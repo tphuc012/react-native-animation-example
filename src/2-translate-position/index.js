@@ -7,19 +7,14 @@ import {
   Animated
 } from 'react-native';
 
-export default class Opacity extends Component {
-  state = { animation: new Animated.Value(1) };
+export default class TranslatePosition extends Component {
+  state = { animation: new Animated.Value(0) };
 
   startAnimation = () => {
     Animated.timing(this.state.animation, {
-      toValue: 0,
+      toValue: 500,
       duration: 1000
-    }).start(() =>
-      Animated.timing(this.state.animation, {
-        toValue: 1,
-        duration: 1000
-      }).start()
-    );
+    }).start(() => this.state.animation.setValue(0));
   };
 
   render() {
@@ -27,7 +22,10 @@ export default class Opacity extends Component {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <TouchableWithoutFeedback onPress={this.startAnimation}>
           <Animated.View
-            style={[styles.box, { opacity: this.state.animation }]}
+            style={[
+              styles.box,
+              { transform: [{ translateY: this.state.animation }] }
+            ]}
           />
         </TouchableWithoutFeedback>
       </View>
