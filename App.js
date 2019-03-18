@@ -5,12 +5,13 @@ import TranslatePosition from './src/2-translate-position';
 import Scale from './src/3-scale';
 import WidthHeightValues from './src/4-width-height-values';
 import AbsolutePosition from './src/5-absolute-position';
+import ColorsInterpolate from './src/6-colors-backgroundColor';
 
 export default class App extends PureComponent {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <AbsolutePosition />
+        <ColorsInterpolate />
       </View>
     );
   }
