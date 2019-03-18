@@ -10,12 +10,13 @@ import Rotation from './src/7-rotation';
 import WidthHeightPercent from './src/8-width-height-percent';
 import EasingScreen from './src/9-easing';
 import SpringScreen from './src/10-spring';
+import EventScreen from './src/11-event';
 
 export default class App extends PureComponent {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <SpringScreen />
+        <EventScreen />
       </View>
     );
   }
