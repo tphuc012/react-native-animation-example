@@ -15,7 +15,7 @@ import SpringScreen from './src/10-spring';
 import EventScreen from './src/11-event';
 import DecayScreen from './src/12-decay';
 import AddScreen from './src/13-add';
-import DeviveScreen from './src/14-devive/DeviveScreen';
+import DevideScreen from './src/14-devide/DevideScreen';
 import MultiplyScreen from './src/15-multiply/MultiplyScreen';
 import ModuloScreen from './src/16-modulo/ModuloScreen';
 import ParallelScreen from './src/17-parallel/ParallelScreen';
@@ -101,9 +101,9 @@ const AppNavigator = createAppContainer(
         screen: AddScreen,
         navigationOptions: { title: 'AddScreen' }
       },
-      DeviveScreen: {
-        screen: DeviveScreen,
-        navigationOptions: { title: 'DeviveScreen' }
+      DevideScreen: {
+        screen: DevideScreen,
+        navigationOptions: { title: 'DevideScreen' }
       },
       MultiplyScreen: {
         screen: MultiplyScreen,
