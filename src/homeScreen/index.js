@@ -22,7 +22,7 @@ const dataScreen = [
   'EventScreen',
   'DecayScreen',
   'AddScreen',
-  'DeviveScreen',
+  'DevideScreen',
   'MultiplyScreen',
   'ModuloScreen',
   'ParallelScreen',
