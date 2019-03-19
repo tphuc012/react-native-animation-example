@@ -34,7 +34,6 @@ const dataScreen = [
   'RotationNewScreen',
   'ExtrapolateScreen',
   'VideoScreen',
-  'InternalsScreen',
   'CreateAnimatedComponentsScreen',
   'SetNativePropsScreen',
   'InterpolateD3',

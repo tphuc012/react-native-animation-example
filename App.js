@@ -27,7 +27,6 @@ import ColorBackgroundColorScreen from './src/22-colorbackground color/ColorBack
 import RotationNewScreen from './src/23-rotation/RotationNewScreen';
 import ExtrapolateScreen from './src/24-extrapolate/ExtrapolateScreen';
 import VideoScreen from './src/25-video/VideoScreen';
-import InternalsScreen from './src/26- animated internals/InternalsScreen';
 import CreateAnimatedComponentsScreen from './src/27- create animated component/CreateAnimatedComponentsScreen';
 import SetNativePropsScreen from './src/28 - set native props/SetNativePropsScreen';
 import InterpolateD3 from './src/29-d3-interpolate/InterpolateD3';
@@ -149,10 +148,7 @@ const AppNavigator = createAppContainer(
         screen: VideoScreen,
         navigationOptions: { title: 'VideoScreen' }
       },
-      InternalsScreen: {
-        screen: InternalsScreen,
-        navigationOptions: { title: 'InternalsScreen' }
-      },
+
       CreateAnimatedComponentsScreen: {
         screen: CreateAnimatedComponentsScreen,
         navigationOptions: { title: 'CreateAnimatedComponentsScreen' }
