@@ -19,7 +19,47 @@ const dataScreen = [
   'WidthHeightPercent',
   'EasingScreen',
   'SpringScreen',
-  'EventScreen'
+  'EventScreen',
+  'DecayScreen',
+  'AddScreen',
+  'DeviveScreen',
+  'MultiplyScreen',
+  'ModuloScreen',
+  'ParallelScreen',
+  'SequenceScreen',
+  'StaggerScreen',
+  'DelayScreen',
+  'InterpolateInInterPolateScreen',
+  'ColorBackgroundColorScreen',
+  'RotationNewScreen',
+  'ExtrapolateScreen',
+  'VideoScreen',
+  'InternalsScreen',
+  'CreateAnimatedComponentsScreen',
+  'SetNativePropsScreen',
+  'InterpolateD3',
+  'InterpolatePathSvg',
+  'ArtMorphTweenComplexSvg',
+  'FubberAndAnimatedForBetterSvg',
+  'Cliff99',
+  'PointerEventsScreen',
+  'FourConnerScreen',
+  'TaggerdHeadsScreen',
+  'KittenCards',
+  'StaggerFormItemsVisbilityOnMount',
+  'AnimatedProgessBarButton',
+  'AnimatedQuestionaireWithProcessbar',
+  'PhotoGridSharedElement',
+  'AnimatedColorPicker',
+  'FloatingActionButtonWithMenu',
+  'ApplicationIntroScreen',
+  'EvolvingWriteButton',
+  'SocialCommentModal',
+  'HorizontalParallaxScrollView',
+  'TapShowLoveFloattingHearts',
+  'BouncingHeartShapedLikeButton',
+  'ExplodingHeartButton',
+  'ExpandingNotifyInputWithSUccessMessage'
 ];
 export default class HomeScreen extends Component {
   render() {
@@ -40,7 +80,9 @@ export default class HomeScreen extends Component {
               }}
               onPress={() => this.props.navigation.navigate(item)}
             >
-              <Text style={{ color: 'blue', textAlign: 'center' }}>{item}</Text>
+              <Text
+                style={{ color: 'blue', textAlign: 'center' }}
+              >{`Lesson:${index + 1} ${item}`}</Text>
             </TouchableOpacity>
           )}
         />
