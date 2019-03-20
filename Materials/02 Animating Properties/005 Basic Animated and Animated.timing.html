@@ -1,0 +1,63 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>005 Basic Animated and Animated.timing</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Each <code>Animated</code> method generally follows the signature <code>Animated.timing(ANIMATED_VALUE, CONFIGURATION)</code>. The <code>ANIMATED_VALUE</code> is an instance of <code>Animated.Value</code>. This is an instance that can be passed around, and is typically passed into an <code>Animated.View</code>.</p>
+
+<p>When using an <code>Animated.View</code> it will attach listeners onto the <code>Animated.Value</code> you provide it. Once you trigger start an animation on the <code>Animated.Value</code> it will be notified and know when and what to update. This is as deep as we will dive into it now, but we'll get into the core of <code>Animated</code> later.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;new Animated.Value(0)
+
+constructor(props) {
+  super(props);
+
+  this._animation = new Animated.Value(0)
+}
+
+constructor(props) {
+  super(props);
+
+  this.state = {
+    snowflakes: [
+      new Animated.Value(0),
+      new Animated.Value(0),
+      new Animated.Value(0)
+    ]
+  }
+}
+
+componentWillMount() {
+  this._animation = new Animated.Value(0)
+}
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>This is what declaring an animated value looks like. This may be on <code>state</code> or it may just be declared on the component instance in a <code>constructor</code> or <code>componentWillMount</code>. Typically it doesn't matter where it lives, however if you are using <code>setState</code> and adding additional elements that are driven by animations it is best to add the animations onto state.</p>
+
+
+
+
+
+<p>An example is if you had an array of snow flakes that were animated. You might be deriving snow flakes to render based upon animations in an array. If you wanted to add more snow flakes you would need to do a <code>setState</code> to trigger a re-render.</p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

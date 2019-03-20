@@ -1,0 +1,45 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>053 Combining Multiple Combined Animations</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Our delay animation is a great example of a complex animation with multiple combined animations. These can all be nested in any fashion as deep as you want. Including <code>timing</code>, <code>stagger</code>, <code>spring</code>, <code>parallel</code>, <code>delay</code>, <code>sequence</code>, etc. However do not that the <code>start</code> callback will not be called until ALL animations are completed.</p>
+
+<p>So here with our delay animation, these run sequentially. This animation would last for <code>500 + 300 + 1500 + 500</code>, and then our <code>start</code> would be called.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;Animated.sequence([
+  Animated.timing(this.state.colorAnimation, {
+    toValue: 1,
+    duration: 500,
+  }),
+  Animated.timing(this.state.scaleAnimation, {
+    toValue: 2,
+    duration: 300,
+  }),
+  Animated.delay(1500),
+  Animated.parallel([
+    Animated.timing(this.state.colorAnimation, {
+      toValue: 0,
+      duration: 500,
+    }),
+    Animated.timing(this.state.scaleAnimation, {
+      toValue: 1,
+      duration: 300,
+    }),
+  ]),
+]).start();
+&lt;/code&gt;</pre></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

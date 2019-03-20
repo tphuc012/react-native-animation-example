@@ -1,0 +1,56 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>022 WidthHeight Percentage Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>As of React Native ~<code>.40</code> an updated version of the Yoga layout engine was added. This allowed for <code>%</code> based layout values to be used. These will only work for <code>width/height</code> but will not work for things like <code>borderRadius</code>, etc. </p>
+
+<p>Thanks to interpolate being smart enough to detect a generic number + character format it can handle interpolating percentages out of the box. </p>
+
+
+
+
+
+<p>This is great for things like progress bars or when you need to interpolate a <code>0-1</code> value to <code>0%-100%</code> and do not necessarily want, or can't measure the size of the layout to animate a width/height point values.</p>
+
+
+
+
+
+<p>An example interpolate would be</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;this.state.animation.interpolate({
+  inputRange: [0, 1],
+  outputRange: ["0%", "100%"]
+})
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>We can interpolate on our <code>0=&gt;1</code> and map it to the range of <code>0%</code> to <code>100%</code>.</p>
+
+
+
+
+
+<p><a href="https://snack.expo.io/SJjZJuYNZ" rel="nofollow">Live Demo</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

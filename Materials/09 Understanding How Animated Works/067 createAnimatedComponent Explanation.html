@@ -1,0 +1,37 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>067 createAnimatedComponent Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>The <code>createAnimatedComponent</code> call can wrap any component and intercept any prop that it detects is an <code>Animated.Value</code> of some sort. It has special case built in to look at the <code>style</code> prop, flatten it, and determine what is an <code>Animated.Value</code> that needs to be updated.</p>
+
+<p>The Animated value passed has listeners attached inside <code>createAnimatedComponent</code> and when an animation is triggered those listeners will call <code>setNativeProps</code> directly for us. Now because we have props being managed internally if a <code>setState</code> happens (even mid animation), the render cycle will happen as usual and the props that are passed over to the native world will be the same as whatever the animated value would be sending over.</p>
+
+
+
+
+
+<p>Rather than me explaining even more check out the concept from Vjeux himself <a href="https://www.youtube.com/watch?v=xtqUJVqpKNo" rel="nofollow">https://www.youtube.com/watch?v=xtqUJVqpKNo</a> and his <a href="https://speakerdeck.com/vjeux/react-rally-animated-react-performance-toolbox" rel="nofollow">slides are here</a>)</p>
+
+
+
+
+
+<p><a href="https://github.com/facebook/react-native/blob/master/Libraries/Animated/src/AnimatedImplementation.js#L1755" rel="nofollow">Source Code</a></p>
+
+
+
+
+
+<p><a href="https://snack.expo.io/HJkW6M3Bb" rel="nofollow">Live Demo</a>
+<a href="https://gitlab.com/codedaily/reactnativeanimations/tree/createAnimatedComponent" rel="nofollow">Code</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

@@ -1,0 +1,249 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>083 Interrupted Animation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Intro</p>
+
+<p>Handling interrupted animations is a crucial part of the user experience. Generally when animations are quick, or they are a single animation the chances of being interrupted is lower. However when dealing with more complex, and longer running animations you don't want to trap the user after they have made a mistake.</p>
+
+
+
+<p>Setup</p>
+
+
+
+<p>We've got our basic box, and 2 animated values. One will be for the translation of our box and the other will be for the opacity.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;import React, { Component } from "react";
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  Animated,
+  TouchableWithoutFeedback,
+} from "react-native";
+
+export default class animations extends Component {
+  state = {
+    animation: new Animated.Value(0),
+    opacity: new Animated.Value(1),
+  };
+  startAnimation = () =&gt; {
+
+  };
+
+  render() {
+    const animatedStyles = {
+      opacity: this.state.opacity,
+      transform: [{ translateY: this.state.animation }],
+    };
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;TouchableWithoutFeedback onPress={this.startAnimation}&gt;
+          &lt;Animated.View style={[styles.box, animatedStyles]} /&gt;
+        &lt;/TouchableWithoutFeedback&gt;
+      &lt;/View&gt;
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  box: {
+    width: 150,
+    height: 150,
+    backgroundColor: "tomato",
+  },
+});
+
+AppRegistry.registerComponent("animations", () =&gt; animations);
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Animate</p>
+
+
+
+<p>Here we setup our basic animation, it will translate to <code>300</code> and slowly fade away to <code>0</code> opacity. These both will happen over 1500 milliseconds. However you'll notice that we will reset our <code>opacity</code> to 1 with a setTimeout every time we tap on our box.</p>
+
+
+
+
+
+<p>Because we are use a combination of animations, if one animation is effected an interruption will happen and they'll both stop.</p>
+
+
+
+
+
+<p>Also realize, we are resetting ONLY the opacity. This means if we re-trigger our animation, the <code>this.state.animation</code> will retain it's current value. Which means we'll now animate from the value over the course of a NEW 1500 milliseconds. That means our animation will just continually get slower.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;startAnimation = () =&gt; {
+    Animated.parallel(
+      [
+        Animated.timing(this.state.animation, {
+          toValue: 300,
+          duration: 1500,
+        }),
+        Animated.timing(this.state.opacity, {
+          toValue: 0,
+          duration: 1500,
+        }),
+      ]
+    ).start();
+
+    setTimeout(() =&gt; {
+      this.state.opacity.setValue(1);
+    }, 500);
+  };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Handle Finished</p>
+
+
+
+<p>The <code>start</code> callback is passed an object with <code>finished</code>. How you handle the interrupted animation depends on your use case. Sometimes you may just want to skip it all together as the user may want it to be gone, or maybe it was a mistake press and you want to reset it back to the start.</p>
+
+
+
+
+
+<p>In our case we'll reset it back to the beginning if our <code>finished</code> is <code>false</code>.</p>
+
+
+
+
+
+<p>To understand why we're using <code>setTimeout</code> refer to the Animate hidden tutorial.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;.start(({ finished }) =&gt; {
+      if (!finished) {
+        setTimeout(() =&gt; {
+          Animated.spring(this.state.animation, {
+            toValue: 0,
+          }).start();
+          Animated.spring(this.state.opacity, {
+            toValue: 1,
+          }).start();
+        }, 0)
+      }
+    });
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Stop Together</p>
+
+
+
+<p>In our case we are using <code>parallel</code>. Parallel gives you the option to not stop the animations at the same time. This isn't an option with <code>sequence</code> or <code>stagger</code>. 
+However just know that <code>finished</code> in this case will always be true as at least one of the animations is allowed to complete.</p>
+
+
+
+
+
+<p>If you were to add <code>this.state.animation.setValue(0);</code> and reset our animation for translate, all animations would have been interrupted and in that case <code>finished</code> would be false. </p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;Animated.parallel(
+      [
+        Animated.timing(this.state.animation, {
+          toValue: 300,
+          duration: 1500,
+        }),
+        Animated.timing(this.state.opacity, {
+          toValue: 0,
+          duration: 1500,
+        }),
+      ]
+      , { stopTogether: false }
+    )
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;setTimeout(() =&gt; {
+  this.state.opacity.setValue(1);
+  this.state.animation.setValue(0);
+}, 500);
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Ending</p>
+
+
+
+<p>Handling interrupted animations is key to ensuring that your app and your animations provide the proper experience. </p>
+
+
+
+
+
+<p><a href="https://snack.expo.io/SJ0paEOHZ" rel="nofollow">Live Demo</a>
+<a href="https://gitlab.com/codedaily/reactnativeanimations/tree/interrupted" rel="nofollow">Code</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

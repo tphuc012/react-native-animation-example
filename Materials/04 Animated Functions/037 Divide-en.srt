@@ -1,0 +1,44 @@
+1
+00:00:00,950 --> 00:00:07,970
+Another crucial math function is the divide we'll be able to once again take a regular animated value
+
+2
+00:00:08,000 --> 00:00:11,170
+or just add integer and divide our enemy into value.
+
+3
+00:00:11,330 --> 00:00:14,370
+So we'll be trend we'll be animating to 300.
+
+4
+00:00:14,570 --> 00:00:25,450
+So we'll just say a conc random value is equal to two and then Conte's new animation sequel to animated
+
+5
+00:00:25,900 --> 00:00:26,940
+divide.
+
+6
+00:00:27,300 --> 00:00:32,940
+And this state animation and a random value.
+
+7
+00:00:33,540 --> 00:00:40,700
+And now when we pipe this in here and save it and then we will press on this rather than translating
+
+8
+00:00:40,700 --> 00:00:41,840
+to 300.
+
+9
+00:00:41,840 --> 00:00:45,750
+It will only go to 150.
+
+10
+00:00:45,960 --> 00:00:55,330
+And then again this also works with animated values so say new animated value save that.
+
+11
+00:00:55,410 --> 00:00:57,890
+Press it again and everything works as normal.
+

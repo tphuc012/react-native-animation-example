@@ -1,0 +1,64 @@
+1
+00:00:00,710 --> 00:00:07,130
+The animated Stiger function allows you to execute animations but with a delay of a certain amount of
+
+2
+00:00:07,130 --> 00:00:08,220
+milliseconds.
+
+3
+00:00:08,440 --> 00:00:16,070
+So we will stagger it color and scale animation will say animated stagger and staggerer is different
+
+4
+00:00:16,100 --> 00:00:23,120
+than others and it takes a millisecond count first and then the set of animations that you want to execute
+
+5
+00:00:23,120 --> 00:00:32,310
+second so will wait 200 milliseconds and then define our array of animations will define our color animation
+
+6
+00:00:32,320 --> 00:00:32,790
+first.
+
+7
+00:00:32,840 --> 00:00:43,710
+They animated that timing that state duck color animation to value of one with a duration of 500 milliseconds
+
+8
+00:00:44,040 --> 00:00:52,440
+or second animation will be our Gale animation says the animated timing that state that scale animation
+
+9
+00:00:53,880 --> 00:01:01,650
+to value to the generation of 300 milliseconds and then we'll call start on our stagger now because
+
+10
+00:01:01,650 --> 00:01:04,140
+we are executing this one first.
+
+11
+00:01:04,260 --> 00:01:06,470
+We then wait 200 milliseconds.
+
+12
+00:01:06,470 --> 00:01:10,870
+We then execute this second one which is 300 milliseconds.
+
+13
+00:01:10,890 --> 00:01:16,410
+So this one will actually complete the scale will complete at the same time as the color animation does
+
+14
+00:01:16,680 --> 00:01:20,700
+because its delayed 200 milliseconds on a stagger.
+
+15
+00:01:20,700 --> 00:01:27,520
+So when we refresh this we will press that and see that they are staggered and complete at the same
+
+16
+00:01:27,520 --> 00:01:28,240
+exact time.
+

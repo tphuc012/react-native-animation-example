@@ -1,0 +1,64 @@
+1
+00:00:01,440 --> 00:00:06,110
+When we press on this box it'll spring to all of the corners.
+
+2
+00:00:06,270 --> 00:00:09,470
+And so let's break down what's exactly happening.
+
+3
+00:00:09,480 --> 00:00:16,960
+First off we have an arbitrarily sized box and when we press on it it it starts in the top left corner
+
+4
+00:00:17,950 --> 00:00:25,300
+real move or with some sort of bouncing or spring to the bottom left corner.
+
+5
+00:00:25,310 --> 00:00:26,790
+So there's a translate.
+
+6
+00:00:26,800 --> 00:00:30,650
+Why that is happening but not to translate x.
+
+7
+00:00:30,870 --> 00:00:39,410
+And then once it's in this corner it does a translate X to the bottom right corner and also a spring.
+
+8
+00:00:39,810 --> 00:00:47,960
+And then as it reaches here it will do a translate y back up and then back to its beginning with a trend
+
+9
+00:00:48,050 --> 00:00:48,620
+x.
+
+10
+00:00:48,800 --> 00:00:54,740
+So it seems here that all that's happening is a translate X to all four corners with an arbitrarily
+
+11
+00:00:54,740 --> 00:00:56,780
+sized box.
+
+12
+00:00:56,780 --> 00:01:03,080
+So yes this is an animation that I created but it's still beneficial to see an animation broken down
+
+13
+00:01:03,080 --> 00:01:04,540
+into its pieces.
+
+14
+00:01:04,550 --> 00:01:11,660
+Another technique we could use is B could record this as a jiff and then we could play it back frame
+
+15
+00:01:11,660 --> 00:01:18,980
+by frame or blow it up into each particular frame and watch the animation happening and seeing the pieces
+
+16
+00:01:19,100 --> 00:01:21,780
+of each transition as they happen.
+

@@ -1,0 +1,680 @@
+1
+00:00:00,720 --> 00:00:07,050
+Get this questionnaire we're going to start with just an array of questions and an empty render.
+
+2
+00:00:07,180 --> 00:00:10,980
+We first need to do a little bit of setup before we can start.
+
+3
+00:00:10,980 --> 00:00:15,110
+So the first thing we're going to do is have two buttons at it.
+
+4
+00:00:15,150 --> 00:00:24,470
+So we'll say touchable opacity and on press we'll just say this handle answer and this is we do our
+
+5
+00:00:24,470 --> 00:00:29,380
+animation and we'll give it an active opacity of point 7.
+
+6
+00:00:30,140 --> 00:00:38,700
+And inside of our touchable opacity we'll just give it some text say text and no and we'll do the same
+
+7
+00:00:38,700 --> 00:00:39,980
+thing for our.
+
+8
+00:00:39,990 --> 00:00:40,620
+Yes.
+
+9
+00:00:40,620 --> 00:00:47,390
+So we'll copy this and create a yes button.
+
+10
+00:00:47,570 --> 00:00:51,500
+Now when we refresh we see that we have a no and a yes here.
+
+11
+00:00:51,620 --> 00:00:56,290
+However we are know to be on this side and are yes to be on this side.
+
+12
+00:00:58,000 --> 00:01:02,570
+Because we want our buttons split down the middle in a row fashion.
+
+13
+00:01:02,590 --> 00:01:13,480
+That means our container is going to mean to be a just to flex direction of row for refreshes.
+
+14
+00:01:13,510 --> 00:01:21,580
+We can now see that there is it is in a row kind of under here but let's fix that with our option.
+
+15
+00:01:21,640 --> 00:01:23,370
+So this will be a yes or no.
+
+16
+00:01:23,470 --> 00:01:24,760
+It'll apply to both.
+
+17
+00:01:24,820 --> 00:01:29,860
+So this option styling will be applied to both of our buttons so we want it to stretch the entire way
+
+18
+00:01:29,860 --> 00:01:32,200
+so will say flex 1.
+
+19
+00:01:32,250 --> 00:01:45,130
+We want our content to be at the end so we'll say justify content flex and and then we want our content
+
+20
+00:01:45,130 --> 00:01:52,580
+to be centered inside of our container so say a line items center.
+
+21
+00:01:52,610 --> 00:02:04,510
+Now if we take our option style and we apply it to our touchable opacity and here as well were refreshed
+
+22
+00:02:04,510 --> 00:02:14,070
+you can see we've moved our buttons to half and half flex and end centered.
+
+23
+00:02:14,310 --> 00:02:21,450
+Now for our final styling on these buttons we're going to create some option text dialing and we'll
+
+24
+00:02:21,450 --> 00:02:31,350
+just get a font size 30 color of white and then we'll just get a margin bottom of 50 to remove it here
+
+25
+00:02:31,410 --> 00:02:34,180
+up off the bot bottom a little bit.
+
+26
+00:02:34,300 --> 00:02:34,850
+Yes.
+
+27
+00:02:34,890 --> 00:02:43,940
+Styling just to be able to distinguish between each buttons say background color or G.P.A. 255 255 255
+
+28
+00:02:44,010 --> 00:02:46,820
+and point 1.
+
+29
+00:02:47,050 --> 00:02:48,370
+Now in refresh.
+
+30
+00:02:48,370 --> 00:02:55,340
+Nothing happens because we haven't applied our styles yet so let's apply those our Yes some styling
+
+31
+00:02:57,800 --> 00:03:04,370
+and then our text him style style equals styles that option text and then Same here
+
+32
+00:03:07,360 --> 00:03:10,920
+now refresh we have yes or no moved up slightly.
+
+33
+00:03:11,210 --> 00:03:20,420
+And our Yes has a slight cover over it so we can distinguish between presses now that we have our buttons
+
+34
+00:03:20,420 --> 00:03:20,880
+rendering.
+
+35
+00:03:20,900 --> 00:03:28,760
+Now we need to render our questions so we need to be able to operate independently of this particular
+
+36
+00:03:28,760 --> 00:03:29,660
+layout here.
+
+37
+00:03:29,660 --> 00:03:35,660
+So we're going to you could have you and we're going to give it the stylesheet absolute fill and that
+
+38
+00:03:35,660 --> 00:03:39,660
+way it'll be a view that just covers this entire container so we can work with it.
+
+39
+00:03:41,670 --> 00:03:45,990
+The other thing we then needs to do is add our questions.
+
+40
+00:03:45,990 --> 00:03:52,390
+However we don't know what questions we need to render and that's where we have this index on stay here.
+
+41
+00:03:52,440 --> 00:03:57,960
+You can derive which questions we need to render will render to questions will render the first question
+
+42
+00:03:58,260 --> 00:04:03,570
+as the main question and then a second question that will sit off screen that way we can animate one
+
+43
+00:04:03,570 --> 00:04:04,020
+off.
+
+44
+00:04:04,020 --> 00:04:10,170
+And the second and at the same time say say conc question which be our main question will be questions
+
+45
+00:04:10,440 --> 00:04:12,360
+index.
+
+46
+00:04:12,580 --> 00:04:19,930
+And then we need to do some slight Figuring out of arrays so is the next question.
+
+47
+00:04:20,390 --> 00:04:29,250
+And then if our index that we currently have selected plus 1 is less than questions length.
+
+48
+00:04:29,300 --> 00:04:37,300
+So if the next question is inside of our range then will say next question is equal to questions.
+
+49
+00:04:38,000 --> 00:04:40,110
+Index plus 1.
+
+50
+00:04:40,130 --> 00:04:49,060
+This way we just grab two of the questions the current one and the next one if it exists.
+
+51
+00:04:49,120 --> 00:04:55,470
+So how this concept is going to go is that we need to center our questions in the middle of the screen.
+
+52
+00:04:56,300 --> 00:05:00,100
+And then they have to be on the same plane.
+
+53
+00:05:00,110 --> 00:05:07,520
+So what that means is that when we render one question and we animate our second in when we re render
+
+54
+00:05:07,520 --> 00:05:13,710
+with the next question as the main question and needs to be in the exact same spot.
+
+55
+00:05:13,790 --> 00:05:19,940
+So that means that we were we are going to have to do some absolute positioning to determine to make
+
+56
+00:05:19,940 --> 00:05:23,520
+the items flow correctly to make the text flow correctly.
+
+57
+00:05:23,570 --> 00:05:30,560
+Now before we move on we do need to come up here and do structure questions and index from this state
+
+58
+00:05:30,860 --> 00:05:36,870
+so that we can reference them as normal variables and now we can start laying out our views.
+
+59
+00:05:36,990 --> 00:05:43,050
+So what we need to do is render our questions so animated that text because we will need to animate
+
+60
+00:05:43,110 --> 00:05:45,960
+the questions via translator later.
+
+61
+00:05:45,960 --> 00:05:52,060
+So our first question close off that and then render our second question
+
+62
+00:05:55,160 --> 00:05:57,810
+which is our next question.
+
+63
+00:05:59,340 --> 00:06:04,960
+And then close that off and then refresh we can see that they are rendering one on top of each other.
+
+64
+00:06:05,190 --> 00:06:09,200
+But we want them in the middle of the screen so to get them there.
+
+65
+00:06:09,210 --> 00:06:17,250
+Lets apply a tile here which would just call styles overlay and will come create our overlay style which
+
+66
+00:06:17,250 --> 00:06:22,620
+would just be a line items center and justify content center.
+
+67
+00:06:22,620 --> 00:06:26,790
+So when we refresh we now have to have our questions in the middle of the screen.
+
+68
+00:06:28,140 --> 00:06:31,500
+Now these questions are stacked one on top of each other.
+
+69
+00:06:31,650 --> 00:06:35,600
+But we want their layout to be independent so we can position them how we feel.
+
+70
+00:06:35,640 --> 00:06:45,690
+So let's create a question text and we will do a background color of transparent to start then we will
+
+71
+00:06:45,690 --> 00:06:48,480
+do a position absolute.
+
+72
+00:06:48,480 --> 00:06:51,420
+So that way each of their questions is free floating.
+
+73
+00:06:51,840 --> 00:07:01,740
+Well then give it some font size a 30 color of white and then we also do text align center to the text
+
+74
+00:07:01,740 --> 00:07:06,950
+justified to the middle and then we have our question textile and we can go ahead and apply it to our
+
+75
+00:07:06,950 --> 00:07:07,840
+questions.
+
+76
+00:07:07,880 --> 00:07:13,590
+So just style equals and we are going to use an array here because we are going to have to animate later
+
+77
+00:07:13,590 --> 00:07:19,370
+as well to duplicate multiple styles to animated text so we'll pass that in here.
+
+78
+00:07:20,500 --> 00:07:23,130
+And then apply over here as well.
+
+79
+00:07:23,140 --> 00:07:24,160
+Step one to refresh.
+
+80
+00:07:24,160 --> 00:07:27,990
+We can see that the two questions are sitting right on top of each other.
+
+81
+00:07:28,480 --> 00:07:34,810
+And now comes the actual animation sort to come up here on our state and we're going to create our animation
+
+82
+00:07:35,260 --> 00:07:38,100
+and create a new animated value and set it to zero.
+
+83
+00:07:39,080 --> 00:07:44,410
+And what we need to do with this and render is have our main question sit at zero.
+
+84
+00:07:44,630 --> 00:07:49,910
+And when our animation happens you'll move it to the left and at the same time we need this one to sit
+
+85
+00:07:50,010 --> 00:07:54,770
+off screen and move at the same time into frame.
+
+86
+00:07:54,770 --> 00:07:57,500
+So to do that we're going to need to use some interpellation.
+
+87
+00:07:57,500 --> 00:08:03,560
+So we're going to first get the width of our screen so we're going to restructure off of our window
+
+88
+00:08:05,510 --> 00:08:14,810
+and then we'll set up to interpellation the first will be our Konst main question and chirpily and this
+
+89
+00:08:14,810 --> 00:08:23,390
+will be this state that animation inter-relate and our input range will just be zero to one in our output
+
+90
+00:08:23,390 --> 00:08:31,130
+range which will be fed into our translate X will be the negative it will be zero because when we are
+
+91
+00:08:31,220 --> 00:08:33,860
+zero like we are here we don't want it to move anywhere.
+
+92
+00:08:34,130 --> 00:08:40,760
+And then we will set it up to negative with that way it will completely translate the entire width over
+
+93
+00:08:40,760 --> 00:08:41,440
+here.
+
+94
+00:08:43,270 --> 00:08:47,290
+Then for our next question will do cance next question.
+
+95
+00:08:47,290 --> 00:08:56,980
+Inter-relate will then be at state animation to interpret the same thing and put range of 0 and 1 ever
+
+96
+00:08:57,260 --> 00:08:58,220
+at zero.
+
+97
+00:08:58,270 --> 00:09:02,280
+We want it to be offset the entire width over here.
+
+98
+00:09:02,380 --> 00:09:06,230
+And that's because we have our style sheet to fill that takes up the entire screen.
+
+99
+00:09:06,610 --> 00:09:13,810
+And so we'll set it at 0 will set it to with and then as we move towards 1 will animate the translated
+
+100
+00:09:14,260 --> 00:09:18,140
+view over here and be in frame.
+
+101
+00:09:18,160 --> 00:09:24,340
+So this one main question out at the same time our second question will intimate in and now we just
+
+102
+00:09:24,340 --> 00:09:34,660
+need to craft our styling so essay contest Maine style is equal to transform takes in objects an array
+
+103
+00:09:34,660 --> 00:09:38,640
+of objects translate X and fast.
+
+104
+00:09:38,640 --> 00:09:41,100
+And our main question and interpolate.
+
+105
+00:09:41,340 --> 00:09:47,470
+And then do the same thing for our conc next style transform
+
+106
+00:09:50,650 --> 00:09:53,040
+translate X and pass it.
+
+107
+00:09:53,050 --> 00:09:57,330
+Our next question interpolate.
+
+108
+00:09:57,550 --> 00:10:06,380
+Now these two can be passed into the animated teks main style and next style.
+
+109
+00:10:06,580 --> 00:10:13,900
+And now if we refresh this our first question is here and our next question is now translated away off
+
+110
+00:10:13,900 --> 00:10:14,940
+the screen.
+
+111
+00:10:15,360 --> 00:10:17,790
+Now let's go see what happens when we trigger our handle.
+
+112
+00:10:17,800 --> 00:10:24,290
+Answer the first thing that we will do is create a handle answer.
+
+113
+00:10:24,670 --> 00:10:29,580
+And because we don't care what the answer is we're just going to do the same animation.
+
+114
+00:10:29,620 --> 00:10:40,570
+So say animated timing this state animation to value of one with the duration of four hundred milliseconds
+
+115
+00:10:40,600 --> 00:10:42,610
+and then call start.
+
+116
+00:10:42,610 --> 00:10:49,750
+So if we refreshed this we can now answer a question and it will translate that question off and this
+
+117
+00:10:49,750 --> 00:10:51,350
+question on at the same time.
+
+118
+00:10:53,720 --> 00:10:59,420
+However we aren't doing any sort of transition of this index because remember our questions are run
+
+119
+00:10:59,420 --> 00:11:01,960
+based upon this particular index.
+
+120
+00:11:01,970 --> 00:11:10,570
+So in our start we'll need to take a call back here and then do this set state and because we will reference
+
+121
+00:11:10,630 --> 00:11:18,660
+our previous state we'll need to do an update or function and then return a new object with index and
+
+122
+00:11:18,660 --> 00:11:22,630
+state index plus 1.
+
+123
+00:11:22,700 --> 00:11:27,600
+So when our animation is completed we will flip over to me the main question.
+
+124
+00:11:27,620 --> 00:11:31,860
+Well now the next question will now be the main question and we'll have a new next question.
+
+125
+00:11:32,650 --> 00:11:40,500
+But then we also realized that the animated value for this animation is still at one and we don't want
+
+126
+00:11:40,500 --> 00:11:46,650
+that because that would then have the next question be translated way off stream stream screen because
+
+127
+00:11:46,650 --> 00:11:48,760
+it became the main question.
+
+128
+00:11:48,930 --> 00:11:55,590
+So then in our component did update callback to set state will then do this start state that animation
+
+129
+00:11:55,590 --> 00:12:01,660
+does set value back to zero so we can go ahead and refresh this now.
+
+130
+00:12:01,980 --> 00:12:09,330
+And when we press on an answer this animated then we changed the animation and reset this.
+
+131
+00:12:09,340 --> 00:12:15,670
+So now we have a second question off screen and we can prove that by pressing another answer and then
+
+132
+00:12:15,760 --> 00:12:17,100
+another answer as well.
+
+133
+00:12:18,180 --> 00:12:25,050
+It's very important to understand the callbacks that animated provides as well as what set state and
+
+134
+00:12:25,350 --> 00:12:27,750
+reac provides in terms of callbacks.
+
+135
+00:12:27,840 --> 00:12:35,520
+It allows us to set up and adjust our animations and prepare for new animations.
+
+136
+00:12:35,520 --> 00:12:38,120
+So one final bit is our progress bar.
+
+137
+00:12:38,340 --> 00:12:40,630
+So let's go ahead and set that up here.
+
+138
+00:12:41,460 --> 00:12:47,400
+We'll do a view which is a style the styles styles progress.
+
+139
+00:12:47,520 --> 00:12:53,850
+And then inside of that we'll set up an animated view which would be our progress bar say animated view
+
+140
+00:12:54,580 --> 00:12:59,630
+in style equals styles up bar close it off.
+
+141
+00:12:59,630 --> 00:13:05,180
+Now let's set up our styling for our progress and progress bar for our progress.
+
+142
+00:13:06,100 --> 00:13:09,070
+We'll have it on the bottom of the screen.
+
+143
+00:13:09,190 --> 00:13:18,180
+So when you do position absolute It will be left zero bottom zero right zero.
+
+144
+00:13:18,570 --> 00:13:21,280
+And then we'll just give it a height of 10.
+
+145
+00:13:21,660 --> 00:13:30,100
+And then for our bar rather than given an explicit height of 10 we'll give it a height of 100 percent
+
+146
+00:13:30,780 --> 00:13:35,490
+and then a background color of white.
+
+147
+00:13:35,540 --> 00:13:43,550
+Now because this is operating independently of our main question which is just anything from 0 to 1
+
+148
+00:13:43,550 --> 00:13:47,980
+we'll need to set up a second progress animated value.
+
+149
+00:13:48,030 --> 00:13:55,660
+So say progress here animated Valley just defaulted to zero and then we need to set up an interpolation.
+
+150
+00:13:55,700 --> 00:14:02,090
+And this interpellation for our progress will be the console progress inter-relate.
+
+151
+00:14:02,270 --> 00:14:11,360
+You call this state DOT progress Don inter-relate and the input range will start at zero and then because
+
+152
+00:14:11,360 --> 00:14:19,010
+we want it to be dynamic we'll just say it's questions length and then for the output range will be
+
+153
+00:14:19,100 --> 00:14:21,800
+0 percent to 100 percent.
+
+154
+00:14:21,830 --> 00:14:28,880
+So interpolate we'll figure out based upon the number of questions that we have what percentage needs
+
+155
+00:14:28,880 --> 00:14:36,010
+to be applied so that it will progress appropriately across the screen when new question is answered.
+
+156
+00:14:37,150 --> 00:14:44,470
+And now we can set up our progress styles to say Konst progress style is equal to the width and will
+
+157
+00:14:44,480 --> 00:14:51,740
+pass in our progress and interpolate and take our progress style and we will pass it into our animated
+
+158
+00:14:51,740 --> 00:14:52,640
+view here.
+
+159
+00:14:54,460 --> 00:15:01,930
+Now if we look at our interpellation we'll see that the input to our progress should be the current
+
+160
+00:15:01,930 --> 00:15:04,630
+question that we are on.
+
+161
+00:15:04,630 --> 00:15:08,820
+So in our handle answer we'll need to flip this around a little bit.
+
+162
+00:15:08,890 --> 00:15:16,840
+We'll do a parallel so they're animated up parallel which will take an array of two questions.
+
+163
+00:15:18,180 --> 00:15:26,640
+And will non-call start on our animated up parallel and this one will be animated timing as well.
+
+164
+00:15:26,660 --> 00:15:37,410
+This state up progress and then we'll pass into value which is just me this state that index plus one
+
+165
+00:15:37,980 --> 00:15:40,880
+with the same duration.
+
+166
+00:15:40,890 --> 00:15:49,840
+So now this progress is being updated with the next current question because I'll take the next question
+
+167
+00:15:49,840 --> 00:15:51,700
+right here and then.
+
+168
+00:15:51,700 --> 00:15:54,810
+The range is dynamic based upon state.
+
+169
+00:15:55,240 --> 00:16:03,040
+So now when we refresh and we answer a question can see that our value will animate our progress of
+
+170
+00:16:03,040 --> 00:16:05,830
+our estimate as we answer questions.
+

@@ -1,0 +1,260 @@
+1
+00:00:00,550 --> 00:00:05,770
+Rather than breaking down actual tinder and exposing a bunch of people's information we're going to
+
+2
+00:00:05,770 --> 00:00:08,800
+just focus on the application that we're actually going to build.
+
+3
+00:00:08,830 --> 00:00:12,920
+Now the first thing that we should do is break down all of the pieces that we see.
+
+4
+00:00:12,970 --> 00:00:18,880
+We have a card here with some sort of chteaux kind of indicating that there's some depth and then additionally
+
+5
+00:00:18,880 --> 00:00:25,030
+we have two buttons that you could potentially press and say yes or no to what you're currently looking
+
+6
+00:00:25,030 --> 00:00:26,080
+at.
+
+7
+00:00:26,080 --> 00:00:29,410
+This is a very classic drag to make a decision animation.
+
+8
+00:00:29,410 --> 00:00:36,550
+So in one case you can see that we can drag this card in as we drag it a few things happened one the
+
+9
+00:00:37,880 --> 00:00:41,480
+card is rotating and the image is fading out.
+
+10
+00:00:41,480 --> 00:00:49,540
+We can see that the image is slightly fading out and at the same time as we drag to the right there's
+
+11
+00:00:49,580 --> 00:00:57,770
+some text that's also rotated in the opposite corner of where we're dragging towards that is coming
+
+12
+00:00:57,770 --> 00:00:59,340
+in.
+
+13
+00:00:59,510 --> 00:01:05,790
+And it has a opacity as well as a scale that does not appear to be any rotate on it.
+
+14
+00:01:05,790 --> 00:01:12,960
+Now if we move back here you'll see that the opposite happens for a different corner but a different
+
+15
+00:01:13,170 --> 00:01:13,960
+text.
+
+16
+00:01:15,800 --> 00:01:17,990
+When dealing with just your animations.
+
+17
+00:01:17,990 --> 00:01:23,090
+Make sure to kind of analyze exactly what's happening based upon the direction that you're moving.
+
+18
+00:01:23,090 --> 00:01:29,420
+So for example US moving up or down in the y direction nothing is actually happening but we move in
+
+19
+00:01:29,420 --> 00:01:31,030
+the x direction.
+
+20
+00:01:31,310 --> 00:01:33,930
+We see that that's when effects take place.
+
+21
+00:01:33,930 --> 00:01:40,730
+It's unlikely that there will be an interpolation off of the animated value x y x value while we drag
+
+22
+00:01:42,850 --> 00:01:48,720
+also think in terms of interpellation with extrapolate as we move this way.
+
+23
+00:01:49,120 --> 00:01:51,090
+We see that the rotate is affected.
+
+24
+00:01:51,100 --> 00:01:57,730
+However after we get to a certain point it does not rotate anymore so there's likely an extrapolate
+
+25
+00:01:57,730 --> 00:01:59,080
+clamp there.
+
+26
+00:01:59,230 --> 00:02:05,880
+And same for the left side when dealing with gesture animations.
+
+27
+00:02:05,880 --> 00:02:07,770
+There are generally three pieces.
+
+28
+00:02:07,770 --> 00:02:13,260
+The start that Grant on Penn. responded grant which we would typically might call extract offset if
+
+29
+00:02:13,260 --> 00:02:18,720
+we were to move something and put it there and it would stay the move that there's things happening
+
+30
+00:02:18,750 --> 00:02:20,100
+on move.
+
+31
+00:02:20,460 --> 00:02:29,130
+And then the release we can see here that we on release on our release we have a animated effect back
+
+32
+00:02:29,130 --> 00:02:33,730
+towards the middle so we know that there's going to be a unpin response release.
+
+33
+00:02:33,780 --> 00:02:38,770
+We know that there's movement happening so we will be doing stuff with her on Panne respond and move.
+
+34
+00:02:38,850 --> 00:02:43,210
+However it does not seem to be any sort of sticking in our on Pan responder Grant.
+
+35
+00:02:43,240 --> 00:02:46,860
+There's no animation that happens when we pick this up.
+
+36
+00:02:46,860 --> 00:02:52,380
+And so we know that we likely won't have an on panderers responder grant to do anything when speed initiate
+
+37
+00:02:52,380 --> 00:02:55,100
+our first touch.
+
+38
+00:02:55,110 --> 00:02:58,860
+That's all for when we pick it up and drop it down.
+
+39
+00:02:58,860 --> 00:03:05,460
+Now what happens if we actually answer a question and see that when we dragged and released.
+
+40
+00:03:05,460 --> 00:03:06,850
+There was a movement.
+
+41
+00:03:06,870 --> 00:03:10,650
+We didn't exactly drop it and it didn't stay.
+
+42
+00:03:10,650 --> 00:03:19,830
+We kind of threw it and it continued on so we know that in our and on Pen respond to release when we
+
+43
+00:03:19,890 --> 00:03:25,170
+haven't gone a certain distance that it is it will bounce back to the middle.
+
+44
+00:03:25,200 --> 00:03:30,360
+However if we go a certain distance then there's likely going to be a decay or some sort of philosophy
+
+45
+00:03:30,690 --> 00:03:35,780
+to make our card move off the screen or move in a particular direction.
+
+46
+00:03:36,660 --> 00:03:42,030
+Let's reset and we can see that there's one final animation to break down.
+
+47
+00:03:42,910 --> 00:03:51,130
+When we inspect these two cards you don't see the other card and this one behind it seems to be slightly
+
+48
+00:03:51,130 --> 00:03:58,650
+smaller so we know that there is a slight scale on that animation or that card back there.
+
+49
+00:03:59,390 --> 00:04:03,720
+That is keeping it slightly smaller than our front yard.
+
+50
+00:04:03,800 --> 00:04:12,370
+When we release just watch the card and see what happens we can see that it kind of scaled in from a
+
+51
+00:04:12,370 --> 00:04:17,500
+smaller spot and had a slight spring animation so we can take a look at that again see the one back
+
+52
+00:04:17,500 --> 00:04:18,510
+there smaller.
+
+53
+00:04:18,740 --> 00:04:28,870
+We release it sprung in so we know that with our animation after we make a decision that that card back
+
+54
+00:04:28,900 --> 00:04:35,800
+there has a scale applied to it and that a spring animation this is happening on it to bounce it into
+
+55
+00:04:35,800 --> 00:04:36,680
+place.
+
+56
+00:04:38,350 --> 00:04:44,020
+Overall this is one of the more complex and involved animations just because there's a lot going on
+
+57
+00:04:44,680 --> 00:04:50,710
+but it makes it easy to kind of dissect each individual action as you're doing it.
+
+58
+00:04:50,710 --> 00:04:53,640
+So first off we can see that there's nothing happening.
+
+59
+00:04:53,800 --> 00:04:56,880
+Move drags in particular directions.
+
+60
+00:04:57,940 --> 00:05:05,020
+Top up and down left and right and then do releases and kind of break down each particular thing that
+
+61
+00:05:05,020 --> 00:05:09,380
+you know of and map it back to ideas that you know and ative.
+
+62
+00:05:09,490 --> 00:05:12,090
+So we know that there's going to be panners bonder here.
+
+63
+00:05:12,340 --> 00:05:18,610
+There's going to be opacity that there's going to be scale once we answer and there's scale right there.
+
+64
+00:05:18,610 --> 00:05:25,300
+So being able to analyze and write down all these sort of techniques and mapping it back to what you
+
+65
+00:05:25,300 --> 00:05:32,530
+know how to use an animated will be able to make you break down any animation and rebuild that.
+

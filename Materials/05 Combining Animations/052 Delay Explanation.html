@@ -1,0 +1,61 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>052 Delay Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>The only time <code>delay</code> is used is when combining with animations. Typically used in conjunction with <code>sequence</code> to cause a delay before a second set of animations is run. This can also be used with super complex animations using <code>sequence</code> and <code>parallel</code>.</p>
+
+<p>Like so</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;Animated.sequence([
+  Animated.timing(this.state.colorAnimation, {
+    toValue: 1,
+    duration: 500,
+  }),
+  Animated.timing(this.state.scaleAnimation, {
+    toValue: 2,
+    duration: 300,
+  }),
+  Animated.delay(1500),
+  Animated.parallel([
+    Animated.timing(this.state.colorAnimation, {
+      toValue: 0,
+      duration: 500,
+    }),
+    Animated.timing(this.state.scaleAnimation, {
+      toValue: 1,
+      duration: 300,
+    }),
+  ]),
+]).start();
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p><img alt="" src="https://images.codedaily.io/animations/delay.gif"></p>
+
+
+
+
+
+<p><a href="https://snack.expo.io/r1Ou8Wj4W" rel="nofollow">Live Demo</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

@@ -1,0 +1,180 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>013 WidthHeight Values Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Animating width and height values will effect layout. These may not always be the most performant however sometimes they are necessary. These are commonly used when you have predefined sizing. They are also typically used for dynamic sizing. With React Native you are able to measure the size of elements asynchronously. </p>
+
+<p>One common animation is an accordion. With dynamic measurement you could measure the height of some content then animate the content from a predefined height to it's actual height. There are many other possibilities but we'll cover those in our more complex examples. This may not be performant on larger blocks of content and is actually a very difficult animation.</p>
+
+
+
+
+
+<p>Lets look at an example of heigh animations and how they effect layout.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;export default class animations extends Component {
+  state = {
+    animation: new Animated.Value(100),
+  }
+
+  componentDidMount() {
+    Animated.timing(this.state.animation, {
+      toValue: 200
+    }).start();
+  }
+
+  render() {
+    const boxStyle = {
+      height: this.state.animation,
+    }
+
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;View&gt;
+          &lt;Animated.View style={[styles.box, boxStyle]} /&gt;
+          &lt;View style={styles.box2} /&gt;
+        &lt;/View&gt;
+      &lt;/View&gt;
+    );
+
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  box: {
+    width: 100,
+    height: 100,
+    backgroundColor: "tomato",
+  },
+  box2: {
+    width: 100,
+    height: 100,
+    backgroundColor: "blue",
+  }
+});
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>We have a box, and a box of the same size sitting right below it. When we animate the bottom box will be pushed down as the layout of the <code>box1</code> increases from 100 to 200.</p>
+
+
+
+
+
+<p><img alt="" src="https://images.codedaily.io/animations/AnimatingHeight.gif"></p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;export default class animations extends Component {
+  state = {
+    animation: new Animated.Value(1),
+  }
+
+  componentDidMount() {
+    Animated.timing(this.state.animation, {
+      toValue: 2,
+      duration: 250,
+    }).start();
+  }
+
+  render() {
+    const yInterpolate = this.state.animation.interpolate({
+      inputRange: [1, 2],
+      outputRange: [0, -25]
+    });
+
+    const boxStyle = {
+      transform: [
+        { scaleY: this.state.animation },
+        { translateY: yInterpolate }
+      ]
+    }
+
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;View&gt;
+          &lt;View style={styles.box2} /&gt;
+          &lt;Animated.View style={[styles.box, boxStyle]} /&gt;
+
+        &lt;/View&gt;
+      &lt;/View&gt;
+    );
+
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  box: {
+    width: 100,
+    height: 100,
+    backgroundColor: "tomato",
+  },
+  box2: {
+    width: 100,
+    height: 100,
+    backgroundColor: "blue",
+  }
+});
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>However if we were to use a scale the layout won't be effected but our box will still reach 200 in size. We move our first box to the bottom so it will sit on top when it animates. Now when we <code>scaleY</code> to increase our <code>box1</code> to <code>200</code>. Then also move it up <code>-25</code>. This will cover the previous box and not move it out of the way like when we animate the layout.</p>
+
+
+
+
+
+<p><img alt="" src="https://images.codedaily.io/animations/AnimateHeightScaleY.gif"></p>
+
+
+
+
+
+<p>Just understand that when you need to adjust the size of a particular element and you want to do it performantly you will need to use size. However because it won't effect layout you may need to use <code>translate</code>s to move other elements as well. This is less than ideal but may be necessary to maintain a 60 FPS animation.</p>
+
+
+
+
+
+<p><a href="https://snack.expo.io/BkR03vKEW" rel="nofollow">Live Demo</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

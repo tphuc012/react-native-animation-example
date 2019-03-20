@@ -1,0 +1,140 @@
+1
+00:00:01,120 --> 00:00:04,090
+D-3 is a very popular SVGA library.
+
+2
+00:00:04,090 --> 00:00:08,830
+However I also had a lot of interpellation helpers inside of it.
+
+3
+00:00:08,830 --> 00:00:13,950
+These were packaged up in a separate NPM module called D-3 internally.
+
+4
+00:00:14,060 --> 00:00:19,610
+We're going to take a look at how we can use D-3 inter-relate and animated to recreate an effect that
+
+5
+00:00:19,610 --> 00:00:22,110
+we would typically use with just animated.
+
+6
+00:00:22,160 --> 00:00:23,900
+So we take a look at our render function.
+
+7
+00:00:23,900 --> 00:00:29,780
+We all have a background color and a transform for a translate y to refresh this and we animate and
+
+8
+00:00:29,780 --> 00:00:34,930
+see that we offset 200 animate from a tomato to a blue.
+
+9
+00:00:34,940 --> 00:00:40,250
+So let's copy and paste these so we have access to them later and we can delete all re-animated styles
+
+10
+00:00:40,670 --> 00:00:44,980
+and also change this from a regular animated view to view.
+
+11
+00:00:45,200 --> 00:00:49,470
+And then we can also move this because we're just going in passing in a single style of box.
+
+12
+00:00:49,670 --> 00:00:55,100
+I'll make sure we get a ref of the views we can call scintillated frumps when we press on our button
+
+13
+00:00:55,480 --> 00:01:00,100
+we call our handle press and it will trigger an animation from 0 to 1.
+
+14
+00:01:00,350 --> 00:01:04,800
+So why don't we attach a state animation.
+
+15
+00:01:04,970 --> 00:01:15,370
+Add listener so we can get access to the value that animated is animating will then set up to interpolations
+
+16
+00:01:15,680 --> 00:01:16,360
+will say
+
+17
+00:01:19,900 --> 00:01:27,550
+Kant's position and interpolate and will use just interpolate number from D-3 in chirpily so was plate
+
+18
+00:01:27,580 --> 00:01:31,340
+number and we'll say from 0 to 200.
+
+19
+00:01:31,360 --> 00:01:38,110
+This is basically the equivalent of an input range in animated within say contest color.
+
+20
+00:01:38,140 --> 00:01:48,120
+Interpret is able to interpolate or G-B will pass in our to our G.V. colors.
+
+21
+00:01:48,220 --> 00:01:55,930
+These will return functions that will take a value between 0 and 1 and return the appropriate interpolated
+
+22
+00:01:55,930 --> 00:01:57,990
+value for us.
+
+23
+00:01:58,000 --> 00:02:01,680
+So this is why we have a animated value from 0 to 1.
+
+24
+00:02:02,580 --> 00:02:13,190
+So we can now set up a contest position and say position interpret and pass in or value and then also
+
+25
+00:02:13,190 --> 00:02:18,720
+do it can't see color and do our color interplay and pass in our value.
+
+26
+00:02:19,090 --> 00:02:25,320
+So these are calling our interpreters passing in a value that is between 0 and 1.
+
+27
+00:02:25,600 --> 00:02:30,970
+And then this over turn the interpolated values that we can use.
+
+28
+00:02:30,980 --> 00:02:35,360
+So now we just need to rebuild our style so that we can override it with native props.
+
+29
+00:02:35,360 --> 00:02:41,570
+So we say Konst style is equal to an array because we already have a style box on here so we don't want
+
+30
+00:02:41,570 --> 00:02:48,230
+to blow away the box styling styles top box and also a new object and we'll say background color all
+
+31
+00:02:48,350 --> 00:02:50,830
+passenger color and we'll set up a transform
+
+32
+00:02:55,530 --> 00:03:03,800
+past and or translate Y and pasan our position.
+
+33
+00:03:03,830 --> 00:03:12,660
+So now we can then do our view and call set native props pass in our new style for a style object.
+
+34
+00:03:12,680 --> 00:03:17,490
+So in refresh this and we press on our box we have the same exact effect.
+
+35
+00:03:17,510 --> 00:03:21,500
+We just rebuilt it using D-3 interpolate and set native props.
+

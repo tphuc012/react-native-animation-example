@@ -1,0 +1,555 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>119 Evolving Write Button Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Intro</p>
+
+<p>Sometimes it makes sense to start with the view you are attempting to animate to. Here we will start with our end editor animation and slowly work it down to a button. Using a single animated value we'll be able to craft a reversible animation.</p>
+
+
+
+<p>Setup</p>
+
+
+
+<p>Standard setup, bring in some icons, and animated value, and additionally a state to toggle whether or not we're open. This will be used to do our pointerEvents technique.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;import React, { Component } from "react";
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  Animated,
+  TextInput,
+  Dimensions,
+  TouchableWithoutFeedback,
+} from "react-native";
+
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+
+export default class animations extends Component {
+  state = {
+    animation: new Animated.Value(0),
+    open: false,
+  };
+
+  render() {
+    const { width, height } = Dimensions.get("window");
+
+    return (
+      &lt;View style={styles.container}&gt;
+
+      &lt;/View&gt;
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  center: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
+
+AppRegistry.registerComponent("animations", () =&gt; animations);
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Keyboard Avoiding View (iOS)</p>
+
+
+
+<p>On iOS we'll wrap our view in an a <code>KeyboardAvoidingView</code>.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;    return (
+      &lt;View style={styles.container}&gt;
+        &lt;KeyboardAvoidingView style={styles.center} behavior="padding"&gt;
+        &lt;/KeyboardAvoidingView&gt;
+      &lt;/View&gt;
+    );
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Edit and Bar</p>
+
+
+
+<p>Because we've centered our content when our animation happens it will appear as if it is animating from the center of the screen. With this outputRange in combination with our centering it will leave a padding of <code>20</code> on either side. Also note that our <code>inputRange</code> only goes to <code>.5</code> which means this will be a 2 stage animation. An expanding bar of content, and then our editor area dropping down will be the second piece.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;    const { width, height } = Dimensions.get("window");
+
+    const widthInterpolate = this.state.animation.interpolate({
+      inputRange: [0, 0.5],
+      outputRange: [100, width - 40],
+      extrapolate: "clamp",
+    });
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Here is our new view setup.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;return (
+      &lt;View style={styles.container}&gt;
+        &lt;KeyboardAvoidingView style={styles.center} behavior="padding"&gt;
+          &lt;Animated.View style={[styles.editor, { width: widthInterpolate }]}&gt;
+            &lt;Animated.View style={styles.bar}&gt;
+
+            &lt;/Animated.View&gt;
+          &lt;/Animated.View&gt;
+        &lt;/KeyboardAvoidingView&gt;
+      &lt;/View&gt;
+    );
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>We have a bar with a set height, and a background color that will be the same color for both the bar and the button.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  editor: {
+    borderWidth: 1,
+    borderColor: "rgba(0,0, 0, .1)",
+  },
+  bar: {
+    backgroundColor: "#2979FF",
+    height: 50,
+    justifyContent: "center",
+  },
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Icons</p>
+
+
+
+<p>Now because we have uniqueish layout constraints where a set of buttons is on the left and another set is on the right we add an additional <code>rightInnerBar</code> view wrap so we can apply styling.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;return (
+      &lt;View style={styles.container}&gt;
+        &lt;KeyboardAvoidingView style={styles.center} behavior="padding"&gt;
+          &lt;Animated.View style={[styles.editor, { width: widthInterpolate }]}&gt;
+            &lt;Animated.View style={styles.bar}&gt;
+              &lt;Animated.View style={[styles.toolbar]}&gt;
+                &lt;Icon name="format-bold" color="#FFF" size={20} /&gt;
+                &lt;Icon name="format-italic" color="#FFF" size={20} /&gt;
+                &lt;Icon name="format-underline" color="#FFF" size={20} /&gt;
+                &lt;Icon name="format-list-bulleted" color="#FFF" size={20} /&gt;
+                &lt;Icon name="format-list-numbers" color="#FFF" size={20} /&gt;
+                &lt;View style={styles.rightInnerBar}&gt;
+                  &lt;Icon name="link" color="#FFF" size={20} /&gt;
+                  &lt;Icon name="image" color="#FFF" size={20} /&gt;
+                  &lt;Icon name="arrow-down-bold-box" color="#FFF" size={20} /&gt;
+                &lt;/View&gt;
+              &lt;/Animated.View&gt;
+            &lt;/Animated.View&gt;
+
+          &lt;/Animated.View&gt;
+
+        &lt;/KeyboardAvoidingView&gt;
+      &lt;/View&gt;
+    );
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Our toolbar is setup to be a row, and we'll tell our icons to be <code>flex-start</code>. This will start the rendering from left and move right. Then for our <code>rightInnerBar</code> which will also be a row, we'll tell it do the opposite and start rendering at <code>flex-end</code>. This will give us the desired 2 separate sides of icons.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;toolbar: {
+  flexDirection: "row",
+  paddingHorizontal: 10,
+  alignItems: "center",
+  justifyContent: "flex-start",
+  overflow: "hidden",
+},
+rightInnerBar: {
+  flexDirection: "row",
+  alignItems: "center",
+  flex: 1,
+  justifyContent: "flex-end",
+},
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Editor Bottom</p>
+
+
+
+<p>Now we need to setup our actual editor. We give our <code>TextInput</code> the <code>StyleSheet.absoluteFill</code> so it will cover it's parent view which will be our <code>Animated.View</code>. This is where the expanding height of our animation will take place and the <code>TextInput</code> will respond accordingly.</p>
+
+
+
+
+
+<p>Additionally we get a <code>ref</code> to our input so when it expands or collapses we can focus or blur it.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;return (
+      &lt;View style={styles.container}&gt;
+        &lt;KeyboardAvoidingView style={styles.center} behavior="padding"&gt;
+          &lt;Animated.View style={[styles.editor, { width: widthInterpolate }]}&gt;
+            &lt;Animated.View style={styles.bar}&gt;
+              &lt;Animated.View style={[styles.toolbar, toolbarStyles]}&gt;
+                &lt;Icon name="format-bold" color="#FFF" size={20} /&gt;
+                &lt;Icon name="format-italic" color="#FFF" size={20} /&gt;
+                &lt;Icon name="format-underline" color="#FFF" size={20} /&gt;
+                &lt;Icon name="format-list-bulleted" color="#FFF" size={20} /&gt;
+                &lt;Icon name="format-list-numbers" color="#FFF" size={20} /&gt;
+                &lt;View style={styles.rightInnerBar}&gt;
+                  &lt;Icon name="link" color="#FFF" size={20} /&gt;
+                  &lt;Icon name="image" color="#FFF" size={20} /&gt;
+                  &lt;Icon name="arrow-down-bold-box" color="#FFF" size={20} /&gt;
+                &lt;/View&gt;
+              &lt;/Animated.View&gt;
+            &lt;/Animated.View&gt;
+
+            &lt;Animated.View style={[styles.lowerView]}&gt;
+              &lt;TextInput
+                placeholder="Start writing..."
+                style={[StyleSheet.absoluteFill, styles.input]}
+                multiline
+                ref={input =&gt; (this._input = input)}
+              /&gt;
+            &lt;/Animated.View&gt;
+
+          &lt;/Animated.View&gt;
+        &lt;/KeyboardAvoidingView&gt;
+      &lt;/View&gt;
+    );
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>We give our <code>lowerView</code> which is our wrapping view a default height here, but this will be overridden by our animation.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;lowerView: {
+  height: 150,
+  overflow: "hidden",
+},
+input: {
+  padding: 10,
+  fontSize: 20,
+},
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Add Writer Button In Bar</p>
+
+
+
+<p>We'll then use our pointerEvents technique and cover the entire bar so that we have a blue background for our write button. This gives us a same dimension view but a new ability to layout a single text item in the middle of the bar.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;&lt;Animated.View style={styles.bar}&gt;
+  &lt;Animated.View style={[styles.toolbar, toolbarStyles]}&gt;
+    &lt;Icon name="format-bold" color="#FFF" size={20} /&gt;
+    &lt;Icon name="format-italic" color="#FFF" size={20} /&gt;
+    &lt;Icon name="format-underline" color="#FFF" size={20} /&gt;
+    &lt;Icon name="format-list-bulleted" color="#FFF" size={20} /&gt;
+    &lt;Icon name="format-list-numbers" color="#FFF" size={20} /&gt;
+    &lt;View style={styles.rightInnerBar}&gt;
+      &lt;Icon name="link" color="#FFF" size={20} /&gt;
+      &lt;Icon name="image" color="#FFF" size={20} /&gt;
+      &lt;Icon name="arrow-down-bold-box" color="#FFF" size={20} /&gt;
+    &lt;/View&gt;
+  &lt;/Animated.View&gt;
+
+  &lt;Animated.View
+    style={[StyleSheet.absoluteFill, styles.center]}
+    pointerEvents={this.state.open ? "none" : "auto"}
+  &gt;
+    &lt;TouchableWithoutFeedback onPress={this.toggleTransform}&gt;
+      &lt;View&gt;
+        &lt;Text style={styles.buttonText}&gt;Write&lt;/Text&gt;
+      &lt;/View&gt;
+    &lt;/TouchableWithoutFeedback&gt;
+  &lt;/Animated.View&gt;
+&lt;/Animated.View&gt;
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  buttonText: {
+    color: "#FFF",
+  },
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Execute our Animation</p>
+
+
+
+<p>Now it's a matter of executing the animation and managing our focus. Here we toggle our open state inside of start callback. This will execute if our animation is interrupted or complete so we can toggle the open state, and handle the input correctly.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  toggleTransform = () =&gt; {
+    const toValue = this._open ? 0 : 1;
+
+    Animated.timing(this.state.animation, {
+      toValue,
+      duration: 550,
+    }).start(() =&gt; {
+      this._open ? this._input.blur() : this._input.focus();
+      this._open = !this._open;
+      this.setState({
+        open: this._open,
+      });
+    });
+  };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Transform the Input Height</p>
+
+
+
+<p>We started with the expanded view first so that means we need to craft our animation backwards. We are in a multi-stage animation our editor expanding will either be the last piece when expanding, or the first piece to animate when collapsing. So we'll setup our <code>inputRange</code> with <code>extrapolate: "clamp"</code> so the height values don't go less than <code>0</code>. Then we craft our editor style and pass it into our animated view.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;const editorHeightInputInterpolate = this.state.animation.interpolate({
+  inputRange: [0.7, 1],
+  outputRange: [0, 150],
+  extrapolate: "clamp",
+});
+
+const editorStyle = {
+  opacity: this.state.animation,
+  height: editorHeightInputInterpolate,
+};
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;&lt;Animated.View style={[styles.lowerView, editorStyle]}&gt;
+  &lt;TextInput
+    placeholder="Start writing..."
+    style={[StyleSheet.absoluteFill, styles.input]}
+    multiline
+    ref={input =&gt; (this._input = input)}
+  /&gt;
+&lt;/Animated.View&gt;
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Transform Toolbar and Buttons</p>
+
+
+
+<p>Now that we have our first stage of our animation complete now we need to hide the editor icons. Again we're dealing with a multi-stage reversed animation. The opacity of the toolbar of buttons will be the first thing to slowly show up when expanding, but also the second piece of the animation. The reason this is starting at <code>.5</code> instead of <code>.7</code> is we want a slight pause before a new animation kicks in. This will also align the fade in of our buttons with expanding and collapsing of the bar.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;const opacityToolbarInterpolate = this.state.animation.interpolate({
+  inputRange: [0, 0.5],
+  outputRange: [0, 1],
+  extrapolate: "clamp",
+});
+
+const toolbarStyles = {
+  opacity: opacityToolbarInterpolate,
+};
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Animate the Write Button Opacity</p>
+
+
+
+<p>Finally we get to the opacity of our write button. When we aren't animating (at 0) we want our button to be visible, but once we hit the <code>50%</code> mark of our animation we should be completely gone because our button bar above will now be visible.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;const opacityButtonInterpolate = this.state.animation.interpolate({
+  inputRange: [0, 0.5],
+  outputRange: [1, 0],
+  extrapolate: "clamp",
+});
+
+const buttonStyles = {
+  opacity: opacityButtonInterpolate,
+};
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Ending</p>
+
+
+
+<p>Sometimes it's easier to start at the end of your animation and work backwards to figure out the appropriate steps to produce the desired start state. Also note that this animation is using width/height transforms. This is generally less performant. If you implement this and are seeing performance issues you would need to fallback to using transforms, and opacity to craft the desired effect.</p>
+
+
+
+
+
+<p><a href="https://snack.expo.io/SJXr1pPBW" rel="nofollow">Live Demo</a>
+<a href="https://gitlab.com/codedaily/reactnativeanimations/tree/writer" rel="nofollow">Code</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

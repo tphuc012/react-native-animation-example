@@ -1,0 +1,72 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>025 Easing Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Easing specifies the rate of change of a parameter over time. Different objects in real life do not travel at a constant speed. 
+In the programming world that just means that over a set period of time the value given to a function will return a different value based upon the formula it's plugged into.</p>
+
+<p>This is why <code>easing</code> is used with <code>Animated.timing</code>. We have a start value, a <code>toValue</code> and a <code>duration</code> of time.</p>
+
+
+
+
+
+<p>To get access to <code>Easing</code> grab it off of <code>react-native</code> import like <code>import { Easing } from "react-native"</code>. All of the available easings can be found here <a href="https://facebook.github.io/react-native/docs/easing.html" rel="nofollow">https://facebook.github.io/react-native/docs/easing.html</a> in the documentation.</p>
+
+
+
+
+
+<p>Bounce</p>
+
+
+
+<p><code>Easing.bounce</code> is one of the few that just takes a specific time. So you can simply pass that as the <code>easing</code> property on an <code>Animated.timing</code> call.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code&gt;Animated.timing(this._animation, {
+  toValue: 1,
+  duration: 500,
+  easing: Easing.bounce
+}).start();
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>You can see the demo of what that pattern would look like by visiting <a href="http://easings.net/#easeInBounce" rel="nofollow">http://easings.net/#easeInBounce</a></p>
+
+
+
+
+
+<p>The Others</p>
+
+
+
+<p>All of the easing functions have their place, and we will touch on when to use an easing and how it will effect your animations when doing the animations. The React Native documentation on <a href="https://facebook.github.io/react-native/docs/easing.html" rel="nofollow">Easing</a> actually does a great job of outlining what is available, and previewing it on the web.</p>
+
+
+
+
+
+<p><a href="https://snack.expo.io/BJwg5zhS-" rel="nofollow">Live Demo</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

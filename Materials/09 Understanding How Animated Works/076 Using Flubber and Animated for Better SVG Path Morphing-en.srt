@@ -1,0 +1,60 @@
+1
+00:00:00,300 --> 00:00:02,250
+Flubber is an amazing SVGA path.
+
+2
+00:00:02,270 --> 00:00:06,510
+Interpolator that aims to have smoother animations in between.
+
+3
+00:00:07,450 --> 00:00:12,280
+Let's take a look at how we can use flubber to animate as CGI pads on Riak native.
+
+4
+00:00:12,280 --> 00:00:18,850
+We have a short path which is a star and we're going to transform it in an animated fashion to a heart.
+
+5
+00:00:18,910 --> 00:00:24,100
+So the first thing we're going to do in our component amount is set up a path and so say Cotts path
+
+6
+00:00:24,430 --> 00:00:30,330
+interpret is equal to interpret which is from the level of a library.
+
+7
+00:00:30,610 --> 00:00:40,880
+It'll take a start path and path and then we'll configure it with maxed segment length of one the lower
+
+8
+00:00:40,880 --> 00:00:43,400
+the number here will produce a smoother animation.
+
+9
+00:00:43,400 --> 00:00:48,450
+However at the sacrifice of performance but we'll just keep it at one and you can play with it.
+
+10
+00:00:48,450 --> 00:00:54,830
+If your animations are not being performant now that we have our interpreter you can set up our listener
+
+11
+00:00:54,830 --> 00:00:58,300
+so is state animation listener.
+
+12
+00:00:59,240 --> 00:01:08,910
+Get our value creator function and then say Konst path is equal to path and interpolate with our value.
+
+13
+00:01:09,820 --> 00:01:16,390
+And we set this up path that native props and we'll update our D with our new path.
+
+14
+00:01:16,480 --> 00:01:22,000
+And now when we refresh our emulator and we kick off our animation you can see that will transform into
+
+15
+00:01:22,000 --> 00:01:25,320
+a heart and then transform back into a star.
+

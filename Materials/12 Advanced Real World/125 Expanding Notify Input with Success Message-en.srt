@@ -1,0 +1,260 @@
+1
+00:00:00,300 --> 00:00:04,950
+Let's dive in and check the state of our application before we start styling it and making it look nice
+
+2
+00:00:05,400 --> 00:00:11,650
+we have an animated value as well as a boolean for success of true and false.
+
+3
+00:00:11,700 --> 00:00:19,040
+We have a handle press and we have a handle send Additionally we have a few conditional inputs.
+
+4
+00:00:19,270 --> 00:00:25,810
+If we're not successful we'll render a text input to surrender the Notify me text.
+
+5
+00:00:25,880 --> 00:00:27,210
+However we are successful.
+
+6
+00:00:27,220 --> 00:00:31,760
+We'll render a thank you message.
+
+7
+00:00:31,790 --> 00:00:37,490
+The first thing you do is create an interpretation on the width so that we can control it expanding.
+
+8
+00:00:37,800 --> 00:00:48,720
+We'll set up a concert with interpolate say this state and it may not interpret our input range.
+
+9
+00:00:48,940 --> 00:00:50,600
+We'll have a few key.
+
+10
+00:00:50,740 --> 00:00:58,990
+We'll have a few values zero point five and one this will give us three steps an output range of 150
+
+11
+00:00:59,290 --> 00:01:01,540
+150 and 300.
+
+12
+00:01:01,750 --> 00:01:04,370
+We'll then also add and extrapolate claim of
+
+13
+00:01:07,220 --> 00:01:15,950
+will then do cartes button wrap style with and then add or with it.
+
+14
+00:01:16,100 --> 00:01:21,320
+You can go ahead and apply that third button wrap refresh.
+
+15
+00:01:21,320 --> 00:01:26,550
+And now we have a default of 150 with on our button.
+
+16
+00:01:26,680 --> 00:01:32,650
+The input is currently visible so we need to adjust it so that it is scaled out of the way said Konst
+
+17
+00:01:33,160 --> 00:01:34,860
+input scale and.
+
+18
+00:01:36,430 --> 00:01:39,480
+Of this state and animate inter-relate
+
+19
+00:01:42,130 --> 00:01:47,180
+input range to zero point five point six.
+
+20
+00:01:47,180 --> 00:02:00,400
+So a three step in our output range of 0 0 and 1 will then set up input scale style which we have a
+
+21
+00:02:00,410 --> 00:02:06,030
+transform of an array with a scale and put our inputs Gaile interpret it in here.
+
+22
+00:02:07,470 --> 00:02:14,650
+Now we can apply that to our interpellation or to our input and now one refresh.
+
+23
+00:02:14,790 --> 00:02:16,060
+You can see that it is scaled.
+
+24
+00:02:16,070 --> 00:02:17,440
+All of our stuff out of the way
+
+25
+00:02:20,320 --> 00:02:26,500
+now we not only need to scale our input but all seem to scale in our center but it's been come up here
+
+26
+00:02:26,560 --> 00:02:32,220
+and create a contest send button and interpolate.
+
+27
+00:02:32,350 --> 00:02:40,140
+It was this that state and a make inter-relate and our input range will be slightly shifted because
+
+28
+00:02:40,140 --> 00:02:47,910
+we want it to animate in after our input scale our input has scaled and so will say input range and
+
+29
+00:02:47,910 --> 00:02:56,780
+we'll set to zero point 6 and 1 in our output range be zero zero and then 1.
+
+30
+00:02:56,820 --> 00:02:58,930
+So it'll come in late.
+
+31
+00:02:58,990 --> 00:03:06,960
+So now we can go ahead and set up our contest send button style and do a scale as well.
+
+32
+00:03:10,850 --> 00:03:16,840
+And then we'll apply that to our Send button.
+
+33
+00:03:16,850 --> 00:03:24,560
+And finally before we can actually see this in action we need to create a scale for our notify me button.
+
+34
+00:03:24,740 --> 00:03:36,380
+So we'll say notice Konst notify text scale and interpolate we'll set up this state and interpolate
+
+35
+00:03:37,430 --> 00:03:42,260
+and this we need to scale out quickly before we scale and anything else will say our input range is
+
+36
+00:03:42,260 --> 00:03:50,180
+a two step of zero 2.5 or output range is 1 to zero and we don't want to scale any further so I will
+
+37
+00:03:50,180 --> 00:03:53,540
+say extrapolate clamp.
+
+38
+00:03:53,780 --> 00:04:04,450
+Now we'll go ahead and set up comments notify text sound and this will also be a skill so it transform
+
+39
+00:04:05,930 --> 00:04:06,650
+scale.
+
+40
+00:04:09,710 --> 00:04:17,980
+Pass this and then we can apply this to our animated view that surrounds our text so he calls high tech
+
+41
+00:04:18,060 --> 00:04:18,930
+style.
+
+42
+00:04:19,260 --> 00:04:25,600
+Let's go to the input scale inter-relate and we will add an extrapolate clamp so that it does not scale
+
+43
+00:04:25,600 --> 00:04:30,820
+beyond blunt one and now we'll go up here and say animated that timing.
+
+44
+00:04:31,080 --> 00:04:39,930
+So this state animate two value of one or duration of 300 milliseconds and then we'll call start.
+
+45
+00:04:40,360 --> 00:04:49,260
+So now when we press this button our input expanded focused and our button scaled in the final scale
+
+46
+00:04:49,260 --> 00:04:55,340
+will need as far I think you message we want it to scale in as everything else is scaling out.
+
+47
+00:04:55,530 --> 00:05:06,660
+So all do is set up of conc think you scale interpolate because this state enemy bullit and with our
+
+48
+00:05:06,660 --> 00:05:19,120
+input range will go from zero to 1 in our output range we'll flip that around and go one to zero.
+
+49
+00:05:19,120 --> 00:05:21,520
+This will cause a reverse effect.
+
+50
+00:05:21,520 --> 00:05:27,420
+So once this is animating backwards from 1 to zero to reset our scale will go from zero to 1 and it
+
+51
+00:05:27,420 --> 00:05:29,800
+will look like our think is animating in.
+
+52
+00:05:30,090 --> 00:05:40,220
+So say Kotz think you text style to transform with a scale or think scale and interpolate.
+
+53
+00:05:40,800 --> 00:05:48,550
+And we will go apply this to I think you textes.
+
+54
+00:05:48,790 --> 00:05:58,040
+Now when we press the send button handle send will be called so let's implement handles send.
+
+55
+00:05:58,120 --> 00:06:03,940
+We need to call this state and say success is true.
+
+56
+00:06:05,890 --> 00:06:08,130
+This will allow our Think New Message to be shown.
+
+57
+00:06:08,130 --> 00:06:13,500
+However it will be scaled out to zero because our animated value is all the way to one at the moment.
+
+58
+00:06:13,490 --> 00:06:20,040
+Then to scale everything out we'll do an animated sequence.
+
+59
+00:06:21,840 --> 00:06:29,690
+And in there we'll say animated timing this does state animate to value of zero.
+
+60
+00:06:30,570 --> 00:06:38,680
+Duration of 300 will also do a delay of animated delay of 5400.
+
+61
+00:06:38,680 --> 00:06:45,700
+Before we toggle everything back MacColl start start takes a function that will be called once this
+
+62
+00:06:45,700 --> 00:06:47,410
+animation is over.
+
+63
+00:06:47,410 --> 00:06:55,320
+And at that point you can then say this Utset state success false to reset everything back to the beginning.
+
+64
+00:06:55,900 --> 00:07:03,890
+So now we refresh click Notify type in an email click send.
+
+65
+00:07:03,890 --> 00:07:07,470
+Everything expands back to nothing and then resets back to the Notify me.
+

@@ -1,0 +1,204 @@
+1
+00:00:00,320 --> 00:00:05,370
+We'll start by putting animated in touch but without feedback from Riak native knows Take a look at
+
+2
+00:00:05,370 --> 00:00:11,130
+how we're going to build our heart a heart will be a singular rapping view with two pieces that will
+
+3
+00:00:11,130 --> 00:00:13,570
+make up each side of the heart.
+
+4
+00:00:13,590 --> 00:00:18,650
+There's a generic Heart-Shaped and then in a left and a right heart piece it's the heart shape is a
+
+5
+00:00:18,660 --> 00:00:24,810
+with a 30 and a height of 45 that's positioned absolutely as a board or top left or radius and a border
+
+6
+00:00:24,840 --> 00:00:29,450
+top right radius which means the top will be rounded but the bottom will be straight.
+
+7
+00:00:29,970 --> 00:00:36,000
+Then for the left piece or the right piece we either rotate it 45 degrees negatively or positively cause
+
+8
+00:00:36,000 --> 00:00:41,310
+them to sit on top of each other to prove this pull out a background color to our left heart.
+
+9
+00:00:42,060 --> 00:00:45,780
+And now interview FRESH who can see that one piece of our heart exists.
+
+10
+00:00:45,920 --> 00:00:52,670
+Now if add the background color of black to the other and refresh and see now that the two pieces are
+
+11
+00:00:52,670 --> 00:00:57,650
+sitting on top of each other let's remove our background color and take a look at how we're going to
+
+12
+00:00:57,650 --> 00:01:01,370
+create a heart that looks empty because of how we've built this heart.
+
+13
+00:01:01,370 --> 00:01:04,470
+We can't use the normal border style to create an outline.
+
+14
+00:01:04,700 --> 00:01:11,540
+So instead what we'll do is we'll create another heart that has two pieces of heart that are white and
+
+15
+00:01:11,540 --> 00:01:16,940
+will absolutely position it and scale at 2.9 and you can see that here in our styles that we've skilled
+
+16
+00:01:16,940 --> 00:01:25,060
+at 2.9 and then we set them back on color to white when then we'll render it on top of and inside of
+
+17
+00:01:25,120 --> 00:01:26,350
+our current heart.
+
+18
+00:01:26,680 --> 00:01:31,500
+And that way it will look like there is a border so we'll render that.
+
+19
+00:01:31,660 --> 00:01:33,260
+Remove this Phil style.
+
+20
+00:01:33,950 --> 00:01:40,170
+And when we refresh you can see that there's a gray heart on the outside with a point nine scale white
+
+21
+00:01:40,190 --> 00:01:42,020
+heart on the inside.
+
+22
+00:01:42,020 --> 00:01:46,460
+Now that we have our heart rendering we can go back to our index and start setting up our bouncy heart.
+
+23
+00:01:46,520 --> 00:01:52,580
+The first thing we'll do is set up our state will create this state and will equal an object.
+
+24
+00:01:52,610 --> 00:01:56,140
+I liked to keep to keep track of whether or not we've pressed the button or not.
+
+25
+00:01:57,300 --> 00:02:03,180
+At a scale animation I will say a new element of value that we default to zero and then will create
+
+26
+00:02:03,240 --> 00:02:06,890
+an array of animations where all default them to zero.
+
+27
+00:02:06,900 --> 00:02:12,750
+And these will be the animations for the heart so will copy and paste this will create six different
+
+28
+00:02:12,750 --> 00:02:13,520
+parts.
+
+29
+00:02:14,560 --> 00:02:19,270
+Now we'll set up a trigger like function that will be called when our button is pressed and will also
+
+30
+00:02:19,270 --> 00:02:21,460
+bind it to this in our constructor.
+
+31
+00:02:22,080 --> 00:02:29,400
+Instead of our trigger like we'll call this that set state and Tugger like by saying not this dot state
+
+32
+00:02:29,800 --> 00:02:38,970
+DOT liked Now narrow scroll down to our heart and we'll wrap it in a touchable without feedback as well.
+
+33
+00:02:39,210 --> 00:02:48,450
+We'll add an animated view and we'll put this inside of the animated view at or on press which will
+
+34
+00:02:48,450 --> 00:02:50,880
+call this stuck trigger like.
+
+35
+00:02:51,210 --> 00:02:59,360
+And also to our heartwood filled equals this state liked now for your fresh and we go later and we press
+
+36
+00:02:59,360 --> 00:03:02,130
+the heart we can trigger it being filled in.
+
+37
+00:03:02,180 --> 00:03:03,570
+We want to add feedback to our heart.
+
+38
+00:03:03,620 --> 00:03:06,320
+So we'll say Konst bouncy heart
+
+39
+00:03:09,190 --> 00:03:14,740
+equals this state that scale doesn't interpolate which is a function that takes an object to the input
+
+40
+00:03:14,740 --> 00:03:22,930
+range is 0 1 2 in our output range is one point a one.
+
+41
+00:03:22,970 --> 00:03:29,600
+Now we'll set up our button style so say Konst heart button style equals an object and we'll say transform
+
+42
+00:03:30,680 --> 00:03:34,180
+an array at the scale transform.
+
+43
+00:03:34,230 --> 00:03:42,860
+Add in our bouncy heart we'll apply that heart button style to our animated these style equals heart
+
+44
+00:03:42,860 --> 00:03:44,650
+button style.
+
+45
+00:03:44,690 --> 00:03:52,530
+Now up in our trigger like we'll call animated spring and we'll do it on our state that scale animated
+
+46
+00:03:52,530 --> 00:04:00,180
+value will take a configuration object will say to value of two with a friction of three.
+
+47
+00:04:00,420 --> 00:04:07,720
+Then McCalls start on our spring animation we'll add a callback function to our start call which we
+
+48
+00:04:07,730 --> 00:04:13,540
+called when the animation is complete and we'll say this state that scale set value and we'll set it
+
+49
+00:04:13,540 --> 00:04:18,130
+back to zero so that we can reach spring the estimation if the button is pressed.
+
+50
+00:04:18,150 --> 00:04:22,900
+So now for a refresher emulator you press our heart we can see that it springs.
+
+51
+00:04:23,230 --> 00:04:25,380
+And then when we unpressed it it springs again.
+

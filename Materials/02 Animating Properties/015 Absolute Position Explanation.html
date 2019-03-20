@@ -1,0 +1,90 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>015 Absolute Position Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Animating elements that are absolute positioned is very similar to animating elements via <code>translateX</code> and <code>translateY</code>. The only difference is that when animating absolutely positioned elements they will effect layout. This is very apparent when using child elements while animating the outside view.</p>
+
+<p>Lets look at how it would effect text.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;export default class animations extends Component {
+  state = {
+    animation: new Animated.Value(0),
+  }
+
+  componentDidMount() {
+    Animated.timing(this.state.animation, {
+      toValue: 300,
+      duration: 1000,
+    }).start();
+  }
+
+  render() {
+    const boxStyle = {
+      right: this.state.animation
+    }
+
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;Animated.View style={[styles.box, boxStyle]}&gt;
+          &lt;Text&gt;
+          This is long repeated text. This is long repeated text. This is long repeated text. This is long repeated text. This is long repeated text.
+          &lt;/Text&gt;
+        &lt;/Animated.View&gt;
+      &lt;/View&gt;
+    );
+
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  box: {
+    height: 100,
+    position: "absolute",
+    left: 0,
+    top: 250,
+    backgroundColor: "tomato",
+  },
+});
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>We can see that we first start out by stretching all the way across the screen. Then we animate away from the right side of the screen and all of the children as we animate will be reflowed.</p>
+
+
+
+
+
+<p><img alt="" src="https://images.codedaily.io/animations/AbsoluteWithText.gif"></p>
+
+
+
+
+
+<p><a href="https://snack.expo.io/Sk57aPKNW" rel="nofollow">Live Demo</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

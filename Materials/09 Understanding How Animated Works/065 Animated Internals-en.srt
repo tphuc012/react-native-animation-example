@@ -1,0 +1,332 @@
+1
+00:00:01,080 --> 00:00:06,620
+Let's start by going through the animated implementation Let's start with the outermost API.
+
+2
+00:00:06,740 --> 00:00:14,380
+The animated view that text image and scroll view as you can see here we import animated implementation.
+
+3
+00:00:14,460 --> 00:00:21,840
+We import our series of views text and image and then we will then call create animated component on
+
+4
+00:00:21,840 --> 00:00:26,430
+each of those and then export our animated object.
+
+5
+00:00:26,500 --> 00:00:30,110
+So now that you can see everything goes through create animated component.
+
+6
+00:00:30,130 --> 00:00:33,590
+Let's go take a look at what create animated component does.
+
+7
+00:00:34,630 --> 00:00:36,730
+Here we have create animated component.
+
+8
+00:00:36,790 --> 00:00:43,900
+You can see that it is a function that takes a component and then returns a new component.
+
+9
+00:00:44,830 --> 00:00:46,390
+The component has a lot on it.
+
+10
+00:00:46,390 --> 00:00:49,840
+In our constructor we can have b c we have a set component ref.
+
+11
+00:00:49,840 --> 00:00:55,580
+So we know we'll be accessing the rest of the component that we pass in if we take a look at component
+
+12
+00:00:55,580 --> 00:00:58,340
+will mount we see that it calls attach props.
+
+13
+00:00:58,610 --> 00:01:03,980
+When we when we mount we can see that we attach native events and do some things when we have a native
+
+14
+00:01:03,980 --> 00:01:05,160
+animation.
+
+15
+00:01:05,480 --> 00:01:12,010
+And then additionally when we unmount we can see we detach and remove any sort of negative events.
+
+16
+00:01:12,020 --> 00:01:17,410
+The key here is actually in the attach props that happens in our component will mount.
+
+17
+00:01:17,420 --> 00:01:23,650
+So let's take a look at attach props and see that we first define a callback and that callback will
+
+18
+00:01:23,740 --> 00:01:29,660
+access this component which is set from the ref and see if it has a set of props.
+
+19
+00:01:29,830 --> 00:01:32,750
+If it does then we will execute a particular flow.
+
+20
+00:01:32,890 --> 00:01:37,090
+However if it does not then we will trigger a force update.
+
+21
+00:01:37,100 --> 00:01:42,980
+So in this callback is called We can see that we get a component called serenader props.
+
+22
+00:01:42,980 --> 00:01:46,060
+And then with our props animated that we're about to create.
+
+23
+00:01:46,280 --> 00:01:49,610
+We will then say get the animated value for it.
+
+24
+00:01:49,710 --> 00:01:56,870
+Now this props animated is a new animated props that receives the current props for the next props as
+
+25
+00:01:56,870 --> 00:01:59,500
+well as the callback we created here.
+
+26
+00:02:00,750 --> 00:02:04,660
+We also have saved off the old props animated here.
+
+27
+00:02:05,470 --> 00:02:09,500
+And then called detach on it so that way we don't have any memory leaks.
+
+28
+00:02:09,570 --> 00:02:15,040
+I can put a wall mount called attach props and then also what we'll do is call attach props with our
+
+29
+00:02:15,040 --> 00:02:23,650
+component will receive props and then in our render the props to animated that we have set up we will
+
+30
+00:02:23,650 --> 00:02:27,980
+then spread in as our props rather than spreading in this type props.
+
+31
+00:02:28,060 --> 00:02:32,460
+We have this interface that we then spread our props and we also get our breath.
+
+32
+00:02:32,460 --> 00:02:38,290
+Here you can see and then some explanation about why or why or why we don't use collapsable for needed
+
+33
+00:02:38,370 --> 00:02:39,030
+use.
+
+34
+00:02:39,340 --> 00:02:45,610
+And then also set component ref and then also get know that we can be called when we need to get access
+
+35
+00:02:45,610 --> 00:02:50,610
+to the internal ref of our component to do measurers or anything like that.
+
+36
+00:02:50,620 --> 00:02:57,880
+Now all of this is driven based upon animated props and some call back that is passed to it and then
+
+37
+00:02:57,880 --> 00:03:01,630
+called that then calls suddenly to prop's on it.
+
+38
+00:03:01,840 --> 00:03:07,410
+So let's take a look at animated props animated props has a constructor here that takes some props.
+
+39
+00:03:07,480 --> 00:03:13,240
+If we have props style which if we had a style object then we would create a new animated style and
+
+40
+00:03:13,240 --> 00:03:14,970
+pass in our Propst style.
+
+41
+00:03:15,760 --> 00:03:22,800
+And then at some point whenever we need to get access to it we have a value call.
+
+42
+00:03:22,810 --> 00:03:30,400
+So back in our animated implementation with that create animated component we can see that in our callback
+
+43
+00:03:31,280 --> 00:03:37,270
+all we're doing is calling get animated value for our call it is set native props whoever in our render
+
+44
+00:03:37,270 --> 00:03:38,520
+recalling get value.
+
+45
+00:03:38,590 --> 00:03:45,150
+The reason why this is is that if an animation is happening we need to call get value because of a set
+
+46
+00:03:45,160 --> 00:03:46,570
+state then happens.
+
+47
+00:03:46,570 --> 00:03:49,300
+We need all of the props to pass over.
+
+48
+00:03:49,300 --> 00:03:53,810
+Otherwise they would be blown away because they'll be all updated on the native side.
+
+49
+00:03:53,950 --> 00:03:59,380
+However when we're just calling set native props all we need to do is send over the values that we want
+
+50
+00:03:59,380 --> 00:04:00,210
+to change.
+
+51
+00:04:00,220 --> 00:04:03,390
+So those are just the animated values that are actually changing.
+
+52
+00:04:03,400 --> 00:04:10,400
+So back in our animated implementation for our animated props we see we just loop over.
+
+53
+00:04:10,420 --> 00:04:16,660
+This is for all of them and if they are animated values or if they're an enemy event then we do special
+
+54
+00:04:16,660 --> 00:04:20,200
+things by calling value on that animated value.
+
+55
+00:04:20,260 --> 00:04:23,790
+Otherwise we just rebuild our props with key and value.
+
+56
+00:04:23,800 --> 00:04:30,220
+And then for the animated value we only look for instance of animated and get our animated value for
+
+57
+00:04:30,220 --> 00:04:34,210
+just the particular props that are animated that need to change at that particular time.
+
+58
+00:04:35,540 --> 00:04:39,080
+Now there's a lot of calls to attach and detach.
+
+59
+00:04:39,080 --> 00:04:45,650
+And let's take a look at what happens when we say set value on a normal animated value without going
+
+60
+00:04:45,650 --> 00:04:52,610
+through animated timing or animated spring feel like here this is set value and this is on an animated
+
+61
+00:04:52,610 --> 00:04:53,090
+value.
+
+62
+00:04:53,120 --> 00:04:59,090
+So this would be animated value that we usually use when set value is called we stop any animations
+
+63
+00:04:59,090 --> 00:05:05,000
+that are happening and call update value with the value that we've passed in.
+
+64
+00:05:05,010 --> 00:05:08,600
+So now let's go look at Update value of value.
+
+65
+00:05:08,820 --> 00:05:15,100
+Then we'll take the value assigned to the animated value and then flush the value.
+
+66
+00:05:16,360 --> 00:05:26,770
+But flush does is find the animated styles and then eventually we will call update on the animated style.
+
+67
+00:05:26,780 --> 00:05:28,030
+Now we are calling update.
+
+68
+00:05:28,040 --> 00:05:33,380
+And let's go back and look at our animated implementation and we can see that we have an update here
+
+69
+00:05:34,280 --> 00:05:38,200
+on our animated props that we have initiated.
+
+70
+00:05:38,210 --> 00:05:45,030
+So this is the animated props that we passed in from our create animated component right here.
+
+71
+00:05:45,080 --> 00:05:51,190
+So that's the callback passed into our animated props are animated props just got up called.
+
+72
+00:05:51,200 --> 00:05:58,190
+We call this callback that we have saved off and now this execute which says hey by the way an animated
+
+73
+00:05:58,190 --> 00:06:00,330
+value has been updated.
+
+74
+00:06:00,440 --> 00:06:02,050
+So now we have our callback.
+
+75
+00:06:02,330 --> 00:06:08,150
+If we have set native props which we do we will then call this some components that need props with
+
+76
+00:06:08,390 --> 00:06:11,320
+all of the animated values in case they've all changed.
+
+77
+00:06:11,330 --> 00:06:17,860
+So now we're just sending the new animated values over so that in a nutshell is how it works we create
+
+78
+00:06:17,890 --> 00:06:23,530
+a new enemy the component that sits in between and intercepts all of the props.
+
+79
+00:06:23,530 --> 00:06:29,620
+And any time we pass in an animated value that changes then a callback is triggered and set native props
+
+80
+00:06:29,620 --> 00:06:31,800
+will then send all the new values over.
+
+81
+00:06:31,840 --> 00:06:37,930
+However any time that state happens we just get all the new values and spread them on and we continue
+
+82
+00:06:37,930 --> 00:06:40,060
+on like we're using just props.
+
+83
+00:06:40,090 --> 00:06:46,000
+Even though we have sat in between and interfered and adjusted all the values with the animated values.
+

@@ -1,0 +1,1280 @@
+1
+00:00:00,700 --> 00:00:07,050
+I'm going to show you a technique to do shared element transition using with height and absolute positioning.
+
+2
+00:00:07,090 --> 00:00:13,810
+If you take a look at some of the other shared elements on mobile a lot of them will use scale and translate
+
+3
+00:00:13,840 --> 00:00:20,710
+and it may not look as nice but that is a fact of performance so we'll take a look at one method.
+
+4
+00:00:20,710 --> 00:00:26,500
+However there are other methods that she could potentially use if you were seeing performance issues.
+
+5
+00:00:26,560 --> 00:00:31,400
+So I went and pulled a bunch of images from an splash and I'm importing them here.
+
+6
+00:00:31,420 --> 00:00:36,760
+I did a lot of resizing on them so that they would be performing enough to be shown in this grid view
+
+7
+00:00:37,030 --> 00:00:39,230
+as well as in the expanded view.
+
+8
+00:00:39,250 --> 00:00:40,710
+And they look just fine.
+
+9
+00:00:41,170 --> 00:00:50,540
+So we're going to go add a scroll view for our photo grid scroll view give it a style of stylized container
+
+10
+00:00:50,550 --> 00:00:59,460
+so it takes up all the available space and then it can take our images and just map over them.
+
+11
+00:00:59,460 --> 00:01:00,810
+Now these aren't on state.
+
+12
+00:01:00,810 --> 00:01:07,560
+You could do them on state if you wanted to but I'm just mapping over the images that I've imported.
+
+13
+00:01:07,620 --> 00:01:12,460
+If you were dynamically adding images and needing a revenger to happen then you would want them to be
+
+14
+00:01:12,460 --> 00:01:13,970
+on state.
+
+15
+00:01:14,030 --> 00:01:17,970
+So we're going to return a touchable without feedback here.
+
+16
+00:01:21,810 --> 00:01:24,300
+And then inside of here we're going to render an image
+
+17
+00:01:27,890 --> 00:01:29,280
+and give it the source
+
+18
+00:01:32,040 --> 00:01:33,780
+and then resize mode.
+
+19
+00:01:35,210 --> 00:01:37,190
+Equals cover.
+
+20
+00:01:37,220 --> 00:01:45,140
+Now before we refresh these We're going to be the size of the image and we want them to be grid sized
+
+21
+00:01:45,200 --> 00:01:52,790
+images so we're going to give it a style and give it styles a grid image and then also we could add
+
+22
+00:01:52,790 --> 00:01:57,860
+a content container style here on our skirl view but we'll just add another view inside here and say
+
+23
+00:01:57,860 --> 00:01:59,750
+style equals styles.
+
+24
+00:01:59,870 --> 00:02:07,020
+Grid and just wrap all of our view interviews scroll view content inside of it.
+
+25
+00:02:07,020 --> 00:02:10,010
+So for our grid image we'll do that one first.
+
+26
+00:02:10,200 --> 00:02:16,810
+We'll set up great image and we want our our images to be 3 per row.
+
+27
+00:02:16,950 --> 00:02:19,740
+Sordidness say with is 33 percent.
+
+28
+00:02:19,740 --> 00:02:22,470
+And then we'll just give it an arbitrary height of 150.
+
+29
+00:02:22,500 --> 00:02:24,660
+You want to calculate this based upon screen size.
+
+30
+00:02:24,680 --> 00:02:27,940
+But this one will work just fine and free fresh.
+
+31
+00:02:27,950 --> 00:02:33,750
+You can see that this is not rendering how we want it to render its rendering them the correct size
+
+32
+00:02:33,780 --> 00:02:36,600
+but not in the correct format.
+
+33
+00:02:36,600 --> 00:02:45,330
+So for our grid which is that wrapping view in our scroll view we need to say flex direction row and
+
+34
+00:02:45,330 --> 00:02:51,090
+if we do that we can refresh and we can see that now it's overflowing off the screen.
+
+35
+00:02:51,210 --> 00:03:00,050
+So we're going to need to use the wrap property and say flex wrap and wrap and now it will wrap everything
+
+36
+00:03:00,170 --> 00:03:06,780
+correctly in a row fashion and wrap once it exceeds the row with.
+
+37
+00:03:06,920 --> 00:03:15,410
+Now for this air here because we aren't actually carrying about we don't have any particular identity
+
+38
+00:03:15,410 --> 00:03:19,670
+for each of these images just in say key equals index.
+
+39
+00:03:19,670 --> 00:03:23,840
+They aren't going to be dynamic so this will be this will be fine for our purposes.
+
+40
+00:03:25,220 --> 00:03:30,480
+Now before we move on from the image we need to understand the concept behind what we're trying to do.
+
+41
+00:03:30,530 --> 00:03:39,150
+So in the reac native world you can measure these items you can measure any element that you want and
+
+42
+00:03:39,180 --> 00:03:44,800
+it will return the with the height and the x and y coordinates of it.
+
+43
+00:03:45,210 --> 00:03:52,740
+And when what we're going to do in terms of concepts is when you press on this image we're going to
+
+44
+00:03:52,740 --> 00:03:57,570
+dynamically measure it and receive a callback with its positioning.
+
+45
+00:03:57,570 --> 00:04:05,580
+Then we're going to get the measurements of this top view where the image will be Emyr going to set
+
+46
+00:04:06,030 --> 00:04:10,860
+the image properties the width height and the coordinates of that image.
+
+47
+00:04:10,860 --> 00:04:14,810
+That's going to be here to be the image that we pressed.
+
+48
+00:04:14,850 --> 00:04:21,450
+So we're going to need to get access to the ref of each of these images so that we can get the coordinates
+
+49
+00:04:21,480 --> 00:04:25,140
+and the size so that we can actually do a image swap.
+
+50
+00:04:25,170 --> 00:04:31,440
+This one would be hit in this one appear will be met will set its size is in its coordinates to be right
+
+51
+00:04:31,440 --> 00:04:34,890
+here and then we can animate it to its actual position.
+
+52
+00:04:34,920 --> 00:04:43,140
+And so first let's go create a component will mount lifecycle method and say this dot grid images equals
+
+53
+00:04:43,170 --> 00:04:47,430
+an object so that we can save off all of the references.
+
+54
+00:04:47,430 --> 00:04:54,960
+And then for each of these images we'll say ref an image and then we'll just say this dot grid images
+
+55
+00:04:55,200 --> 00:05:02,180
+and save everything off based upon the index equals image Additionally we're going to need to set up
+
+56
+00:05:02,210 --> 00:05:10,010
+a some sort of on press for our touch without feedback so we'll call it handle open image
+
+57
+00:05:13,150 --> 00:05:19,000
+which will receive the index of the image that was clicked so we can then map it back to our grid images
+
+58
+00:05:19,690 --> 00:05:27,570
+and then here will say on press and then call this handle open image with our index.
+
+59
+00:05:27,600 --> 00:05:33,660
+And so now now we're set up to receive whatever images clicked on and then do our measurements and didn't
+
+60
+00:05:33,830 --> 00:05:35,760
+then do our transition.
+
+61
+00:05:36,050 --> 00:05:41,400
+Now that we have our scroll view grid view set up we need something to transition to.
+
+62
+00:05:41,450 --> 00:05:43,130
+That's what the shared elements is all about.
+
+63
+00:05:43,130 --> 00:05:47,680
+You have a particular view and then you have a second view that you transition to.
+
+64
+00:05:47,870 --> 00:05:52,170
+So we're going to set up a view below our scroll view
+
+65
+00:05:55,500 --> 00:06:01,890
+and we're going to use our pointer events techniques are going to say style equals style sheet not absolute
+
+66
+00:06:01,890 --> 00:06:02,660
+fill.
+
+67
+00:06:03,150 --> 00:06:10,650
+And then we also need to toggle our pointer events and for our pointer events we will drive it off of
+
+68
+00:06:10,650 --> 00:06:13,050
+whether or not we have an active image or not.
+
+69
+00:06:13,050 --> 00:06:22,160
+So I'll say this that state that active image and say auto or none.
+
+70
+00:06:22,320 --> 00:06:24,440
+And then we are going to set up our content.
+
+71
+00:06:24,450 --> 00:06:32,170
+So we're going to say view here at the top our animated image will be in here.
+
+72
+00:06:37,350 --> 00:06:42,480
+And then our content will be done here which will be an animated view so we can kind of transition it
+
+73
+00:06:42,930 --> 00:06:45,510
+in once the image is selected.
+
+74
+00:06:47,800 --> 00:06:54,450
+For our content I'm just going to paste in a bunch of content and that way we don't have to write out
+
+75
+00:06:54,450 --> 00:07:00,450
+warm up some it's just going to be generic but this could be controlled by you or whatever image content
+
+76
+00:07:00,450 --> 00:07:01,900
+that you have to display.
+
+77
+00:07:03,090 --> 00:07:05,840
+And now we can get to actually styling this.
+
+78
+00:07:05,970 --> 00:07:09,710
+So there's a few things that we need to take care of first.
+
+79
+00:07:09,870 --> 00:07:19,160
+So the first one will be the style for our top content sociate style equals styles top content.
+
+80
+00:07:19,410 --> 00:07:25,560
+And then another crucial piece to this is that because we're going to be adjusting our animated image
+
+81
+00:07:25,610 --> 00:07:33,330
+I mean I want it to appear here instantly but we're going to do is get the ref of the available space.
+
+82
+00:07:33,330 --> 00:07:39,430
+So the view here that we're not going to animate will be taking up the space that we want to occupy
+
+83
+00:07:39,640 --> 00:07:40,720
+here.
+
+84
+00:07:40,860 --> 00:07:45,390
+And so when we do our measurements will actually measure this rapping view which we wanted to be the
+
+85
+00:07:45,390 --> 00:07:48,410
+same this image to be covering this.
+
+86
+00:07:48,690 --> 00:07:53,370
+And so that is a way that we can actually adjust our image but still get accurate measurements of the
+
+87
+00:07:53,370 --> 00:07:55,330
+space that we want to occupy.
+
+88
+00:07:55,620 --> 00:08:03,930
+So we're just going to say rough the image and this dot view image equals image and we'll just continue
+
+89
+00:08:03,930 --> 00:08:05,540
+to reference that as the image.
+
+90
+00:08:05,550 --> 00:08:08,570
+But it's actually going to be the container wrapping our image.
+
+91
+00:08:08,970 --> 00:08:11,440
+And now we're going to set up our animated image.
+
+92
+00:08:11,460 --> 00:08:15,560
+We're going to say key equals this state active image.
+
+93
+00:08:15,690 --> 00:08:19,040
+That way it'll just kind of clear out the cache every time we toggle.
+
+94
+00:08:19,040 --> 00:08:25,800
+Having an active image and an inactive image of the source to just be this state that active image.
+
+95
+00:08:25,800 --> 00:08:31,150
+So when we select one of these we'll just put whichever image it is on our state and then we'll say
+
+96
+00:08:31,150 --> 00:08:33,210
+resize mode equals cover.
+
+97
+00:08:33,210 --> 00:08:39,990
+This is actually a crucial bit if we want our animations to look smooth in terms of animating from one
+
+98
+00:08:39,990 --> 00:08:42,810
+particular scenario to the second scenario.
+
+99
+00:08:42,870 --> 00:08:48,360
+We either have a matching resize modes so we have a resize mode of cover on our image here and or resize
+
+100
+00:08:48,360 --> 00:08:51,390
+mode of image on our image here.
+
+101
+00:08:51,390 --> 00:08:57,660
+And that way they'll be a smooth transition and then we'll say style equals an array and we'll say styles
+
+102
+00:08:57,870 --> 00:09:01,740
+view image so we can style that.
+
+103
+00:09:01,900 --> 00:09:08,840
+And finally done here we'll add some styles to our content so a style style stot content.
+
+104
+00:09:09,070 --> 00:09:14,910
+And now we can go and style the top content or view image and our content down here.
+
+105
+00:09:15,730 --> 00:09:19,830
+Now we can apply our styling for those styles that we built there.
+
+106
+00:09:20,020 --> 00:09:25,840
+So we're going to say first our top content which will be the container that we're measuring So we're
+
+107
+00:09:25,840 --> 00:09:33,080
+going to say it's flex 1 then for our regular content we're going to say it's Flex 2 with a background
+
+108
+00:09:33,680 --> 00:09:39,350
+color of white and that means that this will take up some space here and this will take up twice as
+
+109
+00:09:39,350 --> 00:09:41,370
+much space down here.
+
+110
+00:09:41,900 --> 00:09:48,500
+And then for our view image because we'll be wanting it to cover and then manipulate will be manipulated
+
+111
+00:09:48,590 --> 00:09:50,540
+with height and the top and left.
+
+112
+00:09:50,540 --> 00:10:04,730
+We're just going to say WITHNALL height no position absolute and then top zero and left zero and these
+
+113
+00:10:04,730 --> 00:10:11,780
+will all get overwritten when we actually do our animation now before we go and we refresh let's add
+
+114
+00:10:11,780 --> 00:10:17,810
+state and say active image is just NULL from the beginning.
+
+115
+00:10:17,900 --> 00:10:22,850
+That way when we refresh it won't it all references stay and there will be an object there for us.
+
+116
+00:10:22,850 --> 00:10:24,010
+So now we refresh.
+
+117
+00:10:24,200 --> 00:10:29,080
+You can see that we have our container taking up the top available spacebar image should be.
+
+118
+00:10:29,330 --> 00:10:35,970
+And then we have our styling or our content down here taking up twice as much space.
+
+119
+00:10:35,990 --> 00:10:44,180
+Now if you feel so inclined we can go at our title style and just say font size 28 refresh and now we
+
+120
+00:10:44,180 --> 00:10:47,070
+have a bigger title there.
+
+121
+00:10:47,090 --> 00:10:50,400
+Now you'll notice that we are rendering this over the top.
+
+122
+00:10:50,450 --> 00:10:58,200
+However we already added our pointer events technique and because we said that our active image is no.
+
+123
+00:10:58,550 --> 00:11:04,000
+We don't have an active image that means all touch events will be ignored on this covering view.
+
+124
+00:11:04,010 --> 00:11:08,210
+So yes it's still a rendering but it won't accept any of its And we can prove that by just pressing
+
+125
+00:11:08,210 --> 00:11:14,990
+and scrolling you see all all such events are passing through to the content behind it which is our
+
+126
+00:11:14,990 --> 00:11:18,060
+scroll view and it allows us to scroll.
+
+127
+00:11:18,100 --> 00:11:23,440
+Now what that also means is that when we press on this image here this touch without feedback will fire
+
+128
+00:11:24,040 --> 00:11:25,660
+and go to our handle open image.
+
+129
+00:11:25,660 --> 00:11:34,540
+So that means we can start crafting the animation for our our shared element transition and before we
+
+130
+00:11:34,540 --> 00:11:40,420
+do that we need some animations some intermediate values to animate and so if we break this down we're
+
+131
+00:11:40,420 --> 00:11:46,090
+going to need a couple of different things because we're animating the width and height of the image
+
+132
+00:11:46,660 --> 00:11:49,720
+as well as the absolute position of our image.
+
+133
+00:11:49,720 --> 00:11:54,670
+We're going to need two different animated value ex-wives.
+
+134
+00:11:54,670 --> 00:11:59,860
+Now we could create an animated value for width and height but we're just going to use estimated value
+
+135
+00:11:59,860 --> 00:12:03,500
+x y because it's already a two value system.
+
+136
+00:12:03,820 --> 00:12:11,000
+And then also we could do an interpolation on this down here based upon the Y positioning.
+
+137
+00:12:11,200 --> 00:12:17,560
+But we're just going to do a separate animated value that we control and we'll do all these other animated
+
+138
+00:12:17,560 --> 00:12:22,150
+Vout animated transitions in sequence with the transition for this one.
+
+139
+00:12:22,150 --> 00:12:28,720
+So that means that we need to set up three animated values one for size would be with height which would
+
+140
+00:12:28,720 --> 00:12:37,930
+say is animated value x y 1:04 position which is another animated value x y and then one just general
+
+141
+00:12:38,020 --> 00:12:45,830
+animation and we'll initialize our animation with the value of 0.
+
+142
+00:12:45,840 --> 00:12:51,080
+So the first thing we can do is get this content out of the way so we're going to do it translate on
+
+143
+00:12:51,090 --> 00:12:51,570
+it.
+
+144
+00:12:51,570 --> 00:12:56,500
+So it kind of slides up when we select our image and then also in opacity on it.
+
+145
+00:12:56,730 --> 00:13:07,680
+So in our render we can say Konst animated content translate equal state animation does interpret our
+
+146
+00:13:07,810 --> 00:13:12,930
+input range of zero to 1 and our output range will move 300 down.
+
+147
+00:13:12,940 --> 00:13:22,540
+And then when it's active it won't be translated at all and we can then build our Konst animated content
+
+148
+00:13:22,540 --> 00:13:33,920
+styles and say opacity is just going to be this that state animation and then do our transform and translate
+
+149
+00:13:34,540 --> 00:13:40,420
+y will be animated content translate.
+
+150
+00:13:40,440 --> 00:13:47,970
+Now we can take this animated content styles come past into our animated content and when we refresh
+
+151
+00:13:48,090 --> 00:13:51,050
+we can see that our animation is gone.
+
+152
+00:13:51,060 --> 00:13:55,380
+Our content is gone because of the way we've set up our animations.
+
+153
+00:13:55,630 --> 00:14:02,410
+Now that we have our content out of the way it's ready to start doing the transition for our animated
+
+154
+00:14:02,440 --> 00:14:03,880
+image shared element.
+
+155
+00:14:04,090 --> 00:14:09,670
+So let's come up here to our handle open image and the first thing that we need to do is get access
+
+156
+00:14:09,670 --> 00:14:12,640
+to the ref so we can call measure on it.
+
+157
+00:14:12,700 --> 00:14:23,190
+Of say this dot create images index measure and that will receive a callback and give us some values.
+
+158
+00:14:23,180 --> 00:14:31,930
+The first one will be X Y then with height page X and Page Y and we care about with high paychecks and
+
+159
+00:14:31,970 --> 00:14:40,880
+Page y now because we wouldn't need our position later because once this is open we need to animate
+
+160
+00:14:40,880 --> 00:14:42,940
+it back to its position.
+
+161
+00:14:43,250 --> 00:14:46,680
+So what that means is that we need to save off our X..
+
+162
+00:14:46,880 --> 00:14:58,570
+Do you go to page X this dot y equals page Y and then our with and our height.
+
+163
+00:14:58,850 --> 00:15:03,320
+Otherwise we'd need to measure things again so we'll just save off the location of it as long as it
+
+164
+00:15:03,320 --> 00:15:05,390
+doesn't change.
+
+165
+00:15:05,480 --> 00:15:12,710
+And then because our concept is that we want to get these measurements and then swap out the active
+
+166
+00:15:12,710 --> 00:15:16,570
+image that's going to be here and have it have the same dimensions.
+
+167
+00:15:16,570 --> 00:15:22,640
+But we're going to be piping our size and position into that image that's up here and so we can just
+
+168
+00:15:22,640 --> 00:15:31,280
+to a set value so this set up position does set value and will say x is equal to our page X and R Y
+
+169
+00:15:31,280 --> 00:15:35,150
+is equal to or page Y and then the same goes for our size.
+
+170
+00:15:35,150 --> 00:15:43,620
+We can say this upstaters size value X will just be r with and y will be our height.
+
+171
+00:15:43,800 --> 00:15:50,810
+And so now we're ready to swap out the active image from null to set our image so we can say this top
+
+172
+00:15:50,840 --> 00:16:00,250
+set state and pass our interactive image the images index and we'll also save off the active index and
+
+173
+00:16:00,250 --> 00:16:01,600
+just pass an index here.
+
+174
+00:16:03,320 --> 00:16:07,700
+Even though we're setting this we haven't actually built the styles yet so we should actually go build
+
+175
+00:16:07,700 --> 00:16:10,810
+those styles before we continue on so.
+
+176
+00:16:10,810 --> 00:16:14,420
+Down here in our render we're going to set up two styles.
+
+177
+00:16:14,420 --> 00:16:22,820
+One will be our active image style and the second will be controlling the opacity on our grid image.
+
+178
+00:16:22,820 --> 00:16:27,740
+So the reason we needed the active index is because we need to know which image we wanted to hide.
+
+179
+00:16:28,010 --> 00:16:29,980
+So first let's set up our active image style.
+
+180
+00:16:29,980 --> 00:16:38,900
+We're going to say with this state that size X and our height of this state DOT sized Y and then our
+
+181
+00:16:38,900 --> 00:16:51,840
+top the state DOT position dot X or Y I should say Y and then left this state up position dot X and
+
+182
+00:16:51,840 --> 00:16:57,580
+then we'll set up our active index style so conc active index style.
+
+183
+00:16:58,050 --> 00:17:04,340
+So you go to opacity and animate this because you want it to be instance we'll say this dot state that
+
+184
+00:17:04,380 --> 00:17:06,170
+active image.
+
+185
+00:17:06,170 --> 00:17:08,210
+If we have one will say zero.
+
+186
+00:17:08,220 --> 00:17:17,440
+If not it will be 1 and with this we can then go pass it into our image so we're going to say Konst
+
+187
+00:17:17,770 --> 00:17:28,660
+style is equal to index and if our index is equal to this that state that active index then we're going
+
+188
+00:17:28,660 --> 00:17:32,140
+to say active index style which is hiding our opacity.
+
+189
+00:17:32,170 --> 00:17:39,180
+Otherwise we'll say it's undefined and we can just pass that into our image.
+
+190
+00:17:40,950 --> 00:17:46,860
+So now if we refresh and we press on one of these we'll see it disappear and then we can replace it
+
+191
+00:17:46,860 --> 00:17:47,600
+with our image.
+
+192
+00:17:47,610 --> 00:17:49,460
+So we press on it and it disappears.
+
+193
+00:17:49,470 --> 00:17:53,240
+Because we now have an active image for this particular index.
+
+194
+00:17:53,280 --> 00:17:59,730
+So now that we have an empty hole we need to go fill it in and see that we already have that appropriately
+
+195
+00:17:59,730 --> 00:18:06,840
+set up when we press on this we get its measurements we save them off for later and then we assign them
+
+196
+00:18:06,870 --> 00:18:09,920
+to the animated value ex-wives.
+
+197
+00:18:10,110 --> 00:18:17,340
+And this is happening before we actually render our image because we are then going to set our active
+
+198
+00:18:17,340 --> 00:18:19,900
+image to the image that we clicked.
+
+199
+00:18:20,070 --> 00:18:26,530
+If we pass in our active image style we've already set these dimensions to be this exact square.
+
+200
+00:18:26,580 --> 00:18:35,760
+So now if we take our active image style we can go and pass it into our active image so we refresh.
+
+201
+00:18:35,890 --> 00:18:41,650
+And in doing so when we press on this field might see a small flicker but our image will be replaced
+
+202
+00:18:41,650 --> 00:18:47,550
+with our top view image or active image.
+
+203
+00:18:47,700 --> 00:18:55,330
+And now the final step is to get the dimensions of that that wrapping view that we had up here.
+
+204
+00:18:56,190 --> 00:19:07,010
+And then animate our view our image I should say to the size that it will take up so with reacts.
+
+205
+00:19:07,240 --> 00:19:10,100
+There's a callback to set state.
+
+206
+00:19:10,300 --> 00:19:13,490
+This is equivalent of component did update.
+
+207
+00:19:13,780 --> 00:19:20,080
+And we know that that means that the image that we rendered here that active image that's in these dimensions
+
+208
+00:19:20,170 --> 00:19:27,670
+and replacing the actual photo great image has officially appeared and then that means that we can now
+
+209
+00:19:27,670 --> 00:19:29,560
+measure our view up top.
+
+210
+00:19:29,650 --> 00:19:38,540
+So to say this view image measure and it will take a callback just like the measure we had here and
+
+211
+00:19:38,540 --> 00:19:42,730
+in this case we're going to say we're going to preface everything with T.
+
+212
+00:19:42,740 --> 00:19:49,820
+So t x t y t with T height t page x and t page Y.
+
+213
+00:19:50,030 --> 00:19:57,560
+And that's just I'm just referencing it as a target and with those measurements we can now animate to
+
+214
+00:19:57,560 --> 00:20:03,500
+them because we already have the animated values of it's location here and now we can animate to its
+
+215
+00:20:03,530 --> 00:20:08,330
+final destination and everything will happen correctly and we want to have that to happen at the same
+
+216
+00:20:08,330 --> 00:20:13,170
+time so we can say animated up parallel takes our array.
+
+217
+00:20:13,380 --> 00:20:15,500
+And we'll just do a spring on all of it.
+
+218
+00:20:15,540 --> 00:20:25,130
+So we're going to animated that spring not state position X to value of t page X..
+
+219
+00:20:25,680 --> 00:20:34,570
+And then with the next one will be animated springe is that state that position Y and will be to value
+
+220
+00:20:35,750 --> 00:20:38,660
+T page y.
+
+221
+00:20:38,700 --> 00:20:44,430
+So even though we aren't yet complete with our animations Let's see if it's actually working.
+
+222
+00:20:44,590 --> 00:20:49,250
+Radical's start on our parallel and come back here and do a refresh.
+
+223
+00:20:49,260 --> 00:20:56,370
+Now what should happen is that we're going to render our image here and then animate to pay jacks and
+
+224
+00:20:56,370 --> 00:21:00,690
+t page Y which is the dimensions of the top content.
+
+225
+00:21:00,690 --> 00:21:04,290
+Now the top content page x and y is going to be 0 0.
+
+226
+00:21:04,440 --> 00:21:10,650
+So if we've done this correctly when we press on this it should animate from the offset here for this
+
+227
+00:21:11,280 --> 00:21:13,600
+particular image to 0 0.
+
+228
+00:21:13,770 --> 00:21:19,320
+And so we can refresh press on it and see that it does just that.
+
+229
+00:21:19,330 --> 00:21:25,070
+We can still see that we have that opacity on the actual image that's in the photo grid.
+
+230
+00:21:25,110 --> 00:21:30,750
+So now we have three more animations to do with the height and our animation for our content.
+
+231
+00:21:30,780 --> 00:21:40,140
+So we're going to animated that spring that state's size dot X to value of the T with which is our target
+
+232
+00:21:40,200 --> 00:21:57,190
+with animated Spring State sized y to value T height and then animated that spring outstate animation.
+
+233
+00:21:58,470 --> 00:22:01,140
+To value of one.
+
+234
+00:22:01,360 --> 00:22:04,120
+And now we're complete with our animation.
+
+235
+00:22:04,120 --> 00:22:06,610
+We're going to be able to trigger this.
+
+236
+00:22:06,610 --> 00:22:13,860
+It'll animate to the exact positions and our content will slide up.
+
+237
+00:22:13,930 --> 00:22:17,210
+Now that we're up here we need a way to close this.
+
+238
+00:22:17,320 --> 00:22:19,660
+So we're just going to add an X button.
+
+239
+00:22:19,940 --> 00:22:25,170
+So down here in our view so that it will appear above all of this.
+
+240
+00:22:25,170 --> 00:22:36,080
+We're going to add a touchable without feedback and we're going to wrap it in an animated view style
+
+241
+00:22:36,110 --> 00:22:44,960
+equals styles close and we'll need to use an opacity on this because it's going to be a part of this
+
+242
+00:22:44,960 --> 00:22:51,710
+view and this whole view is not being controlled with opacity just the bottom part is and then we'll
+
+243
+00:22:51,710 --> 00:22:59,310
+say text put an X somewhere text and we will need to give this some styling So NSA style equals styles
+
+244
+00:22:59,330 --> 00:23:02,780
+like close text.
+
+245
+00:23:02,780 --> 00:23:04,640
+So now let's set that up.
+
+246
+00:23:04,790 --> 00:23:12,280
+We're going to say close and we're going to a position absolute
+
+247
+00:23:14,740 --> 00:23:18,000
+top 20 right 20.
+
+248
+00:23:18,040 --> 00:23:23,220
+And then for our close text or say background color is transparent.
+
+249
+00:23:24,990 --> 00:23:30,950
+Font size twenty eight color white.
+
+250
+00:23:30,990 --> 00:23:36,090
+So if we were to refresh this our X is still appearing so we need to actually control the opacity in
+
+251
+00:23:36,090 --> 00:23:38,750
+regards to the animation.
+
+252
+00:23:38,820 --> 00:23:47,310
+So we're going to need to create a cartes animated close style and you can just pass in our opacity
+
+253
+00:23:47,310 --> 00:23:50,890
+with this state animation.
+
+254
+00:23:51,070 --> 00:23:57,410
+We take this it into our animated view.
+
+255
+00:23:57,560 --> 00:24:03,900
+And now when we refresh and see that it's gone from when we open up an image it appears.
+
+256
+00:24:03,990 --> 00:24:08,870
+However when this X is clicked we need to handle the closing of Suranne on press here.
+
+257
+00:24:10,510 --> 00:24:12,640
+Say this handle close
+
+258
+00:24:16,710 --> 00:24:24,620
+and now we can go do the reverse of our animation that we opened with.
+
+259
+00:24:24,660 --> 00:24:27,850
+So the reverse of our animation is going to be another parallel
+
+260
+00:24:30,940 --> 00:24:38,810
+and then we're going to do animate back to the position that the item in the grid was so animated timing
+
+261
+00:24:38,850 --> 00:24:46,330
+we're going to do a timing on this one versus a spring that set up position X to value of this dot X
+
+262
+00:24:46,330 --> 00:24:53,370
+which was the original grid position that we saved off of the photo and a duration of 250.
+
+263
+00:24:54,130 --> 00:24:59,440
+And then we can do the same thing for everything else animated that timing is tight state position y
+
+264
+00:25:00,310 --> 00:25:11,730
+to value this y duration to 50 and then the size and animated time in this state position or does size
+
+265
+00:25:12,540 --> 00:25:25,000
+X to value this stuff with duration of 250 them animated timing this state that's sized.
+
+266
+00:25:25,030 --> 00:25:28,400
+Why do you do this stuff right.
+
+267
+00:25:29,160 --> 00:25:35,030
+To ration 50 and finally to control our content as well we animate it back to zero.
+
+268
+00:25:35,030 --> 00:25:46,010
+So animated timing this state animation to value of zero and a duration of two hundred and fifty.
+
+269
+00:25:46,400 --> 00:25:48,620
+And then we need to call start on this.
+
+270
+00:25:48,620 --> 00:25:54,240
+However we'll notice that we don't actually have the active imagery setting.
+
+271
+00:25:54,260 --> 00:25:56,920
+So we'll see what that looks like in a second.
+
+272
+00:25:57,110 --> 00:25:58,340
+So let's refresh this.
+
+273
+00:25:58,490 --> 00:26:02,940
+And when we open up our image again and then we close it.
+
+274
+00:26:03,170 --> 00:26:07,120
+This will animate back to where it was in the grade and we can see that happening here.
+
+275
+00:26:08,440 --> 00:26:15,080
+However because we aren't toggling our active image the pointer events will still be set to auto.
+
+276
+00:26:15,100 --> 00:26:23,320
+Meaning that that active you can is clickable and are touches now won't go through to the photo grid.
+
+277
+00:26:23,320 --> 00:26:29,980
+And this is actually just the active image sitting in that position that that photo grid was originally
+
+278
+00:26:29,980 --> 00:26:30,880
+in.
+
+279
+00:26:30,880 --> 00:26:33,820
+So now we need to pass in a callback to our start function.
+
+280
+00:26:33,820 --> 00:26:42,970
+And so when this is complete we can then swap out the active image with no which trigger we render the
+
+281
+00:26:42,970 --> 00:26:49,390
+original image and this position will be go from opacity of zero to 1 and then our pointer events will
+
+282
+00:26:49,390 --> 00:26:52,350
+toggle so we can click on the photo grid items again.
+
+283
+00:26:52,360 --> 00:27:01,400
+So now we can refresh open up an image close it animates down and we can continue to do that for other
+
+284
+00:27:01,430 --> 00:27:08,960
+and other images even ones that we've scrolled to we've swapped over to Android because we want to show
+
+285
+00:27:08,960 --> 00:27:11,550
+what this code would actually do on Android.
+
+286
+00:27:11,690 --> 00:27:17,400
+So first off we're going to copy and paste iOS and paste it into the Android side.
+
+287
+00:27:17,900 --> 00:27:25,490
+Save this and we're going to refresh and when we press on this we see it nothing happens and there are
+
+288
+00:27:25,490 --> 00:27:28,610
+a few things there that we need to debug.
+
+289
+00:27:29,000 --> 00:27:38,360
+So there are two ways to get access to the lay out of a particular view and that is with onlly out and
+
+290
+00:27:38,360 --> 00:27:41,000
+also calling measure on RF.
+
+291
+00:27:41,030 --> 00:27:46,470
+One of the things that I found was an issue with Android was that even though we had reference to our
+
+292
+00:27:46,860 --> 00:27:52,730
+our image and called measure there were no values that were coming back for the width height or the
+
+293
+00:27:52,730 --> 00:27:54,610
+page X and Page y.
+
+294
+00:27:54,680 --> 00:28:02,210
+So I just added an on layout and added an empty function that got called.
+
+295
+00:28:02,780 --> 00:28:10,100
+And this would tell Briac that we needed to get access to those measurements to now and refresh and
+
+296
+00:28:10,100 --> 00:28:11,840
+click on an image.
+
+297
+00:28:11,940 --> 00:28:13,410
+It kind of works.
+
+298
+00:28:13,410 --> 00:28:20,650
+However note that it's not a smooth transition if you press on one down here it still will animate to
+
+299
+00:28:20,650 --> 00:28:22,120
+the position that's inside.
+
+300
+00:28:22,120 --> 00:28:29,710
+And the reason why that is is because there is no overflow visible available on Android.
+
+301
+00:28:29,920 --> 00:28:36,610
+And so it's trying to animate outside of the container of our container here that we're measuring but
+
+302
+00:28:37,120 --> 00:28:42,520
+it's not able to because it is there is no overflow visible and it's hidden.
+
+303
+00:28:42,520 --> 00:28:47,260
+So it's going beyond here trying to estimate back down but it's getting caught outside of this when
+
+304
+00:28:47,260 --> 00:28:49,030
+it tries to go outside this view.
+
+305
+00:28:49,030 --> 00:28:57,900
+So to fix this all we have to do is actually move it to the root view so move it to this root container.
+
+306
+00:28:58,240 --> 00:29:05,950
+And because we aren't actually animating this container here but it still is the thing that we're measuring
+
+307
+00:29:06,550 --> 00:29:10,070
+we can animate something into that space.
+
+308
+00:29:10,120 --> 00:29:18,980
+So if we remove our animated image here and we move it into the root container the same will need to
+
+309
+00:29:18,980 --> 00:29:20,680
+happen for our clothes.
+
+310
+00:29:20,690 --> 00:29:27,630
+So now we see that clothes hidden because we have hot relisting enabled we can move this out here
+
+311
+00:29:31,550 --> 00:29:38,580
+and now it appears that this is actually sitting outside of our view container.
+
+312
+00:29:38,630 --> 00:29:46,050
+So if we refresh and we press on one of these images we can now see that because it's its parent is
+
+313
+00:29:46,050 --> 00:29:52,060
+this entire screen that the overflow visible will work just fine or the image will animate just fine.
+
+314
+00:29:52,080 --> 00:30:00,390
+If we press on it and see that it animates to the available space this flex container is inside of our
+
+315
+00:30:00,390 --> 00:30:08,430
+view but it's saving us a spot where we can animate our image too and then we can close this animates
+
+316
+00:30:08,450 --> 00:30:11,010
+right back just like it was on.
+
+317
+00:30:11,040 --> 00:30:13,240
+Working well on iOS.
+
+318
+00:30:13,410 --> 00:30:18,930
+So sometimes for Android you do have to do some hacks but we kind of set it up perfectly so that we
+
+319
+00:30:18,930 --> 00:30:25,890
+have an empty space that is a space saver we can move our image and structure things correctly so that
+
+320
+00:30:25,890 --> 00:30:34,130
+it is capable of animating without and kind of doing a work around with the limits on overflow on Android.
+

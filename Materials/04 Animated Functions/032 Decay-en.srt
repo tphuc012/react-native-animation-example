@@ -1,0 +1,376 @@
+1
+00:00:00,890 --> 00:00:07,830
+Animated K allows you to apply a velocity and a deceleration to an intermediate value.
+
+2
+00:00:07,940 --> 00:00:14,600
+This is typically going to be used whenever you need to have a throw flick or some sort of gesture animation
+
+3
+00:00:15,220 --> 00:00:19,280
+that the user has released and then mission needs to continue.
+
+4
+00:00:19,310 --> 00:00:21,530
+But look realistic.
+
+5
+00:00:21,530 --> 00:00:28,790
+So we will have an animated value x y because we will be controlling the x and y direction of this particular
+
+6
+00:00:28,790 --> 00:00:29,960
+square here.
+
+7
+00:00:31,040 --> 00:00:33,500
+We will need to create a pan responder.
+
+8
+00:00:33,680 --> 00:00:40,790
+So we'll see this dot and this core pan responder is equal to a pan responder create.
+
+9
+00:00:41,510 --> 00:00:45,800
+And there are various methods to tell this Panne responder what to do.
+
+10
+00:00:45,830 --> 00:00:54,110
+And the first one will be on START should set pan responder and that will just be a function that returns
+
+11
+00:00:54,110 --> 00:00:54,830
+true.
+
+12
+00:00:54,950 --> 00:01:01,700
+And this will just say if this pan responder's hit that the view is touched we should start the pan
+
+13
+00:01:01,700 --> 00:01:06,620
+responder touch events and then the other is going to be on move.
+
+14
+00:01:06,770 --> 00:01:12,680
+Should set pan responder and this is just going to say if we continue to move should be keep calling
+
+15
+00:01:12,720 --> 00:01:16,460
+our on pand response Buddh function and we say yes.
+
+16
+00:01:16,460 --> 00:01:22,500
+So in order to capture the value of the finger the press and the drag.
+
+17
+00:01:22,730 --> 00:01:32,570
+We're going to need to use the on plan responder move callback which will pass an animated event which
+
+18
+00:01:32,570 --> 00:01:33,870
+takes an array.
+
+19
+00:01:34,340 --> 00:01:39,110
+And in our case the enemy the unpin respond or move is called with two arguments.
+
+20
+00:01:39,110 --> 00:01:43,510
+The first is the event and the second is going to be the gesture.
+
+21
+00:01:43,730 --> 00:01:49,380
+And that is just going to be a bunch of information about the gesture that is happening from the user.
+
+22
+00:01:49,380 --> 00:01:55,650
+So what we actually care about is the gesture states that will say no for this first argument and then
+
+23
+00:01:55,650 --> 00:02:03,390
+we'll say object with a DX and pass that to this state to animation X and then r Delta Y and say this
+
+24
+00:02:03,540 --> 00:02:07,660
+state animation y.
+
+25
+00:02:07,700 --> 00:02:13,300
+So these are both going to be capturing the delta of the the gesture.
+
+26
+00:02:13,300 --> 00:02:19,420
+So if I press here and I move in this direction there's a change from the original point which was here
+
+27
+00:02:19,420 --> 00:02:26,320
+to here on both the X and the y axis C is and that is going to be captured and automatically set on
+
+28
+00:02:26,320 --> 00:02:27,690
+our animation value.
+
+29
+00:02:29,920 --> 00:02:38,340
+Now where the decay comes in is when we release or the user releases the the box that it's throwing.
+
+30
+00:02:38,430 --> 00:02:44,010
+And it will have a particular velocity that we will get from the gesture state.
+
+31
+00:02:44,010 --> 00:02:56,220
+So we'll say on Pan responder release and it will be called with an event and then a velocity the X
+
+32
+00:02:56,250 --> 00:02:58,560
+which is the velocity x and a v y
+
+33
+00:03:03,120 --> 00:03:14,000
+with those values will then call animated to K and pass and R this state animation will then say velocity
+
+34
+00:03:14,480 --> 00:03:22,670
+and pass in an x velocity which is just going to be v x and r y velocity which will be Y and then we'll
+
+35
+00:03:22,670 --> 00:03:23,850
+say deceleration.
+
+36
+00:03:23,900 --> 00:03:32,800
+And it just defaults to 0.9 7 and then we will call start on our enemy to decay.
+
+37
+00:03:32,880 --> 00:03:35,850
+Now that are pan responder is created.
+
+38
+00:03:35,910 --> 00:03:40,910
+We need to apply our panhandlers to the view that we want our gestures to work on.
+
+39
+00:03:40,950 --> 00:03:48,270
+And so in that case when it's a dot dot dot which is a spread operator to say this dot pan responder
+
+40
+00:03:48,750 --> 00:03:50,660
+pan handlers.
+
+41
+00:03:50,880 --> 00:03:59,570
+And this will apply these specific props to this view so that our gesture handlers will be culled accordingly.
+
+42
+00:04:01,580 --> 00:04:08,690
+One other thing to note is that we are using the animated value that x y get translate transform this
+
+43
+00:04:08,690 --> 00:04:15,890
+will automatically decompose our enemy and animated values on the x and y into a translate X and a translate
+
+44
+00:04:15,890 --> 00:04:17,000
+y.
+
+45
+00:04:17,000 --> 00:04:21,190
+So now if we go ahead and refresh this we can drag this around.
+
+46
+00:04:21,320 --> 00:04:29,330
+And then as we release it you can see that we throw it and it will then slowly decelerate.
+
+47
+00:04:29,370 --> 00:04:33,780
+However there's one thing that if you slightly move it here and then press on it here you can see that
+
+48
+00:04:33,780 --> 00:04:34,960
+there is a jump.
+
+49
+00:04:35,130 --> 00:04:41,380
+And this is because of the Delta that is being set the delta the animated value already has a value.
+
+50
+00:04:41,400 --> 00:04:46,980
+And then we're setting a Delta value on top of it which would then be jump back to zero.
+
+51
+00:04:46,980 --> 00:04:51,030
+So it will then cause this to jump.
+
+52
+00:04:51,210 --> 00:04:59,370
+In order to make this smooth we need to use the set offset from animated on an intermediate value.
+
+53
+00:04:59,370 --> 00:05:05,150
+And so we need to keep track of the animated values so we're going to do that first by saying this dot
+
+54
+00:05:05,520 --> 00:05:09,790
+X equals zero and this y equals zero.
+
+55
+00:05:10,140 --> 00:05:18,630
+And then we're going to attach a listener to it soon and say this state DOT animation and listener and
+
+56
+00:05:18,750 --> 00:05:22,530
+that will be called with some sort of value object.
+
+57
+00:05:22,530 --> 00:05:28,890
+And on that value object will say this dot the square x is equal to a value of x and this underscore
+
+58
+00:05:28,920 --> 00:05:32,160
+Y Z equal to value Y.
+
+59
+00:05:32,380 --> 00:05:39,310
+And then inside of another function called on Pan responder grant
+
+60
+00:05:42,860 --> 00:05:48,080
+we're going to say this Stut state that animation set offset.
+
+61
+00:05:48,350 --> 00:05:53,050
+And we can just pass an X and say this X Y and say this.
+
+62
+00:05:53,160 --> 00:05:54,100
+Y.
+
+63
+00:05:54,470 --> 00:06:00,790
+And this will then set the offset of our animation.
+
+64
+00:06:01,040 --> 00:06:05,290
+And then at the same time we need to then reset our.
+
+65
+00:06:05,450 --> 00:06:08,460
+Our animation intermediate values back to zero.
+
+66
+00:06:08,750 --> 00:06:16,790
+So this offset will then apply our current values to the animated values so that the Delta will take
+
+67
+00:06:16,790 --> 00:06:18,280
+effect correctly.
+
+68
+00:06:18,440 --> 00:06:28,880
+So say this state animation that set value x of 0 and y zero so now that that's working we can refreshed
+
+69
+00:06:28,880 --> 00:06:35,010
+this and move our box and then press it again and move it again.
+
+70
+00:06:35,100 --> 00:06:42,310
+And that is working because when we drag it we're setting a specific delta position which is just an
+
+71
+00:06:42,340 --> 00:06:46,070
+offset from where this box was originally in the middle.
+
+72
+00:06:46,390 --> 00:06:51,100
+And then because we're keeping track of it appear unpin responded Grant.
+
+73
+00:06:51,100 --> 00:06:52,200
+Nothing has happened yet.
+
+74
+00:06:52,210 --> 00:06:55,390
+Nothing no movements have happened yet.
+
+75
+00:06:55,390 --> 00:07:02,520
+We adjust the offset of this animation which is just extra values that are added to the normal value.
+
+76
+00:07:02,590 --> 00:07:06,370
+So this will set it to its current location as the offset.
+
+77
+00:07:06,550 --> 00:07:10,740
+At the same time we'll then set the to value to zero.
+
+78
+00:07:11,020 --> 00:07:13,890
+And that way the offset plus zero.
+
+79
+00:07:14,260 --> 00:07:16,530
+Basically be the same exact value.
+
+80
+00:07:16,930 --> 00:07:19,110
+And then as this kicks in.
+
+81
+00:07:19,100 --> 00:07:27,530
+It will then apply the delta from its current position plus the offset and allow us to drag it around.
+
+82
+00:07:27,610 --> 00:07:33,140
+And then additionally throw it if we want let's simplify this code a little bit.
+
+83
+00:07:33,140 --> 00:07:37,050
+It's very annoying that we have to attach a listener just to keep track of the value.
+
+84
+00:07:37,070 --> 00:07:44,720
+And then also send it to the offset just to clear the animated value to zero before we simplify this.
+
+85
+00:07:44,720 --> 00:07:47,330
+Let's take a look at what is exactly happening.
+
+86
+00:07:47,540 --> 00:07:54,980
+We are setting the offset of the previous value and then resetting our animated value to zero.
+
+87
+00:07:55,010 --> 00:08:01,850
+That was because we were updating with the delta x and Delta Y and that way the offset is now going
+
+88
+00:08:01,850 --> 00:08:03,380
+to be the previous Delta.
+
+89
+00:08:03,380 --> 00:08:07,630
+So whenever we move this it will be in that exact location.
+
+90
+00:08:07,640 --> 00:08:15,590
+So what we can then do instead of tracking and doing all this we can just call the extract offset function
+
+91
+00:08:16,340 --> 00:08:20,820
+and that way we don't have to keep track of any of our values either.
+
+92
+00:08:20,990 --> 00:08:23,790
+This will do exactly what we were already doing.
+
+93
+00:08:23,790 --> 00:08:31,490
+It'll take the current value that we have here move it into the offset and then update the value to
+
+94
+00:08:31,490 --> 00:08:32,010
+zero.
+

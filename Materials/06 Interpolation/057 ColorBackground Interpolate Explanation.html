@@ -1,0 +1,106 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>057 ColorBackground Interpolate Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Changing colors, and opacity of colors (using rgba) is another common animation in an application. You must use <code>interpolate</code> to animate between colors. <code>Animated</code> has special interpolations built in to be able to identify colors, and generic numeric patterns.</p>
+
+<p>Using animated for colors will only work for <code>rbg/rgba/hcl</code> it will not work for <code>hex</code> colors. So if you want to animate a color you'll need to convert your hex to one of the formats interpolation allows. </p>
+
+
+
+
+
+<p>Lets look at 2 cases. RGB and RGBA interpolations.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;export default class animations extends Component {
+  state = {
+    animation: new Animated.Value(0),
+  }
+
+  componentDidMount() {
+    Animated.timing(this.state.animation, {
+      toValue: 1,
+      duration: 1000,
+    }).start();
+  }
+
+  render() {
+
+    const bgStyle = {
+      backgroundColor: this.state.animation.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["rgba(255,99,71, 1)", "rgba(255,99,71, 0)"]
+      })
+    }
+
+    const boxStyle = {
+      backgroundColor: this.state.animation.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["rgb(99,71,255)", "rgb(255,99,71)"]
+      })
+    }
+
+    return (
+      &lt;Animated.View style={[styles.container, bgStyle]}&gt;
+        &lt;Animated.View style={[styles.box, boxStyle]} /&gt;
+      &lt;/Animated.View&gt;
+    );
+
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  box: {
+    height: 100,
+    width: 100,
+  },
+});
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>We have 2 interpolations here. One for our outside and one for our box. They both start at the same color. The background though is the same color, however we only interpolate the alpha of the RGBA. So it will animate the opacity. Then we also animate our box from a blue-purple to the tomato background color.</p>
+
+
+
+
+
+<p>This is just demonstrating that <code>interpolate</code> doesn't care about the values, it will figure it all out correctly.</p>
+
+
+
+
+
+<p><img alt="" src="https://images.codedaily.io/animations/InterpolateColors.gif"></p>
+
+
+
+
+
+<p><a href="https://snack.expo.io/rki9wV2HW" rel="nofollow">Live Demo</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

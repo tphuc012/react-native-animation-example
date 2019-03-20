@@ -1,0 +1,404 @@
+1
+00:00:00,960 --> 00:00:07,920
+The first thing you're going to do is define our animated value so say state equals animation animated
+
+2
+00:00:07,920 --> 00:00:09,580
+value that defaults to zero.
+
+3
+00:00:09,640 --> 00:00:15,890
+This will control the animation for the color as well as the progress of the width across the screen.
+
+4
+00:00:18,080 --> 00:00:24,290
+Rather than diving into animating this value from 0 to 1 using a timing Lets first set up the progress
+
+5
+00:00:24,290 --> 00:00:28,090
+bar and the interpellation so that we can see the effect when it happens.
+
+6
+00:00:29,010 --> 00:00:33,220
+So let's come down to surrender and set up a progress inside of our button.
+
+7
+00:00:33,430 --> 00:00:36,100
+We have a button here and our text here.
+
+8
+00:00:36,130 --> 00:00:42,030
+And so in our break time we can see that the progress needs to happen before the button text.
+
+9
+00:00:42,040 --> 00:00:47,890
+Otherwise if we put it after the button text as the background animated our button text would get covered
+
+10
+00:00:47,890 --> 00:00:48,470
+up.
+
+11
+00:00:48,520 --> 00:00:54,380
+So we're going to say View style equals style sheet.
+
+12
+00:00:54,400 --> 00:00:55,870
+Absolute fill.
+
+13
+00:00:56,470 --> 00:00:59,680
+This is a helper function for us that does position.
+
+14
+00:00:59,680 --> 00:01:02,990
+Absolute left top right and bottom zero.
+
+15
+00:01:03,030 --> 00:01:08,500
+It's just going to define a view that covers this entire thing so that when we use our with percentages
+
+16
+00:01:08,500 --> 00:01:10,950
+that it doesn't overflow outside of here.
+
+17
+00:01:12,580 --> 00:01:19,450
+And now with that set up we can set of our animated view and give it a style is styles that progress
+
+18
+00:01:19,480 --> 00:01:20,690
+which we will go set up.
+
+19
+00:01:20,710 --> 00:01:23,320
+Now this will be our progress bar.
+
+20
+00:01:23,380 --> 00:01:26,240
+So we want it to be absolutely positions
+
+21
+00:01:33,620 --> 00:01:37,420
+and then we want it to be left and top zero.
+
+22
+00:01:37,670 --> 00:01:43,220
+This will then allow us to control whether or not we want an animation to go left and right from top
+
+23
+00:01:43,220 --> 00:01:48,380
+to bottom or just cover the bottom of the screen and we'll change those animations later.
+
+24
+00:01:48,380 --> 00:01:54,060
+So it was a top zero and left zero with that set up.
+
+25
+00:01:54,090 --> 00:02:02,970
+We're able to now go put build our progress style so our progress style consists of a interpolate on
+
+26
+00:02:03,450 --> 00:02:05,040
+the percentage.
+
+27
+00:02:05,040 --> 00:02:15,770
+So will say this that state animation interpret the input range 0 to 1 output range will be zero 0 percent
+
+28
+00:02:16,250 --> 00:02:17,840
+to 100 percent.
+
+29
+00:02:18,230 --> 00:02:23,620
+And then we will do an extrapolate clamp here in case 0.
+
+30
+00:02:23,660 --> 00:02:25,690
+The animation goes beyond 0 or 1.
+
+31
+00:02:25,690 --> 00:02:30,190
+We don't want this going to be a negative percentage or a percentage over 100.
+
+32
+00:02:30,680 --> 00:02:37,140
+We'll then set up our background color and templates for sequence color and interpolate to this state
+
+33
+00:02:37,140 --> 00:02:43,140
+that information interpolate armpit range is going to be 0 to 1 again.
+
+34
+00:02:43,560 --> 00:02:45,600
+And then our output range is going to be 2.
+
+35
+00:02:45,600 --> 00:02:54,780
+RG be colors these colors can be whatever you want as long as they are G-B R-Ga. or HGL so that interpellation
+
+36
+00:02:54,780 --> 00:02:55,660
+will work on them.
+
+37
+00:02:56,550 --> 00:03:04,250
+Now with these two values set up we can set up our progress task to say Konst progress style and we'll
+
+38
+00:03:04,250 --> 00:03:10,910
+give our with with our progress interpolate which will be between 0 percent and 100 percent.
+
+39
+00:03:11,330 --> 00:03:14,480
+We'll then have a bottom of zero for this particular animation.
+
+40
+00:03:14,480 --> 00:03:20,290
+So now we have our lefts and top applied styles up progress and now we'll just apply a bottom here so
+
+41
+00:03:20,290 --> 00:03:25,970
+that as our percentage our animation will go across this button and then we'll pass it back on color
+
+42
+00:03:25,970 --> 00:03:33,340
+with our color and interpolate past this and to our progress bar.
+
+43
+00:03:33,350 --> 00:03:38,150
+And now it started on what happens when we actually press our button in real life.
+
+44
+00:03:38,150 --> 00:03:43,200
+This is going to be controlled by some sort of a sink progress operation that you have going.
+
+45
+00:03:43,370 --> 00:03:48,840
+So when the user presses on this button again we're just going to reset everything and restart our animation.
+
+46
+00:03:48,890 --> 00:03:51,800
+This kind of is up to you on implementation.
+
+47
+00:03:51,800 --> 00:03:59,990
+So we're going to do is say this state animation set value of 0 and then will trigger our animation
+
+48
+00:04:00,480 --> 00:04:10,090
+our animated timing so animated timing pass and this state animation to value of one.
+
+49
+00:04:10,150 --> 00:04:16,340
+I'll just give it a duration of 1300 milliseconds and then we'll call start.
+
+50
+00:04:16,580 --> 00:04:24,050
+If this were a real implementation you might do an animated timing and set the value to whatever the
+
+51
+00:04:24,050 --> 00:04:32,280
+percentages would be like point for point five point six and you're continually triggered this animated
+
+52
+00:04:32,490 --> 00:04:35,010
+timing over a smaller amount.
+
+53
+00:04:35,010 --> 00:04:37,430
+But we're just going to animate it to one.
+
+54
+00:04:37,440 --> 00:04:43,830
+So now when we refresh this and we click on our button we can see that our animation is taking effect
+
+55
+00:04:43,920 --> 00:04:46,710
+but nothing happens when the button is completed.
+
+56
+00:04:46,710 --> 00:04:48,600
+We don't have a opacity yet.
+
+57
+00:04:48,870 --> 00:04:56,040
+So to do our opacity will first set up another animated value to animated value with a default of one
+
+58
+00:04:56,100 --> 00:05:01,160
+because we want the bar to be visible when we first operate across the screen.
+
+59
+00:05:01,170 --> 00:05:03,450
+And then once completed fade out.
+
+60
+00:05:03,720 --> 00:05:07,350
+So then we'll come down here to our progress style and apply our opacity.
+
+61
+00:05:07,350 --> 00:05:19,660
+So this state that opacity and then inside of our timing will need to specify a callback which its first
+
+62
+00:05:19,660 --> 00:05:21,500
+argument is an object with finished.
+
+63
+00:05:21,550 --> 00:05:22,760
+True or false.
+
+64
+00:05:24,410 --> 00:05:33,400
+If we have finished and we weren't interrupted by another press we'll say animated timing state or past
+
+65
+00:05:33,400 --> 00:05:42,010
+city and our value will go from one to zero settle fade out over a duration of 200 milliseconds.
+
+66
+00:05:42,020 --> 00:05:43,700
+OK I'll start on this.
+
+67
+00:05:44,590 --> 00:05:52,390
+Now to also reset this value back to one we're going to need to do this state animation or this state
+
+68
+00:05:52,390 --> 00:05:59,180
+that opacity that set value to its default of one.
+
+69
+00:05:59,190 --> 00:06:01,920
+Now we can go ahead and refresh this.
+
+70
+00:06:02,190 --> 00:06:06,810
+And when we press on our button will see our animation go across the screen and then fade up.
+
+71
+00:06:07,110 --> 00:06:13,290
+And then any time it stays in that particular setting and then any time we want to press on this again
+
+72
+00:06:13,590 --> 00:06:19,070
+our values will reset right before we start doing our timing and our opacity again.
+
+73
+00:06:19,140 --> 00:06:23,070
+So we can click on it and see that it reset.
+
+74
+00:06:23,130 --> 00:06:28,860
+So we don't want to do an animated timing on this zero back to here on this you want to watch this Doraine
+
+75
+00:06:29,250 --> 00:06:36,420
+but that's not what we're setting up now because we're working with a with a percentage that doesn't
+
+76
+00:06:36,420 --> 00:06:40,000
+necessarily apply to just with it could apply to height.
+
+77
+00:06:40,080 --> 00:06:46,380
+So depending on the animation that you want we can pass these in and modify our style slightly to get
+
+78
+00:06:46,650 --> 00:06:48,420
+some different animations.
+
+79
+00:06:48,420 --> 00:06:56,070
+So rather than setting a bottom of zero if we change this to right and rather then with the progress
+
+80
+00:06:56,070 --> 00:06:58,010
+we change it to height.
+
+81
+00:06:58,080 --> 00:07:04,490
+But that's going to set up as a left and top of 0 and then all the way over here.
+
+82
+00:07:04,500 --> 00:07:09,850
+So basically the animation will start up here and then animate to the full height.
+
+83
+00:07:09,870 --> 00:07:17,590
+So if we refresh this and we press on it again we see that it animates in a curtain style and then finally
+
+84
+00:07:18,040 --> 00:07:23,770
+because we've passed this progress stylin as the second parameter we can override styles in the styles
+
+85
+00:07:23,770 --> 00:07:24,990
+that progress.
+
+86
+00:07:25,000 --> 00:07:32,600
+So if we wanted this to be a small bar on the bottom of our button will change us back to with of with
+
+87
+00:07:32,710 --> 00:07:35,360
+the progress then we'll switch over to the top.
+
+88
+00:07:35,380 --> 00:07:42,660
+No because we don't want it to be on top anymore you want it to be on the bottom and that will move
+
+89
+00:07:42,720 --> 00:07:50,610
+our bar to the left bottom and then animate all the way to the right side.
+
+90
+00:07:50,610 --> 00:07:54,030
+Now we do need to add a height and this height will just be five.
+
+91
+00:07:54,030 --> 00:07:59,850
+It could be any value but that will be a five pixel bar on the bottom here.
+
+92
+00:07:59,850 --> 00:08:07,740
+So if you refresh and sugar are animation that we now have a bar that just animates along the bottom.
+
+93
+00:08:07,780 --> 00:08:17,210
+And finally if we didn't want any particular color we can remove this and remove our top notch and keep
+
+94
+00:08:17,210 --> 00:08:18,480
+our progress and serve plate.
+
+95
+00:08:18,560 --> 00:08:24,780
+And rather than our color inter-relate we can just pass in a background color that's R-GA to 55 to 45
+
+96
+00:08:24,820 --> 00:08:25,820
+to 55.
+
+97
+00:08:25,820 --> 00:08:33,650
+So white with a point five opacity and this will allow a kind of whitish background to go across the
+
+98
+00:08:33,650 --> 00:08:34,400
+screen.
+
+99
+00:08:34,460 --> 00:08:38,700
+So this will just ignore color interplay because we're passing in a background color and we refresh
+
+100
+00:08:38,700 --> 00:08:44,750
+this and trigger our button and we just see a white ish background go across the screen or across the
+
+101
+00:08:44,750 --> 00:08:45,080
+button.
+

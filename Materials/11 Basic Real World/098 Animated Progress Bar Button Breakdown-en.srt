@@ -1,0 +1,44 @@
+1
+00:00:00,890 --> 00:00:09,130
+Let's take a look at this animation we have a button and when we press on that button there is an animation
+
+2
+00:00:09,130 --> 00:00:17,320
+that takes in effect in the background and it has b inside the button and in between the text and the
+
+3
+00:00:17,320 --> 00:00:19,190
+background of the button.
+
+4
+00:00:20,020 --> 00:00:27,310
+In terms of a breakdown we can see that there's likely a single animated value that's animating from
+
+5
+00:00:27,310 --> 00:00:35,890
+say 0 to 1 and that is having an interpolation for a different view that covers the background here.
+
+6
+00:00:37,220 --> 00:00:46,070
+Then we can see that there is a with interpellation and likely we have a view that is top left and bottom
+
+7
+00:00:46,070 --> 00:00:53,330
+of the zero and then we interpolate the with and then at the very end we can see that it fades out.
+
+8
+00:00:53,330 --> 00:00:57,770
+So that's likely going to be a secondary animation an animated value.
+
+9
+00:00:57,770 --> 00:01:00,440
+So there's actually two animated values here.
+
+10
+00:01:00,500 --> 00:01:07,930
+One for the background color and the width and then a second to execute after the animation is completed.
+
+11
+00:01:09,000 --> 00:01:13,170
+To fade out that particular progress bar.
+

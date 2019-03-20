@@ -1,0 +1,92 @@
+1
+00:00:00,600 --> 00:00:07,020
+Percentage with based lay out options like using with 20 percent and high of 20 percent in this case
+
+2
+00:00:07,470 --> 00:00:10,780
+we're not at it until later in re-act native.
+
+3
+00:00:10,800 --> 00:00:13,620
+And that was because of the additions to yoga.
+
+4
+00:00:13,700 --> 00:00:20,350
+However interpolate did not need to be fixed to be able to interpret the width and height with animated.
+
+5
+00:00:20,430 --> 00:00:27,060
+We already have our animated values set up so we'll say Konst with interpret as you get to this state
+
+6
+00:00:27,200 --> 00:00:33,210
+animation interpret and input range will just be 0 to 1.
+
+7
+00:00:33,500 --> 00:00:40,530
+But our output range will be 20 percent that will be our default to start to 50 percent of the width
+
+8
+00:00:41,220 --> 00:00:51,660
+and then we'll set up our Konst height and interpolate So this state animation inter-relate input range
+
+9
+00:00:51,660 --> 00:00:59,300
+of zero to one in an output range of 20 percent to 30 percent.
+
+10
+00:00:59,350 --> 00:01:05,140
+And now with our interpretations we will build out our enemy cells so we'll see conc animated style
+
+11
+00:01:05,320 --> 00:01:14,540
+sequel to with passing or with interpretive and height height inter-relate and then pass that into our
+
+12
+00:01:14,540 --> 00:01:15,710
+box.
+
+13
+00:01:16,070 --> 00:01:18,590
+And we already have width and height of 20 percent done here.
+
+14
+00:01:18,590 --> 00:01:24,270
+However we don't need that anymore because we have defined our percentages inside of our tribulation
+
+15
+00:01:24,300 --> 00:01:27,100
+and inside of this dynamic style.
+
+16
+00:01:27,140 --> 00:01:32,300
+The reason that we're not animating to the exact values is because these width and height percentages
+
+17
+00:01:32,530 --> 00:01:34,130
+are of width and height.
+
+18
+00:01:34,130 --> 00:01:34,820
+They are different.
+
+19
+00:01:34,820 --> 00:01:37,650
+So this is 50 percent of the width.
+
+20
+00:01:37,760 --> 00:01:40,320
+And this will be 30 percent of the height.
+
+21
+00:01:40,500 --> 00:01:50,530
+We'll start by now setting up our star animation with our animated timing and say this animation to
+
+22
+00:01:50,530 --> 00:01:58,860
+value of one over 2300 milliseconds and then we'll call start.
+
+23
+00:01:59,030 --> 00:02:04,830
+And now when we press on it we can see that it grows to 50 percent width and 30 percent of the height.
+

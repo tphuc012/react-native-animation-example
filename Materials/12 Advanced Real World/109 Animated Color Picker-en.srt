@@ -1,0 +1,1032 @@
+1
+00:00:00,600 --> 00:00:05,180
+For our color picker we're going to need to set up two new animated components.
+
+2
+00:00:05,260 --> 00:00:07,520
+The first thing will be our animated text input.
+
+3
+00:00:07,630 --> 00:00:14,080
+And the second will be animated icon that we've imported from Riak the vector icons and using the foundation
+
+4
+00:00:14,140 --> 00:00:15,310
+icons set.
+
+5
+00:00:15,730 --> 00:00:21,790
+We already just have our buttons set up that will call handler toggle to get us going with an open inclosing
+
+6
+00:00:22,770 --> 00:00:30,010
+function call in our animation breaktime we could see that when it opened up that would be a single
+
+7
+00:00:30,010 --> 00:00:32,860
+animation to go from nothing to something.
+
+8
+00:00:32,920 --> 00:00:38,500
+And so that was reversible so that now that means we know that we need a single animation of-I for that.
+
+9
+00:00:38,500 --> 00:00:44,710
+And then additionally there was a second open and close with the input and the button that seemed reversible.
+
+10
+00:00:44,770 --> 00:00:53,110
+So we should set up two different animations so do state equals animation animated value and that will
+
+11
+00:00:53,110 --> 00:00:55,090
+be for the toggling open and closed.
+
+12
+00:00:55,180 --> 00:01:03,050
+And then we'll do a button animation and that will be for when we open up the button and the input there
+
+13
+00:01:03,090 --> 00:01:06,890
+thing we need do is use to find our color on our state.
+
+14
+00:01:06,900 --> 00:01:13,060
+So going to default to black and that will be for the drive the value in the input.
+
+15
+00:01:13,300 --> 00:01:18,460
+Before we start driving any animations let's first get our viewers set up.
+
+16
+00:01:18,490 --> 00:01:23,500
+This is something that people may not realize but if you build your view then creating the animations
+
+17
+00:01:23,500 --> 00:01:26,760
+to go from different states is a lot easier.
+
+18
+00:01:26,770 --> 00:01:32,710
+So we're going to set up an animated view.
+
+19
+00:01:32,900 --> 00:01:39,410
+So we are wrapping view I want to say style equals styles dot row wrap.
+
+20
+00:01:39,420 --> 00:01:41,750
+Now let's go define our style.
+
+21
+00:01:41,770 --> 00:01:52,380
+So include a row rap style and because our items are moving in a row direction we need to switch our
+
+22
+00:01:52,380 --> 00:01:58,260
+flex direction to row for this.
+
+23
+00:01:58,390 --> 00:02:05,390
+Then we're going to align our items to the center so that they are centered along the horizontal line
+
+24
+00:02:05,860 --> 00:02:08,800
+then we're going to say menwith of 50 percent.
+
+25
+00:02:08,800 --> 00:02:19,610
+So at least take up 50 percent of our screen so that our background color to white sort of border radius
+
+26
+00:02:20,030 --> 00:02:24,520
+of 20 so the edges will be rounded.
+
+27
+00:02:24,820 --> 00:02:26,190
+Sort of a shadow color.
+
+28
+00:02:27,760 --> 00:02:34,610
+Dark gray shadow opacity point to shadow offset.
+
+29
+00:02:36,180 --> 00:02:37,680
+X too wide to
+
+30
+00:02:40,880 --> 00:02:52,300
+shadow radius 3 and we'll add some padding and so will do a padding vertical of five and a padding horizontal
+
+31
+00:02:52,510 --> 00:02:53,830
+of 10.
+
+32
+00:02:53,830 --> 00:02:58,850
+Now these values I arrived just kind of playing with stuff and seeing what it looked like.
+
+33
+00:02:58,900 --> 00:03:06,150
+And so because there's no content in it we just have this very thin box that is the spacing is our padding.
+
+34
+00:03:06,160 --> 00:03:13,120
+And now we can start filling in our our icons with our colored ball.
+
+35
+00:03:13,130 --> 00:03:14,540
+It needs to be separate.
+
+36
+00:03:14,600 --> 00:03:20,000
+And then there needs to be a separate container for both the buttons and the
+
+37
+00:03:23,570 --> 00:03:25,340
+button and its inputs.
+
+38
+00:03:25,370 --> 00:03:27,710
+So why don't we set up a color ball first.
+
+39
+00:03:27,740 --> 00:03:37,480
+So we're going to your color ball and we'll give it with 15 a high of 15 and a border radius of eight.
+
+40
+00:03:37,550 --> 00:03:39,910
+And that way it will be a perfect circle.
+
+41
+00:03:40,240 --> 00:03:45,460
+And then we can come up here and say touchable without feedback because we are going to want to be able
+
+42
+00:03:45,460 --> 00:03:49,560
+to touch this and trigger some sort of event to happen.
+
+43
+00:03:54,990 --> 00:04:03,690
+And then inside of here we're going to create an animated view and pasand style and new styles.
+
+44
+00:04:03,690 --> 00:04:05,560
+What color ball
+
+45
+00:04:08,570 --> 00:04:13,050
+Additionally we want the background color of our ball to be driven based upon state.
+
+46
+00:04:13,310 --> 00:04:20,330
+So we're going to to create a style we'll just create a contrast color style equals background color
+
+47
+00:04:20,360 --> 00:04:28,730
+and this state color and how we can pass this in and if we refresh.
+
+48
+00:04:28,730 --> 00:04:36,130
+So we now have our 15 by 15 ball and it's black driven based upon our state.
+
+49
+00:04:36,140 --> 00:04:40,350
+So with this we now need to create another view to the right of it.
+
+50
+00:04:40,400 --> 00:04:48,020
+So when would say View style equals styles row so we can style this row and this will be the container
+
+51
+00:04:48,020 --> 00:04:52,810
+for both our buttons and for our button and input.
+
+52
+00:04:53,120 --> 00:04:59,540
+So to save a little bit of time I'm just going to paste in all the buttons that I have and they're are
+
+53
+00:04:59,540 --> 00:05:04,310
+going to be wrapped in touchable pasties because you just want to show that they can still be triggered.
+
+54
+00:05:04,550 --> 00:05:08,620
+And then we're going to use our animated icons because we want to animate these later.
+
+55
+00:05:08,720 --> 00:05:13,990
+So if we save this and refresh you'll see that we are in a calm fashion for our row.
+
+56
+00:05:14,060 --> 00:05:16,410
+So we need to now go tile our rows.
+
+57
+00:05:16,430 --> 00:05:20,470
+It will be appropriately the appropriate direction.
+
+58
+00:05:20,780 --> 00:05:23,150
+So we're going to create a row here
+
+59
+00:05:26,080 --> 00:05:31,830
+and inside of this we're going to build a flex one so it'll take up all of the available space.
+
+60
+00:05:31,880 --> 00:05:41,480
+We're not going to do a line items center and then justify content to space around so that there's even
+
+61
+00:05:41,480 --> 00:05:44,560
+space around each of the icons.
+
+62
+00:05:44,610 --> 00:05:47,120
+They're going to do flex action row.
+
+63
+00:05:47,150 --> 00:05:48,320
+So they're in a row.
+
+64
+00:05:48,340 --> 00:05:49,520
+It's dialing.
+
+65
+00:05:49,520 --> 00:05:51,950
+And then we're just going to give it overflow.
+
+66
+00:05:51,950 --> 00:05:54,020
+Hidden.
+
+67
+00:05:54,110 --> 00:06:01,170
+Now when you refresh we have appropriate spacing between each of the icons and they're each touchable
+
+68
+00:06:01,950 --> 00:06:07,440
+and they're in the center aligned with our colorable.
+
+69
+00:06:07,530 --> 00:06:14,670
+So now that we have the icons let's add the input and the button right over the top of the icon so that
+
+70
+00:06:14,670 --> 00:06:21,240
+we know all of the pieces that we have to animate So that will be in this container here.
+
+71
+00:06:22,110 --> 00:06:25,480
+Because we'll need to animate the outside of the container.
+
+72
+00:06:25,670 --> 00:06:27,870
+We're going to make it an animated view.
+
+73
+00:06:29,410 --> 00:06:39,800
+And we'll be able to put our animated text input in there as well as our touchable without feedback.
+
+74
+00:06:44,830 --> 00:06:49,990
+Which will drive our animated view which will be our button
+
+75
+00:06:53,660 --> 00:06:57,590
+and then it will have some text that says OK
+
+76
+00:07:00,980 --> 00:07:08,120
+for our rapping or our animated view that wraps all of this we're going to give it a style to use the
+
+77
+00:07:08,290 --> 00:07:11,700
+style sheet talk absolute fill.
+
+78
+00:07:11,930 --> 00:07:21,070
+Now that this is below our buttons and covering the entire view our entire row view if we go back here
+
+79
+00:07:21,610 --> 00:07:28,010
+and see that we can't actually touch anything because it's covering all of this.
+
+80
+00:07:28,060 --> 00:07:34,480
+So that means that when we have two views rendering we're going to need to use our pointer events technique
+
+81
+00:07:34,780 --> 00:07:38,740
+to toggle whether or not this you can receive touches or not.
+
+82
+00:07:39,570 --> 00:07:42,450
+So first let's style our color row wrap.
+
+83
+00:07:42,480 --> 00:07:55,130
+We're going to pass it styles color row wrap and then let's go add those and will say color wrap and
+
+84
+00:07:55,140 --> 00:07:59,170
+we're going to make it flex direction row so it's the same as everything else.
+
+85
+00:07:59,350 --> 00:08:05,350
+Flex 1 and then just on the left side to where the color ball is we can see that it's right up against
+
+86
+00:08:05,350 --> 00:08:08,880
+that color ball string and say padding left five.
+
+87
+00:08:09,100 --> 00:08:14,720
+So now if we refresh we can see that the input has no spacing.
+
+88
+00:08:14,890 --> 00:08:18,830
+And then our ok is button right there should say that our.
+
+89
+00:08:18,960 --> 00:08:22,100
+Our input has no layout no sizing.
+
+90
+00:08:22,150 --> 00:08:27,570
+So we're going to give it some size which to say flex 1 and say take up of the space.
+
+91
+00:08:27,690 --> 00:08:32,800
+And because it this be in the same container as our ok button.
+
+92
+00:08:33,750 --> 00:08:35,310
+We can just give our ok button.
+
+93
+00:08:35,350 --> 00:08:45,020
+Some specific styling we're going to give it a border radius of 20 with a width of 40 so that it's a
+
+94
+00:08:45,020 --> 00:08:50,380
+circle and to have a height of 100 percent to take up all up and down.
+
+95
+00:08:51,150 --> 00:08:58,020
+Area going at a background color of 3 0 9 Eby which is the blue color.
+
+96
+00:08:58,260 --> 00:09:08,020
+And then we're going to these line items center and justify content center to center our text and then
+
+97
+00:09:08,020 --> 00:09:15,350
+for our Okay text are just the same color white.
+
+98
+00:09:15,380 --> 00:09:20,600
+So sometimes I do this whenever I set up my views.
+
+99
+00:09:20,600 --> 00:09:27,170
+I'll just run through and figure out exactly what stylings need to happen to those views to make them
+
+100
+00:09:27,170 --> 00:09:29,180
+stack correctly once they're there.
+
+101
+00:09:29,330 --> 00:09:35,500
+Once I have rendered them so pass and our style equals styles the input and this is going to be our
+
+102
+00:09:35,920 --> 00:09:39,100
+style equals styles that OK button.
+
+103
+00:09:39,340 --> 00:09:41,740
+And then this is in the style equals styles.
+
+104
+00:09:41,880 --> 00:09:42,790
+OK.
+
+105
+00:09:43,030 --> 00:09:45,980
+Text and now when we refresh.
+
+106
+00:09:46,300 --> 00:09:48,310
+We kind of have everything laid out correctly.
+
+107
+00:09:48,310 --> 00:09:55,020
+Our input is right here taking up all the available space and then our button is defined over here.
+
+108
+00:09:56,630 --> 00:10:03,070
+Now that we have all of our views set up we can now start doing the transitions with our animations.
+
+109
+00:10:03,960 --> 00:10:07,760
+The first thing I'll do is just the toggling of this entire thing.
+
+110
+00:10:07,800 --> 00:10:11,870
+So we're going to come up to our handle toggle say conc to value.
+
+111
+00:10:12,090 --> 00:10:19,530
+So you could do this to square open zero or one is going to store the toggling of it on the component
+
+112
+00:10:19,530 --> 00:10:20,890
+instance.
+
+113
+00:10:20,940 --> 00:10:25,950
+The reason why is we only care about the pointer events technique for this one which with the pointer
+
+114
+00:10:25,950 --> 00:10:31,560
+events technique we need to store a particular value on state to trigger a rear under cover in our case
+
+115
+00:10:31,560 --> 00:10:38,030
+we don't care whether or not this thing is open enough then we'll do an animated spring on this state.
+
+116
+00:10:38,160 --> 00:10:51,440
+Animation to value and call start and then we will toggle this dot open equals not this dot open the
+
+117
+00:10:51,440 --> 00:10:54,760
+animation will now all run off of interpellation.
+
+118
+00:10:54,800 --> 00:10:57,340
+Which means that it will be completely reversible.
+
+119
+00:10:57,530 --> 00:11:04,910
+So now we need to set up our conc Rowe style and we'll just right off the bat at a few different things
+
+120
+00:11:04,910 --> 00:11:07,030
+driven off of 0 to 1.
+
+121
+00:11:07,040 --> 00:11:09,750
+So the things driven off of 0 to 1 will be our opacity.
+
+122
+00:11:10,040 --> 00:11:19,580
+So zero it will be hidden and at 1 it will be visible and then we'll add in or transform and we'll pass
+
+123
+00:11:19,580 --> 00:11:30,860
+and a translate or scale Y and past and see the animation so it will scale the y from here to here correctly
+
+124
+00:11:31,370 --> 00:11:36,540
+and then we need to control the scale x which will then be the width and height expansion.
+
+125
+00:11:36,740 --> 00:11:42,690
+And then also the movement from down here to look like it's erupting from the button.
+
+126
+00:11:42,700 --> 00:11:48,440
+So now with just these two animations if we take our pro-style and pass it into our VRO
+
+127
+00:11:52,010 --> 00:12:00,980
+and then we'll refresh and then trigger this and see that it just kind of has a opacity and it's Calle
+
+128
+00:12:00,980 --> 00:12:05,340
+y kind of rotate effects.
+
+129
+00:12:05,410 --> 00:12:10,040
+However we want it to start from the button and explode out and explode.
+
+130
+00:12:10,780 --> 00:12:12,190
+Up and out.
+
+131
+00:12:12,370 --> 00:12:22,950
+So we're going to define our Konst scale x inter-relate and this be this animation to interpolate this
+
+132
+00:12:22,950 --> 00:12:23,400
+back
+
+133
+00:12:26,290 --> 00:12:31,900
+and our input range will define as zero point five and 1.
+
+134
+00:12:31,930 --> 00:12:40,080
+So we do a point five click here so that we will execute the x direction of our scale until after half
+
+135
+00:12:40,080 --> 00:12:42,200
+the animation is completed.
+
+136
+00:12:42,200 --> 00:12:46,790
+So a passenger input range 0 0 and then 1.
+
+137
+00:12:46,880 --> 00:12:50,100
+So let's pass a Senate and see what effect that has had.
+
+138
+00:12:50,100 --> 00:12:51,210
+So skill X
+
+139
+00:12:54,050 --> 00:12:55,240
+be fresh.
+
+140
+00:12:55,400 --> 00:12:57,080
+Watch the watch it here.
+
+141
+00:12:58,560 --> 00:13:06,460
+So we see that it is scaling it's Y and then it's X is moving it from the center outwards.
+
+142
+00:13:06,520 --> 00:13:12,620
+Then finally we need to set up our scale wise and say conc or translate why I should say translate.
+
+143
+00:13:12,620 --> 00:13:16,250
+Why interpolate because of this Up-State animation.
+
+144
+00:13:16,330 --> 00:13:24,450
+Interpolate input range 0 to 1 in our output range at zero.
+
+145
+00:13:24,880 --> 00:13:31,170
+We want it to be moved down roughly here so about 150 and then once it hits one meaning it's open.
+
+146
+00:13:31,180 --> 00:13:34,440
+We don't want it to be anything we want it to be sitting right up here.
+
+147
+00:13:34,720 --> 00:13:38,530
+So we can take that precedents to translate.
+
+148
+00:13:38,810 --> 00:13:40,980
+Why.
+
+149
+00:13:41,200 --> 00:13:46,600
+And now to refresh we toggle it it move from here and explode upwards and outwards
+
+150
+00:13:52,330 --> 00:13:59,070
+and now we need to define and work with hiding this input and this button.
+
+151
+00:13:59,320 --> 00:14:06,080
+So we're going to set up a contest move and interpolate and operate off of the button animation.
+
+152
+00:14:06,080 --> 00:14:11,790
+I know we haven't animated this yet but we'll set it up and then we'll control our animation later.
+
+153
+00:14:11,810 --> 00:14:17,180
+So they're going to interpret and this will be an input range of 0 to 1 as well.
+
+154
+00:14:19,230 --> 00:14:24,840
+And our output range will be starting at negative 115 moving to zero.
+
+155
+00:14:24,840 --> 00:14:30,690
+This will be passed into a translate X sort of move it roughly over here somewhere so that we have the
+
+156
+00:14:30,690 --> 00:14:40,480
+button kind of explode out towards zero which is in its position now so say cartes button style equal
+
+157
+00:14:40,480 --> 00:14:43,110
+to transform.
+
+158
+00:14:43,320 --> 00:14:51,800
+And the first way to translate x to a person or move interpolate and then to also make it small and
+
+159
+00:14:51,800 --> 00:15:00,050
+then scale out to its normal size pasand scale and passages state button animation because already moving
+
+160
+00:15:00,050 --> 00:15:01,810
+from 0 to 1.
+
+161
+00:15:02,240 --> 00:15:08,510
+So with this button style Let's go ahead and pass that in to our button down here which is here and
+
+162
+00:15:08,510 --> 00:15:10,880
+our touch type feedback animated view.
+
+163
+00:15:13,600 --> 00:15:21,850
+So because we have one animation already set up let's go trigger what happens when we press on our animated
+
+164
+00:15:22,400 --> 00:15:23,540
+colored ball here.
+
+165
+00:15:23,770 --> 00:15:31,660
+So that's just going to be a function called toggle input and here will do a very similar thing to what
+
+166
+00:15:31,660 --> 00:15:43,350
+we did up above where it is a contest to value equals this dot and put Open 0 and 1 and we'll also save
+
+167
+00:15:43,350 --> 00:15:45,640
+up the input open on our state in a second.
+
+168
+00:15:45,660 --> 00:15:48,110
+But we're going to just worry about that later.
+
+169
+00:15:48,190 --> 00:15:57,730
+The animated timing does not state that button animation to value duration of 350 milliseconds we'll
+
+170
+00:15:57,750 --> 00:16:07,030
+call start and then we'll toggle this input open to not start input input open.
+
+171
+00:16:07,190 --> 00:16:12,980
+Now that we have this toggle input function come down to our colorable with a touch without feedback
+
+172
+00:16:12,980 --> 00:16:22,050
+we'll say on press equal to this total input and now we refresh this and we open it up our button is
+
+173
+00:16:22,050 --> 00:16:22,950
+now gone.
+
+174
+00:16:22,950 --> 00:16:30,780
+Our input still there but if we trigger our button animation we can see that our ball explodes from
+
+175
+00:16:31,170 --> 00:16:36,850
+somewhere around here into its original position or its layout position.
+
+176
+00:16:38,040 --> 00:16:41,000
+Now we're going to deal with our text input.
+
+177
+00:16:41,040 --> 00:16:43,850
+We haven't actually completed setting up our text input.
+
+178
+00:16:43,950 --> 00:16:49,320
+We're gonna need to pass in the value which we have on this state color.
+
+179
+00:16:49,530 --> 00:16:56,010
+We're going to have to pass in something to update the state so on change text.
+
+180
+00:16:56,250 --> 00:17:00,310
+Now give us a text value and say this does set state
+
+181
+00:17:05,700 --> 00:17:10,190
+and then here we're going to get our ref to our input so that afterwards we can actually focus on it.
+
+182
+00:17:10,200 --> 00:17:17,730
+So the users can type it in as well as potentially blur after the fact to say this input is equal to
+
+183
+00:17:18,330 --> 00:17:19,350
+input.
+
+184
+00:17:19,500 --> 00:17:24,780
+So there we have that set up a free refresh and open this up so that we have our color sitting right
+
+185
+00:17:24,780 --> 00:17:31,760
+here and if we add to it it changes to blue or whatever color we type in.
+
+186
+00:17:31,850 --> 00:17:37,340
+And now we can control the animation for our enemy to text input which is just going to be an opacity
+
+187
+00:17:37,340 --> 00:17:42,830
+animation once or button kind of expands past all available text that could be input.
+
+188
+00:17:42,860 --> 00:17:45,610
+Real slow will fade it in pretty quickly.
+
+189
+00:17:45,860 --> 00:17:49,820
+So let's come up here and do an interpolation on our button animation.
+
+190
+00:17:49,820 --> 00:17:58,530
+Scott's input opacity and interpolate of this state animation button animation we want to operate off
+
+191
+00:17:58,530 --> 00:18:05,290
+our button animation and interpret passenger input range and zero.
+
+192
+00:18:05,290 --> 00:18:13,620
+When you say point eight point Cliff to one that are output range will be 0 0 and then 1.
+
+193
+00:18:13,940 --> 00:18:17,590
+So that way it's hidden for about 80 percent of the animation.
+
+194
+00:18:17,720 --> 00:18:20,080
+And then will quickly appear.
+
+195
+00:18:20,360 --> 00:18:28,250
+And now we can craft our input Silas's at concerts and put style Sugata opacity passenger input opacity
+
+196
+00:18:28,250 --> 00:18:29,510
+and interpolate.
+
+197
+00:18:29,510 --> 00:18:38,100
+And then we can bring it down here to our animated text input and we'll combine these and when we refresh
+
+198
+00:18:38,370 --> 00:18:42,060
+and open this up see that our input is gone.
+
+199
+00:18:42,060 --> 00:18:46,690
+And then when we chigger our animation here it fades in.
+
+200
+00:18:46,690 --> 00:18:48,550
+Once this is kind of gone by it.
+
+201
+00:18:48,670 --> 00:19:00,010
+And then also the reverse so rather than just adding a white background to our color wrap row you're
+
+202
+00:19:00,060 --> 00:19:07,290
+going to actually hide and move are touchable are animals and icons so it looks like they are actually
+
+203
+00:19:07,290 --> 00:19:12,070
+animating in the opposite direction as our expanding button.
+
+204
+00:19:12,330 --> 00:19:15,490
+So let's come up here and we're going to set up an interplay.
+
+205
+00:19:15,690 --> 00:19:24,620
+Say Konst icon translate because of this state button animation and interpolate an input range.
+
+206
+00:19:24,630 --> 00:19:31,170
+We'll have to go from 0 to 1 but we're going to be doing reverse values so at zero we don't want our
+
+207
+00:19:31,170 --> 00:19:32,810
+thing to do anything.
+
+208
+00:19:32,880 --> 00:19:40,330
+And then as we animate open our button we want to move it negative 20 and then we'll do an inter-relate
+
+209
+00:19:40,350 --> 00:19:41,880
+for the opacity as well.
+
+210
+00:19:41,890 --> 00:19:54,570
+We'll say Konst opacity Ican interpret this state animation button animation that interpolate put on
+
+211
+00:19:54,620 --> 00:19:57,920
+input range and we'll just go from zero to point two.
+
+212
+00:19:57,920 --> 00:19:59,450
+So this will happen very quickly.
+
+213
+00:19:59,450 --> 00:20:06,290
+This will happen in the first 20 percent of our animation output range which would be one of the visible
+
+214
+00:20:06,290 --> 00:20:10,540
+when the button is closed and then hidden when it's opening.
+
+215
+00:20:10,670 --> 00:20:21,940
+And then you can extrapolate clamp and then we'll create our cost icon style pastie can be opacity.
+
+216
+00:20:21,940 --> 00:20:25,650
+I kind of interpolate and a translate X for a transform
+
+217
+00:20:28,340 --> 00:20:33,970
+like X and pass in our icon translate.
+
+218
+00:20:34,090 --> 00:20:36,750
+Now we can apply this to each of our icons.
+
+219
+00:20:36,910 --> 00:20:41,940
+So we're going to say style equals icon style.
+
+220
+00:20:42,000 --> 00:20:46,620
+Just copy and paste this and put it on all of the icons.
+
+221
+00:20:47,010 --> 00:20:54,260
+And now refresh this open and then watch the icons as the button moves.
+
+222
+00:20:55,600 --> 00:20:56,290
+And comes back.
+
+223
+00:20:56,290 --> 00:21:02,660
+So they kind of shift and fade out and look like they're swapping places with that expanding button
+
+224
+00:21:02,660 --> 00:21:04,560
+and view.
+
+225
+00:21:04,650 --> 00:21:07,070
+Finally we need to do one more thing.
+
+226
+00:21:07,320 --> 00:21:10,410
+And if you notice here yes these buttons are visible.
+
+227
+00:21:10,440 --> 00:21:16,860
+However we can't actually touch on them because we are wrapping it and covering it with this absolute
+
+228
+00:21:16,860 --> 00:21:18,310
+filled view.
+
+229
+00:21:18,540 --> 00:21:22,410
+So we need to control the pointer events on our animated view here.
+
+230
+00:21:22,830 --> 00:21:32,470
+So we're going to add pointer events and say this state that input open which we haven't created yet.
+
+231
+00:21:32,890 --> 00:21:41,230
+If it is open to say Otto otherwise and I say none and we can come up to our input open or our state
+
+232
+00:21:42,310 --> 00:21:48,690
+and input open and it will default to false.
+
+233
+00:21:48,720 --> 00:21:57,140
+Now in order to have that take effect read it come down here and say this dot set stay.
+
+234
+00:21:57,300 --> 00:21:59,780
+This is going to be our target input say input.
+
+235
+00:21:59,800 --> 00:22:05,780
+Open is equal to this dot underscore and put open.
+
+236
+00:22:06,050 --> 00:22:14,930
+So now we refresh target open we can press on our buttons and when we open this up they're gone.
+
+237
+00:22:15,170 --> 00:22:16,340
+Go back
+
+238
+00:22:18,910 --> 00:22:20,260
+and they're good to go.
+
+239
+00:22:21,050 --> 00:22:29,220
+Finally for accessibility purposes we want to focus and blur this text input once the animation is complete.
+
+240
+00:22:29,360 --> 00:22:35,680
+So we're actually going to do a callback here which is a component to it update callback.
+
+241
+00:22:35,990 --> 00:22:42,140
+And that way we know that the focus where we know that the pointer events will be able to allow this
+
+242
+00:22:42,140 --> 00:22:43,330
+thing to be touched.
+
+243
+00:22:43,340 --> 00:22:49,450
+So to say if not this does stay open and we do this not because we're actually sugaring and not here
+
+244
+00:22:49,460 --> 00:22:57,700
+so we're doing a double knot but if it's not open anymore and that should be input open if it's not
+
+245
+00:22:57,700 --> 00:23:03,640
+open any more than we say this underscore input which is our raft our input because it's an animated
+
+246
+00:23:04,390 --> 00:23:04,820
+input.
+
+247
+00:23:04,840 --> 00:23:14,790
+We're going to say get node Blar And then if we are open which is this second parameter to this ternary
+
+248
+00:23:14,790 --> 00:23:22,290
+here and I say this does underscore input get node and then focus what this is going to do for us is
+
+249
+00:23:22,290 --> 00:23:27,210
+when we open this up and click on our colorable we're going to have focus on the field.
+
+250
+00:23:27,480 --> 00:23:31,080
+And then when we close it we're going to blur the focus on the field.
+
+251
+00:23:31,080 --> 00:23:39,380
+So if we have our keyboard open now it's open and then close it and the keyboard goes away.
+
+252
+00:23:40,820 --> 00:23:47,840
+And one other thing we can do is come down to our touch both feedback on the OK button and pass it on
+
+253
+00:23:47,840 --> 00:23:55,050
+press calls this toggle input for refresh in our press on this.
+
+254
+00:23:55,130 --> 00:23:56,760
+And it will hide everything.
+
+255
+00:23:56,780 --> 00:24:02,240
+So some of the key kind of takeaways from this is make sure that you have all the lay out set out for
+
+256
+00:24:02,240 --> 00:24:08,990
+your view and then just reverse each piece at a time until you have the animation that you've desired
+
+257
+00:24:08,990 --> 00:24:12,380
+for opening closing and anything else in between.
+
+258
+00:24:12,410 --> 00:24:18,380
+And then also make sure that buttons continue to be touchable and use pointer events when you need to.
+

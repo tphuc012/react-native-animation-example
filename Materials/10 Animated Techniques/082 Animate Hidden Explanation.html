@@ -1,0 +1,319 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>082 Animate Hidden Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Intro</p>
+
+<p>Animated doesn't support unmounting animations, which means you need to manually control whether or not an item will stay mounted via state. However there are issues with this, in that an animation can be interrupted. Interrupted animations won't be the focus of this, but we need to manage them.</p>
+
+
+
+<p>Setup</p>
+
+
+
+<p>We start by setting up an <code>Animated.Value</code> and default it to <code>1</code> as we'll be passing it into <code>opacity</code>. We then also setup a <code>visible</code> of true. This will control whether or not the <code>box</code> is mounted or unmounted.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;import React, { Component } from "react";
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  Animated,
+  TouchableWithoutFeedback,
+} from "react-native";
+
+export default class animations extends Component {
+  state = {
+    animation: new Animated.Value(1),
+    visible: true,
+  };
+
+  render() {
+    return (
+      &lt;View style={styles.container}&gt;
+        {this.state.visible &amp;&amp;
+          &lt;TouchableWithoutFeedback onPress={this.startAnimation}&gt;
+            &lt;Animated.View style={[styles.box]} /&gt;
+          &lt;/TouchableWithoutFeedback&gt;}
+      &lt;/View&gt;
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  box: {
+    width: 150,
+    height: 150,
+    backgroundColor: "tomato",
+  },
+});
+
+AppRegistry.registerComponent("animations", () =&gt; animations);
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Styling</p>
+
+
+
+<p>We add an interpolation to move the box off screen when tapped, and additionally pass in an opacity so it's fading at the same time.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;render() {
+    const translateYInterpolate = this.state.animation.interpolate({
+      inputRange: [0, 1],
+      outputRange: [500, 0],
+    });
+
+    const animatedStyles = {
+      opacity: this.state.animation,
+      transform: [
+        {
+          translateY: translateYInterpolate,
+        },
+      ],
+    };
+    return (
+      &lt;View style={styles.container}&gt;
+        {this.state.visible &amp;&amp;
+          &lt;TouchableWithoutFeedback onPress={this.startAnimation}&gt;
+            &lt;Animated.View style={[styles.box, animatedStyles]} /&gt;
+          &lt;/TouchableWithoutFeedback&gt;}
+      &lt;/View&gt;
+    );
+  }
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Animation</p>
+
+
+
+<p>When our box is pressed we will start our animation to <code>0</code> over <code>1500ms</code>. This gives us time to be able to still tap and interrupt our animation.</p>
+
+
+
+
+
+<p>When an animation is interrupted our callback passed into <code>start</code> is called with an object that has a <code>key</code> of <code>finished</code> which is either true or false. If true it means our animation got to it's destination (in our case 0) without be interrupted. </p>
+
+
+
+
+
+<p>If the button is pressed again our <code>startAnimation</code> would be called again and thus our <code>Animated.timing</code> would be called again. Despite animating to the same value this would interrupt our first animation we declared. Meaning our <code>start</code> would be called with <code>finished</code> as <code>false</code>.</p>
+
+
+
+
+
+<p>Now we can do our logic. Calling the same function may be unlikely, and rather than triggering the same animation (<code>toValue: 0</code>), you would likely change the code path. Whether via a <code>setState</code> to say something is happening, etc.</p>
+
+
+
+
+
+<p>I'm not doing that and instead just calling the same animation. However this will cause issues for us. An animation towards <code>0</code> is already executing, then we'll call a new animation towards <code>0</code>. This will then cause an interrupted animation. When our animation is interrupted it will call our <code>start</code> callback of our previous animation with <code>{finished: false }</code>. We SHOULDN'T trigger another animation on the same value. We would then be triggering an animation to start, at the same time our second <code>toValue: 0</code> animation would be animating.</p>
+
+
+
+
+
+<p>This is why we have the <code>setTimeout</code>. This is a less than ideal solution! We should technically be tracking the animation if it's finished or not, or when an animation starts we toggle a function that is called.</p>
+
+
+
+
+
+<p>We could do something like</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  _finished = true; // on the instance
+
+  startAnimation = () =&gt; {
+    if (this._finished) {
+      Animated.timing(this.state.animation, {
+        toValue: 0,
+        duration: 1500,
+      }).start(({ finished }) =&gt; {
+        if (finished) {
+          this.setState({ visible: false });
+          this._finished = true;
+        }
+      });
+    } else {
+      Animated.spring(this.state.animation, {
+        toValue: 1,
+      }).start();
+    }
+
+    this._finished = false;
+  };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Another method we could use 2 different functions. This is the most likely scenario of how you may want to do it in your actually application. </p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;startAnimation = () =&gt; {
+  this.setState({
+    started: true, 
+  }, () =&gt; {
+    Animated.timing(this.state.animation, {
+      toValue: 0,
+      duration: 1500,
+    }).start(({ finished }) =&gt; {
+      this.setState({
+        visible: !finished,
+        started: false
+      })
+    });
+  });
+};
+
+resetAnimation = () =&gt; {
+  this.setState({ started: false}, () =&gt; {
+    Animated.spring(this.state.animation, {
+      toValue: 1,
+    }).start();
+  });
+}
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Then in our render we need to toggle the function that is called based upon whether or not the animation is running.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;    const onPress = this.state.started ? this.resetAnimation : this.startAnimation;
+
+    return (
+      &lt;View style={styles.container}&gt;
+        {this.state.visible &amp;&amp;
+          &lt;TouchableWithoutFeedback onPress={onPress}&gt;
+            &lt;Animated.View style={[styles.box, animatedStyles]} /&gt;
+          &lt;/TouchableWithoutFeedback&gt;}
+      &lt;/View&gt;
+    );
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Out of some slight laziness, and to keep the code concise I'm going to just use <code>setTimeout</code>. This is slightly less efficient. How the animation would go would be:</p>
+
+
+
+
+
+<p>1) First click =&gt; animate to 0
+2) Second Click Interrupt =&gt; start callback of first click, use setTimeout for next tick
+3) Second Click =&gt; animate to 0
+4) Next tick =&gt; animate to beginning again</p>
+
+
+
+
+
+<p>If it was successfully finished we call <code>setState</code> and hide our box. However if it wasn't finished then we start a new animation and <code>spring</code> it back to where it started.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  startAnimation = () =&gt; {
+    Animated.timing(this.state.animation, {
+      toValue: 0,
+      duration: 1500,
+    }).start(({ finished }) =&gt; {
+      setTimeout(() =&gt; {
+        if (finished) {
+          this.setState({ visible: false });
+        } else {
+          Animated.spring(this.state.animation, {
+            toValue: 1,
+          }).start();
+        }
+      }, 0);
+    });
+  };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+<p><br>Ending</p>
+
+
+
+<p><a href="https://snack.expo.io/BJNfZGDSZ" rel="nofollow">Live Demo</a>
+<a href="https://gitlab.com/codedaily/reactnativeanimations/tree/animateHidden" rel="nofollow">Code</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

@@ -1,0 +1,316 @@
+1
+00:00:00,250 --> 00:00:08,920
+Start by putting scroll view dimensions an animated film Riak native next will the structure of width
+
+2
+00:00:09,540 --> 00:00:16,680
+and height from a dimension stock get call which is a function that takes the winter window which will
+
+3
+00:00:16,680 --> 00:00:19,290
+turn the current dimensions of the phone screen.
+
+4
+00:00:19,290 --> 00:00:24,480
+Now Lego set up our state an acting structure pretty epic this state is equal to an object will create
+
+5
+00:00:24,480 --> 00:00:30,240
+an animated scroll state variable and assign a new animated value with the default value of zero.
+
+6
+00:00:30,270 --> 00:00:40,920
+Next inside of a container will create a scroll view close of our school you and all the properties
+
+7
+00:00:41,190 --> 00:00:49,180
+paging enabled which will cause this groovey just stop on multiples of it's with the horizontal flag
+
+8
+00:00:49,990 --> 00:00:56,620
+scroll event throttle to throttle our scroll event caused to 16 milliseconds and then at or on scroll
+
+9
+00:00:57,830 --> 00:01:08,910
+which will be an animated event which is a function that takes an array for grab native event the content
+
+10
+00:01:08,910 --> 00:01:17,900
+offset and the X of the content offset and assign that to this state that animated scroll.
+
+11
+00:01:17,950 --> 00:01:21,880
+Now it will create a new file which will call a moment.
+
+12
+00:01:21,990 --> 00:01:30,780
+Yes and inside of will create a new reac component and call it moment.
+
+13
+00:01:30,820 --> 00:01:39,730
+Now we'll go back to our app and we'll import our new file that we created.
+
+14
+00:01:39,780 --> 00:01:44,140
+Now go under scroll view and inside of it will do.
+
+15
+00:01:44,170 --> 00:01:55,180
+Images map which takes a function which will get our image and our eye will then return the moment file
+
+16
+00:01:55,180 --> 00:02:04,380
+that we created will pass and he for the index will spread our image so we'll pass on our properties
+
+17
+00:02:04,380 --> 00:02:11,310
+little clearer image and our title now switch over to our moment is that we created our import animated
+
+18
+00:02:12,260 --> 00:02:21,310
+dimension's and touchable without feedback.
+
+19
+00:02:21,330 --> 00:02:24,930
+Now we'll do the same as we did before and we'll say conc with
+
+20
+00:02:28,250 --> 00:02:33,880
+the structure our dimensions Dockett call with the window now could add new style sheets will say conc
+
+21
+00:02:33,890 --> 00:02:43,170
+styles equal style sheet does create a so-called container which will have with the height which are
+
+22
+00:02:43,170 --> 00:02:48,550
+the width of the screen and overflow hidden.
+
+23
+00:02:48,670 --> 00:02:58,550
+Now also create an image style which will add flex 1 and with set to know height set to know no set
+
+24
+00:02:58,550 --> 00:03:05,570
+up or component structure so open this and close it will give our out of you the style styles container
+
+25
+00:03:06,410 --> 00:03:07,760
+style that we created.
+
+26
+00:03:08,040 --> 00:03:20,300
+Now an animated image which will give the source of this stuff start image style will say styles image
+
+27
+00:03:20,840 --> 00:03:24,380
+and also will get the resize mode to sign cover.
+
+28
+00:03:25,760 --> 00:03:27,560
+So now I want to refresh your application.
+
+29
+00:03:27,620 --> 00:03:31,380
+You can see that images are finally loading and the paging is enabled
+
+30
+00:03:35,240 --> 00:03:37,810
+no dials for our title.
+
+31
+00:03:38,040 --> 00:03:52,330
+While at a center justify content value of center text draps style the background color of our G.P.A.
+
+32
+00:03:52,480 --> 00:03:55,180
+0 0 0 and in a passive.
+
+33
+00:03:55,180 --> 00:04:05,680
+Point five padding vertical of 10 and then our title text will be a background color of transparent
+
+34
+00:04:08,340 --> 00:04:22,180
+font size 30 color of white and we will line our text the center now go at our components so we add
+
+35
+00:04:22,180 --> 00:04:31,600
+a view and to give it a style and it be an array and a style sheet absolute fill which will add a left
+
+36
+00:04:31,690 --> 00:04:35,710
+0 0 top zero bottom zero with an absolute position.
+
+37
+00:04:35,740 --> 00:04:43,780
+So this will cover the image Well then at our styles data center inside of here will then add a view
+
+38
+00:04:43,930 --> 00:04:46,530
+and say style equals styles.
+
+39
+00:04:47,550 --> 00:04:57,950
+Text wrap and then inside of here will say text Well then you are this top prop's title.
+
+40
+00:04:58,170 --> 00:05:05,730
+And then we will add our style equals styles title and now in refresh we can see that the title of our
+
+41
+00:05:05,730 --> 00:05:11,110
+drink is in the middle of the screen in order to achieve our parallax effect.
+
+42
+00:05:11,110 --> 00:05:20,670
+We need to add a Konst animated style to be an object that transform key takes an array of transforms
+
+43
+00:05:20,790 --> 00:05:29,490
+and we use the translate X transform well passing this props that translate X we aren't passing down
+
+44
+00:05:29,490 --> 00:05:29,950
+yet.
+
+45
+00:05:30,570 --> 00:05:36,550
+And then we will add that to our image.
+
+46
+00:05:36,570 --> 00:05:43,890
+Now we'll move back to the index and we'll create a function which will call construct get interpreted
+
+47
+00:05:46,560 --> 00:05:54,620
+our function and will take the animated scroll the current index and the current amount of images that
+
+48
+00:05:54,620 --> 00:06:01,930
+we have now set up our interpellation will set apart input range will say conc input range is equal
+
+49
+00:06:01,930 --> 00:06:06,470
+to minus one times the width.
+
+50
+00:06:06,490 --> 00:06:13,600
+This will set up the translate X for the image before it is Swype to then will say I times with which
+
+51
+00:06:13,600 --> 00:06:23,250
+will be the translate X input for where we are at the image and then additional do I plus 1 times with
+
+52
+00:06:23,550 --> 00:06:28,480
+which will be the input range for after we have swept away from the image.
+
+53
+00:06:28,610 --> 00:06:38,830
+Now set up our conc output range and when we are at the first index we'll say 0 0 and then 150 translated
+
+54
+00:06:39,670 --> 00:06:45,280
+and then when we are anywhere else we'll say negative 300 which means that the image will be negative
+
+55
+00:06:45,280 --> 00:06:45,870
+300.
+
+56
+00:06:45,880 --> 00:06:54,840
+As we're swiping towards it it will then move toward 0 and then as we swipe by it it will be at 150.
+
+57
+00:06:54,980 --> 00:07:05,240
+Now will return animated skirl interpret will pass in our input range our output range and then extrapolate
+
+58
+00:07:06,510 --> 00:07:12,750
+clamp which means no matter what happens it will never go past zero negative three hundred or one half
+
+59
+00:07:12,830 --> 00:07:14,610
+or 150 on either side.
+
+60
+00:07:14,610 --> 00:07:21,660
+Now we'll go down for a scroll viewer rendering our moments will set up to translate X property that
+
+61
+00:07:21,660 --> 00:07:30,660
+we're using for animation we'll called Get interpret and pass and this state animated scroll will pass
+
+62
+00:07:30,660 --> 00:07:34,560
+in our current index and then we pass an image is length.
+
+63
+00:07:34,560 --> 00:07:42,370
+Now if a refresher emulator and we swipe we can see that a translate X effect is happening on both images
+
+64
+00:07:48,910 --> 00:07:58,000
+finally we'll go at a separator style will criticized called separator which will be a background color
+
+65
+00:07:58,780 --> 00:08:01,520
+of black position.
+
+66
+00:08:02,540 --> 00:08:14,900
+Absolute top zero bottom zero will give with a five scroll to the top and click Konst get separator
+
+67
+00:08:16,470 --> 00:08:27,260
+is equal to the current index which will turn a view which we will say is a self-closing view because
+
+68
+00:08:27,260 --> 00:08:28,510
+we're putting nothing in the middle.
+
+69
+00:08:30,630 --> 00:08:39,810
+We will give it a key of the current index and we'll say stout equals an array style start separate
+
+70
+00:08:40,950 --> 00:08:53,810
+and then we will say our left is I minus 1 times with minus 2.5.
+
+71
+00:08:53,850 --> 00:08:57,810
+This will cause our separator to be right in the middle of both images.
+
+72
+00:08:57,810 --> 00:09:09,770
+Now we need to render them inside of our scroll view which say re apply no say length is equal to our
+
+73
+00:09:09,860 --> 00:09:13,510
+images length plus 1.
+
+74
+00:09:14,790 --> 00:09:21,000
+This will create an empty array with the length of our images plus 1 in that so that our separator will
+
+75
+00:09:21,000 --> 00:09:24,090
+be rendered on the final screen as well.
+
+76
+00:09:24,090 --> 00:09:31,160
+Say map which will be an arrow function will put in something pointless here will get our index within
+
+77
+00:09:31,170 --> 00:09:36,740
+say arrow function get separator.
+
+78
+00:09:38,480 --> 00:09:46,540
+Will pass in our index and now refresh we can see that a black bar is rendered in between each of our
+
+79
+00:09:46,540 --> 00:09:47,190
+images.
+

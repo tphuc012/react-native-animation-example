@@ -1,0 +1,136 @@
+1
+00:00:00,480 --> 00:00:05,790
+In some cases you may need to move items across the screen whether it be in a drag or just animating
+
+2
+00:00:05,790 --> 00:00:08,160
+them across a screen before they disappear.
+
+3
+00:00:08,190 --> 00:00:12,560
+The appropriate way to use to do this is to use translate.
+
+4
+00:00:12,660 --> 00:00:16,580
+It operates the most performance without also affecting layout.
+
+5
+00:00:17,640 --> 00:00:26,180
+We're going to start by setting up state again and say animation is equal to a new animated value and
+
+6
+00:00:26,190 --> 00:00:30,960
+we're going to set it to zero so that our translate does not start anywhere and does not offset our
+
+7
+00:00:30,960 --> 00:00:32,040
+particular view.
+
+8
+00:00:33,550 --> 00:00:42,340
+We'll then set up our dynamic styles so say Konst animated styles is equal to an object to do a translation.
+
+9
+00:00:42,350 --> 00:00:49,010
+You need to use the transform style and the transform style takes an array of different objects and
+
+10
+00:00:49,010 --> 00:00:50,420
+each object should have a key.
+
+11
+00:00:50,450 --> 00:00:58,850
+And in our case we'll use translate Y and we'll pass in this state to animation we'll then pass our
+
+12
+00:00:58,850 --> 00:01:01,070
+animated styles into our animated view.
+
+13
+00:01:01,110 --> 00:01:08,030
+And we see here we have our array syntax set up so we can combine multiple styles and then finally we'll
+
+14
+00:01:08,030 --> 00:01:10,370
+switch or start we'll create our start animation
+
+15
+00:01:13,870 --> 00:01:23,560
+and will once again use animated talk timing say this outstate animation to value of three hundred a
+
+16
+00:01:23,560 --> 00:01:28,880
+duration of fifteen hundred milliseconds and then we'll call start.
+
+17
+00:01:28,900 --> 00:01:38,310
+So now when we refresh and we press on our box we can see that it animates 300 pixels down translate
+
+18
+00:01:38,330 --> 00:01:44,810
+uses a grid where the 0 0 is the starting Top left point of the particular element.
+
+19
+00:01:44,810 --> 00:01:50,240
+So when you animate the y value 300 positive it will go down.
+
+20
+00:01:50,570 --> 00:01:56,900
+And if you were to translate X it would go from left to right in a positive fashion.
+
+21
+00:01:56,900 --> 00:02:02,240
+So we'll try that we'll switch or translate y to translate X and then we press this it will translate
+
+22
+00:02:02,420 --> 00:02:04,870
+300 pixels to the right off the screen.
+
+23
+00:02:05,860 --> 00:02:08,050
+Now switch this back to translate Y.
+
+24
+00:02:08,480 --> 00:02:16,420
+And in order to make this item go up we need to change this value to negative 300 so positive values
+
+25
+00:02:16,510 --> 00:02:23,890
+will go down for the translate Y and for translate X they will go from left to right and then if you
+
+26
+00:02:24,010 --> 00:02:26,950
+do a negative value it will go up.
+
+27
+00:02:27,070 --> 00:02:33,430
+So let's refresh this and animate from zero to negative 300 and you can see that now our box goes up
+
+28
+00:02:33,490 --> 00:02:36,420
+rather than down.
+
+29
+00:02:36,420 --> 00:02:43,590
+Now we'll switch this back to just 300 and we'll then pass our finish callback function into start and
+
+30
+00:02:43,590 --> 00:02:52,710
+then rather than animating we'll just say this state animation value of zero and that way we won't do
+
+31
+00:02:52,770 --> 00:02:54,750
+any sort of timing animation.
+
+32
+00:02:54,750 --> 00:02:57,740
+We will just literally set the value back to zero.
+
+33
+00:02:57,930 --> 00:03:04,080
+So once this hits the end it'll just reset right back to where it was to be being press on this and
+
+34
+00:03:04,110 --> 00:03:05,340
+it jumps right back.
+

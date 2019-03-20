@@ -1,0 +1,122 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>077 Using Flubber and Animated for Better SVG Path Morphing</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p><a href="https://github.com/veltman/flubber/" rel="nofollow">Flubber</a> is a great library for interpolating SVG paths that will transform more naturally. It can work with both singular paths or multiple svg paths.</p>
+
+<p>Nothing new about this setup, we have 2 paths, however this time we are pulling in <code>interpolate</code> from <code>flubber</code>. I ran into issues installing it due to some weird babel plugin configuration. If you attempt to use this in your own project, check the dev dependencies of the branch and that should help fix any issues.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;import React, { Component } from "react";
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  Animated,
+  TouchableWithoutFeedback,
+} from "react-native";
+import Svg, { Path } from "react-native-svg";
+
+import { interpolate } from "flubber";
+
+const startPath = `M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z`;
+const endPath = `M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z`;
+
+export default class animations extends Component {
+  state = {
+    animation: new Animated.Value(0),
+  };
+
+  handlePress = () =&gt; {
+    Animated.sequence([
+      Animated.timing(this.state.animation, {
+        toValue: 1,
+        duration: 500,
+      }),
+      Animated.delay(1500),
+      Animated.timing(this.state.animation, {
+        toValue: 0,
+        duration: 500,
+      }),
+    ]).start();
+  };
+  render() {
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;TouchableWithoutFeedback onPress={this.handlePress}&gt;
+          &lt;Svg width={150} height={150}&gt;
+            &lt;Path scale={3} d={startPath} stroke="black" ref={path =&gt; (this._path = path)} /&gt;
+          &lt;/Svg&gt;
+        &lt;/TouchableWithoutFeedback&gt;
+      &lt;/View&gt;
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>We create our <code>pathInterpolate</code> passing in the desired startPath and endPath. Then pass in our <code>value</code> between <code>0</code> and <code>1</code> to the interpolator and it will spit out a new path for us to pass along to <code>setNativeProps</code>.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  componentWillMount() {
+    const pathInterpolate = interpolate(startPath, endPath, {
+      maxSegmentLength: 1,
+    });
+
+    this.state.animation.addListener(({ value }) =&gt; {
+      const path = pathInterpolate(value);
+      this._path.setNativeProps({
+        d: path,
+      });
+    });
+  }
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p><img alt="" src="https://images.codedaily.io/animations/flubberTransform.gif"></p>
+
+
+
+
+
+<p><a href="https://gitlab.com/codedaily/reactnativeanimations/tree/svgPathsFlubberAnimated" rel="nofollow">Code</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

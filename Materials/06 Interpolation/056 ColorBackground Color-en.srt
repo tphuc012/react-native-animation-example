@@ -1,0 +1,112 @@
+1
+00:00:00,900 --> 00:00:04,170
+With animated animated values are just numbers.
+
+2
+00:00:04,180 --> 00:00:08,410
+However in order to do colors we must use interpellation.
+
+3
+00:00:08,440 --> 00:00:14,150
+So now let's go down to a render function and set up and interpolate space say conc color and interpolate
+
+4
+00:00:15,500 --> 00:00:24,340
+to this state animation that interpolate which would take an input Prange and will say 0 1 and 2.
+
+5
+00:00:24,370 --> 00:00:29,080
+That way we can define a three step color when interpolating colors.
+
+6
+00:00:29,110 --> 00:00:33,430
+They must be in R G B our G.P.A. or in HCO.
+
+7
+00:00:33,640 --> 00:00:40,570
+So we're going to paste in an output range here and we'll have three colors that go from green to blue
+
+8
+00:00:40,600 --> 00:00:44,480
+to red or red to blue I should say.
+
+9
+00:00:44,580 --> 00:00:55,580
+So now we can set up cots animated styles which passes into a background color and give it our color
+
+10
+00:00:55,580 --> 00:01:00,000
+internally and then we'll pass this into our box.
+
+11
+00:01:00,260 --> 00:01:07,460
+And because we never specified a value down here there was no value of color for our box now because
+
+12
+00:01:07,460 --> 00:01:14,770
+we did default 2.0 our interpellation will say zero maps to this green color.
+
+13
+00:01:14,770 --> 00:01:21,670
+Now if we press on our box because we have a press to trigger an animation we'll go from zero to 2 and
+
+14
+00:01:21,670 --> 00:01:25,520
+watch it step through changing colors regardless of what color it is.
+
+15
+00:01:25,510 --> 00:01:27,710
+It'll figure out how to interpret it to it.
+
+16
+00:01:31,500 --> 00:01:33,360
+Let's set up one more interpellation.
+
+17
+00:01:33,360 --> 00:01:39,840
+We don't we aren't able to interpolate off of inter-relations that output colors because the output
+
+18
+00:01:39,870 --> 00:01:42,900
+of this is not another number to interpolate to.
+
+19
+00:01:43,140 --> 00:01:45,540
+So unlike numbers we can't do that.
+
+20
+00:01:45,540 --> 00:01:53,080
+So we'd have to say Konst background style is equal to background color and we'll just do an inline
+
+21
+00:01:53,130 --> 00:01:57,180
+interpellation here and say this state animation interpolate
+
+22
+00:02:02,380 --> 00:02:10,480
+Well then define an input range of zero to two and then an output range of the same exact color.
+
+23
+00:02:10,720 --> 00:02:12,970
+So they're both a red color.
+
+24
+00:02:13,000 --> 00:02:17,600
+However all we're changing is the alpha channel value.
+
+25
+00:02:17,710 --> 00:02:24,460
+So interpolate will interpolate and animate just the opacity of this particular color.
+
+26
+00:02:24,460 --> 00:02:28,400
+Let's apply our background style to our container and watch it take effect.
+
+27
+00:02:28,420 --> 00:02:34,110
+So when refresh we can see that we have this tomato color and animates from 0 to 2.
+
+28
+00:02:34,150 --> 00:02:36,490
+All that will change is the alpha value.
+

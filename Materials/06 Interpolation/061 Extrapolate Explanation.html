@@ -1,0 +1,530 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>061 Extrapolate Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>The <code>extrapolate</code> key of an <code>interpolate</code> call defines how the interpolation should operate. Additionally you can define <code>extrapolateLeft</code> and <code>extrapolateRight</code> if you need either side of the interpolation to operate differently.</p>
+
+<p>When I say either side I mean depending on the direction the animated value is going will pick the correct extrapolate <code>left/right</code>.</p>
+
+
+
+
+
+<p>Lets look at an example</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;this.state.animation.interpolate({
+  inputRange: [0, 1],
+  outputRange: [0, 100],
+  extrapolateLeft: "clamp",
+  extrapolateRight: "clamp"
+})
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Lets assume our <code>this.state.animation</code> is starting at <code>0</code>. If we trigger an animation to <code>2</code>. The <code>extrapolateRight</code> will apply once we exceed <code>1</code>. If we then animate back to <code>0</code>, once the animated value hits <code>0</code> and or goes beyond <code>0</code> then our <code>extrapolateLeft</code> will be applied.</p>
+
+
+
+
+
+<p>Generally you'll define the same extrapolate on either side and can just use the <code>extrapolate</code> key to define that.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;this.state.animation.interpolate({
+  inputRange: [0, 1],
+  outputRange: [0, 100],
+  extrapolate: "clamp",
+})
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>There are 3 values that are accepted for extrapolation. The default is <code>extend</code>. </p>
+
+
+
+
+
+<p>Extend</p>
+
+
+
+<p>Extend tells extrapolate to figure out the rate of change happening once the inputRange is exceeded and continue to interpolate. Because it's the default you don't have to add it in as an extrapolate.</p>
+
+
+
+
+
+<p>If we were to trigger an animation to <code>2</code> the interpolation will continue extending past 100. Our value will continue on to be <code>200</code>.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;this.state.animation.interpolate({
+  inputRange: [0, 1],
+  outputRange: [0, 100],
+});
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Lets prove this with some code.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;export default class animations extends Component {
+
+  state = {
+    animation: new Animated.Value(0)
+  }
+  componentDidMount() {
+    Animated.timing(this.state.animation, {
+      toValue: 2,
+    }).start();
+  }
+
+  render() {
+    const animatedStyles = {
+      height: this.state.animation.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, 100],
+      })
+    }
+
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;Animated.View style={[styles.box, animatedStyles]} /&gt;
+      &lt;/View&gt;
+    );
+
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  box: {
+    width: 100,
+    backgroundColor: "tomato",
+  }
+});
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Our height will start at <code>0</code>, grow to <code>100</code> via the interpolate, and then because the <code>default</code> is extend it will continue to grow at the same pace that it was previously at. So it will grow to <code>200</code> in size.</p>
+
+
+
+
+
+<p><img alt="" src="https://images.codedaily.io/animations/extrapolateExtend.png">;</p>
+
+
+
+
+
+<p>Clamp</p>
+
+
+
+<p>Taking advantage of extrapolate is going to happen more with transforms than it is with height. Often you might be scaling an animation but only from <code>0</code> to <code>1</code> . However with the <code>extend</code> extrapolate it could easily scale to twice the size and we do not want that. </p>
+
+
+
+
+
+<p>Here is what it would look like before we apply our <code>clamp</code>, with the box growing to 2 times it's size because it still has the default <code>extrapolate: "extend"</code>.</p>
+
+
+
+
+
+<p><img alt="" src="https://images.codedaily.io/animations/extrapolateClampScale.gif"></p>
+
+
+
+
+
+<p>Now we apply our clamp</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;export default class animations extends Component {
+  state = {
+    animation: new Animated.Value(0),
+  };
+  componentDidMount() {
+    Animated.timing(this.state.animation, {
+      toValue: 2,
+    }).start();
+  }
+
+  render() {
+    const animatedStyles = {
+      transform: [
+        {
+          scale: this.state.animation.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 1],
+            extrapolate: "clamp",
+          }),
+        },
+      ],
+    };
+
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;Animated.View style={[styles.box, animatedStyles]} /&gt;
+      &lt;/View&gt;
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  box: {
+    height: 100,
+    width: 100,
+    backgroundColor: "tomato",
+  },
+});
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>And now we get the scale rising to <code>1</code> half way through the animation and stopping.</p>
+
+
+
+
+
+<p><img alt="" src="https://images.codedaily.io/animations/extrapolateClampScaleStop.gif"></p>
+
+
+
+
+
+<p>Identity</p>
+
+
+
+<p>Once our animated value passes our <code>inputRange</code> the <code>identity</code> extrapolate will tell the interpolation to completely ignore the <code>inputRange</code> and just use the value of the animated value.</p>
+
+
+
+
+
+<p>We can see in our code below, we are animating to <code>2</code> but our <code>outputRange</code> is only scaling the box to <code>.2</code>. Once our animated value gets to beyond <code>1</code> our <code>inputRange</code> no longer applies, and our <code>scale</code> will apply the value of our <code>this.state.animation</code>. </p>
+
+
+
+
+
+<p>You'll see a jump in the animation from <code>.2</code> to <code>1</code> and then continue to grow to <code>2</code>.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;export default class animations extends Component {
+  state = {
+    animation: new Animated.Value(0),
+  };
+  componentDidMount() {
+    Animated.timing(this.state.animation, {
+      toValue: 2,
+    }).start();
+  }
+
+  render() {
+    const animatedStyles = {
+      transform: [
+        {
+          scale: this.state.animation.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, .2],
+            extrapolate: "identity",
+          }),
+        },
+      ],
+    };
+
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;Animated.View style={[styles.box, animatedStyles]} /&gt;
+      &lt;/View&gt;
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  box: {
+    height: 100,
+    width: 100,
+    backgroundColor: "tomato",
+  },
+});
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p><img alt="" src="https://images.codedaily.io/animations/extrapolateIdentity.gif"></p>
+
+
+
+
+
+<p>Mixing Extrapolates</p>
+
+
+
+<p>Lets see what animated effects mixing extrapolates can cause. We start by setting up a gesture example.</p>
+
+
+
+
+
+<p>However you can see that we aren't actually attaching the gestures to the box. We are attaching them to the container element</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;&lt;View style={styles.container} {...this._panResponder.panHandlers}&gt;
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>This is going to allow us to touch and drag anywhere and it'll effect the box properties.</p>
+
+
+
+
+
+<p>Also for the sake of visualization I've added</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;    this.state.animation.y.addListener(({ value }) =&gt; {
+      this.setState({
+        value
+      })
+    });
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>DO NOT DO THIS IN PRACTICE. Calling <code>setState</code> every time the event listener is called is going to cause way too many updates in real practice. This is purely for visualizing the current value of our animation drag.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;import React, { Component } from "react";
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  Animated,
+  PanResponder,
+  Dimensions
+} from "react-native";
+
+export default class animations extends Component {
+  state = {
+    animation: new Animated.ValueXY(0),
+    value: 0,
+  };
+
+  componentWillMount() {
+
+    this.state.animation.y.addListener(({ value }) =&gt; {
+      this.setState({
+        value
+      })
+    });
+
+    this._panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: () =&gt; true,
+      onMoveShouldSetPanResponder: () =&gt; true,
+      onPanResponderGrant: (e, gestureState) =&gt; {
+        this.state.animation.extractOffset();
+      },
+      onPanResponderMove: Animated.event([
+        null,
+        { dx: this.state.animation.x, dy: this.state.animation.y },
+      ]),
+    });
+  }
+
+  render() {  
+    const { height } = Dimensions.get("window");  
+    return (
+      &lt;View style={styles.container} {...this._panResponder.panHandlers}&gt;
+        &lt;Animated.View 
+          style={[styles.box, animatedStyle]}
+        &gt;
+          &lt;Text&gt;{Math.round(this.state.value)}/{Math.round(height/3)}&lt;/Text&gt;
+        &lt;/Animated.View&gt;
+      &lt;/View&gt;
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  box: {
+    width: 75,
+    height: 75,
+    backgroundColor: "tomato",
+  },
+});
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Now we'll setup our interpolation purely on the <code>y</code> of our drag. And cap the right side with a <code>clamp</code>. Meaning when we have dragged to the <code>height/3</code> it will stop and not scale anymore than <code>1</code>.</p>
+
+
+
+
+
+<p>However as we touch and drag up and cause our <code>y</code> value to head towards <code>0</code> and then negative. Our value will continue to extend and grow. Because we are passing it into scale we will actually flip the box around.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;    var scaleAndFlipOnReverse = this.state.animation.y.interpolate({
+      inputRange: [0, height / 3],
+      outputRange: [0.1, 1],
+      extrapolateLeft: "extend",
+      extrapolateRight: "clamp",
+    });
+
+    const animatedStyle = { 
+      transform: [
+        { scale: scaleAndFlipOnReverse },
+      ] 
+    };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p><a href="https://snack.expo.io/SyVkX_0S-" rel="nofollow">Live Demo</a></p>
+
+
+
+
+
+<p><a href="https://gitlab.com/codedaily/reactnativeanimations/tree/mixedExtrapolate" rel="nofollow">Code</a></p>
+
+
+
+
+
+<p><img alt="" src="https://images.codedaily.io/animations/mixedExtrapolate.gif"></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

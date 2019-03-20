@@ -1,0 +1,124 @@
+1
+00:00:00,600 --> 00:00:04,170
+This is another animation found on you eye movement.
+
+2
+00:00:04,380 --> 00:00:07,490
+You can see that we have a sort of color picture here.
+
+3
+00:00:07,650 --> 00:00:12,680
+And when we press on the color there's an expansion out.
+
+4
+00:00:12,990 --> 00:00:20,550
+We can download the gift here from dribble after pressing on it and it is made by Nick Frost.
+
+5
+00:00:20,550 --> 00:00:25,950
+So in our actual animation we won't be modifying the text color bold italic or any of that kind of stuff
+
+6
+00:00:26,310 --> 00:00:31,090
+that can be implemented by you and is beyond the scope of this animation tutorial.
+
+7
+00:00:31,200 --> 00:00:39,490
+But if we pop open we can see that the animation actually starts at this are really being open and we
+
+8
+00:00:39,500 --> 00:00:47,640
+get to action and we can step through so we can see here that decompose what's happening we've pressed
+
+9
+00:00:47,640 --> 00:00:58,580
+on it and this square stays in both views and doesn't change which means that there is likely a container
+
+10
+00:00:58,580 --> 00:01:07,010
+view here that contains both the pulled icon and the headings and all that kind of a button action as
+
+11
+00:01:07,040 --> 00:01:11,700
+well as contains the button that's slowly popping out here.
+
+12
+00:01:11,870 --> 00:01:18,260
+So you can see that it starts with a small button and then it slowly scale up.
+
+13
+00:01:18,280 --> 00:01:27,790
+When you see that frame by frame that the input is already there and so we are slowly expanding this
+
+14
+00:01:28,660 --> 00:01:30,760
+covering box out.
+
+15
+00:01:31,000 --> 00:01:34,540
+Well these are already there so we know that there's going to be two views one is going to be sitting
+
+16
+00:01:34,540 --> 00:01:39,790
+over the top and then there's one going to be sitting on the bottom which contains our buttons.
+
+17
+00:01:39,790 --> 00:01:48,000
+We can keep slow the scaling that button out until our other icons are completely covered.
+
+18
+00:01:48,780 --> 00:01:54,210
+Now we don't need to deal with the reverse because we could just use a 1 zero with inter-relations and
+
+19
+00:01:54,210 --> 00:01:55,980
+have a reversible animation.
+
+20
+00:01:56,010 --> 00:01:59,040
+But now let's take a look at what the close looks like.
+
+21
+00:01:59,040 --> 00:02:13,470
+So here you can see that we are stepping through and that the box here is slowly fading and collapsing.
+
+22
+00:02:13,650 --> 00:02:20,320
+So the outside box is actually causing is actually pulling in.
+
+23
+00:02:20,350 --> 00:02:24,760
+And those bold icons and all that kind of stuff is staying in place.
+
+24
+00:02:24,760 --> 00:02:31,130
+Now this may be slightly difficult to do but we can kind of recreate the same exact effect.
+
+25
+00:02:31,150 --> 00:02:37,810
+Also we scroll back we can see that there is a slight translate and scale happening.
+
+26
+00:02:37,840 --> 00:02:45,080
+So it was in one spot and it slowly is shrinking and moving towards the hello world.
+
+27
+00:02:45,530 --> 00:02:48,650
+And see here now the gap is almost completely gone.
+
+28
+00:02:49,220 --> 00:02:52,280
+It's now inside and kind of behind it.
+
+29
+00:02:52,280 --> 00:02:53,900
+And now it's completely gone.
+
+30
+00:02:54,200 --> 00:02:58,560
+So that's likely just a translate and an opacity on the outside.
+
+31
+00:02:58,610 --> 00:03:03,980
+However we're going to add a different effect with a translate and a scale.
+

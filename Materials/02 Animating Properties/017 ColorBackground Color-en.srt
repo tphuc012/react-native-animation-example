@@ -1,0 +1,200 @@
+1
+00:00:01,040 --> 00:00:07,360
+Animated allows us to also use interpellation to control colors whether it be back on colors or text
+
+2
+00:00:07,360 --> 00:00:08,770
+colors.
+
+3
+00:00:08,770 --> 00:00:15,030
+We're going to start by setting up state is equal to animation and our new animated value.
+
+4
+00:00:15,130 --> 00:00:21,000
+And we're just going to it to zero then we're going to come down to our render function and we're going
+
+5
+00:00:21,000 --> 00:00:25,830
+to first set up our box interpellation that will be a box that you currently don't see because it doesn't
+
+6
+00:00:25,830 --> 00:00:27,360
+have a background color.
+
+7
+00:00:27,570 --> 00:00:33,880
+So it's a contest box interpellation is equal to this state animation.
+
+8
+00:00:34,030 --> 00:00:43,970
+Inter-relate and they will take a configuration object configuration object takes a few different properties.
+
+9
+00:00:44,130 --> 00:00:49,000
+The first one is input range this input range is going to be an array.
+
+10
+00:00:49,230 --> 00:00:53,090
+And it requires items to be in order so 0 to 1.
+
+11
+00:00:53,310 --> 00:00:56,130
+And this is defining a range of our animation.
+
+12
+00:00:56,130 --> 00:01:01,080
+So when you have zero there will be a direct correlation.
+
+13
+00:01:01,080 --> 00:01:04,140
+And when you have one there will be another direct correlation.
+
+14
+00:01:04,230 --> 00:01:11,280
+However it will figure out when the animation is between 0 and 1 what color to pick in it does that
+
+15
+00:01:11,280 --> 00:01:17,610
+by using the output range which also takes an array and we can pass in our colors.
+
+16
+00:01:17,640 --> 00:01:19,780
+This is our tomato color.
+
+17
+00:01:19,800 --> 00:01:26,870
+However interplay only works with our G-B our DPA and other various items.
+
+18
+00:01:26,880 --> 00:01:33,220
+But everything but Hexe but interpolate actually does returns a new animated value.
+
+19
+00:01:33,240 --> 00:01:40,050
+However when the value is requested by the animated view it'll figure out what color or what output
+
+20
+00:01:40,050 --> 00:01:42,210
+range it actually needs to be.
+
+21
+00:01:42,210 --> 00:01:52,320
+So in this case we'll set up a contest box animated style and say background color and we'll pass in
+
+22
+00:01:52,320 --> 00:01:54,390
+our box interpellation.
+
+23
+00:01:54,540 --> 00:01:58,650
+Then take our box animated style and apply it to our view.
+
+24
+00:02:00,140 --> 00:02:08,780
+And now when we refresh we can see that the default value is zero which then hits this particular input
+
+25
+00:02:08,780 --> 00:02:13,960
+range and output this particular color which happens to be tomato.
+
+26
+00:02:14,060 --> 00:02:17,120
+We then pass a background color and into our enemy to view.
+
+27
+00:02:17,180 --> 00:02:21,170
+And here we are now styling our background color.
+
+28
+00:02:21,280 --> 00:02:24,820
+You can interpolate more than once on this same animation.
+
+29
+00:02:24,820 --> 00:02:33,640
+So we're going to say Konst color interpellation or this state animation inter-relate which then will
+
+30
+00:02:33,640 --> 00:02:38,770
+take our input range of 0 and 1 and then an output range.
+
+31
+00:02:38,890 --> 00:02:44,260
+And in this case we're going to do the reverse so we're going to do the other color here and then trend's
+
+32
+00:02:44,470 --> 00:02:54,940
+interpret to our tomato color this color interpellation will then be passed into our Konst text animated
+
+33
+00:02:55,090 --> 00:03:03,080
+style and say color pass and our color interpretation then we'll take that and put it here.
+
+34
+00:03:03,860 --> 00:03:08,990
+On our animated Texas style is equal to Tex animated style.
+
+35
+00:03:08,990 --> 00:03:15,270
+So now one refreshed we can see that we have a tomato background with a purple interior color.
+
+36
+00:03:16,690 --> 00:03:25,560
+And now we're ready to go set up our start animation Well then say animated timing pass in this state
+
+37
+00:03:25,700 --> 00:03:27,430
+to animation.
+
+38
+00:03:27,460 --> 00:03:33,880
+So to value of one over the course of 1300 milliseconds and then call start
+
+39
+00:03:37,730 --> 00:03:50,230
+now when we refresh and we press on our box you can see that it transitions from blue to orange and
+
+40
+00:03:50,230 --> 00:04:03,630
+then if we enter a back and say animated timing state to animation to value of 0 rather than one over
+
+41
+00:04:03,630 --> 00:04:11,470
+the course of 1300 milliseconds and then call start refreshed this press.
+
+42
+00:04:11,610 --> 00:04:15,940
+You see that goes one way and then comes back.
+
+43
+00:04:15,950 --> 00:04:23,210
+This shows that over the course of this animated timing this value of this state's animation that we're
+
+44
+00:04:23,210 --> 00:04:28,490
+interpretating on is not always going to be exactly zero or exactly what it's going to be a range and
+
+45
+00:04:28,490 --> 00:04:35,720
+interpolate takes the output ranges and the values that are in between 0 1 and then figures out the
+
+46
+00:04:35,720 --> 00:04:41,790
+exact color that it interprets to.
+
+47
+00:04:41,920 --> 00:04:47,440
+And it does not matter which direction that this is animating as we can see that it happened both going
+
+48
+00:04:47,440 --> 00:04:50,040
+forward to one and backwards to zero.
+
+49
+00:04:50,170 --> 00:04:56,800
+It will only just figure out between these two ranges and does not care about which direction the animation
+
+50
+00:04:56,800 --> 00:04:57,480
+is occurring.
+

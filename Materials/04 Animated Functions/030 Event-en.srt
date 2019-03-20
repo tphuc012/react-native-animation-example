@@ -1,0 +1,108 @@
+1
+00:00:01,190 --> 00:00:07,580
+Animated the event is a helper function that will take a configuration and traverse that configuration
+
+2
+00:00:07,640 --> 00:00:13,300
+and then call set value on the animated values that you've passed to it.
+
+3
+00:00:13,310 --> 00:00:18,950
+This is typically used with a scroll of view pan responder and anything else where you just need a function
+
+4
+00:00:18,950 --> 00:00:25,550
+returned and the configuration to traverse the arguments that are called and automatically call set
+
+5
+00:00:25,550 --> 00:00:33,080
+value on your enemy to add value to demonstrate this were going to cause this background to change whenever
+
+6
+00:00:33,080 --> 00:00:34,550
+things are scrolled.
+
+7
+00:00:34,550 --> 00:00:43,860
+So we have an animated value here on State interpretating from orange to blue over 3000.
+
+8
+00:00:44,300 --> 00:00:50,060
+And that is coming from our style's dark content the styles that content is just some fit content with
+
+9
+00:00:50,150 --> 00:00:52,760
+a 3000 pixel height set on it.
+
+10
+00:00:54,060 --> 00:01:01,050
+So on our scroll view we're going to say scroll event throttle is equal to 16.
+
+11
+00:01:01,290 --> 00:01:05,530
+And this is saying we want our onscreen function to be called every 16 milliseconds.
+
+12
+00:01:05,610 --> 00:01:09,330
+And that'll help us achieve 60 frames per second.
+
+13
+00:01:10,470 --> 00:01:14,730
+Now we can define our on scroll function.
+
+14
+00:01:14,730 --> 00:01:20,610
+And typically you would have to do a function here or something else which is then called with an event.
+
+15
+00:01:20,610 --> 00:01:31,410
+We then need to get the native event content offset Y and then we would say this that state that animation
+
+16
+00:01:31,420 --> 00:01:36,510
+that set value this value.
+
+17
+00:01:36,720 --> 00:01:45,180
+This is a little bit robust and so we can add the enemy event helper because we are grabbing the first
+
+18
+00:01:45,390 --> 00:01:47,490
+argument of this function.
+
+19
+00:01:47,490 --> 00:01:50,630
+That means that we need to say animated event.
+
+20
+00:01:51,060 --> 00:01:57,660
+We then pass in an array and whichever index of the array that you put your configuration object is
+
+21
+00:01:57,660 --> 00:02:02,290
+going to be the map to the argument order that is called.
+
+22
+00:02:02,360 --> 00:02:09,830
+So because for the first argument we just want this first index put an object here and say a native
+
+23
+00:02:10,520 --> 00:02:22,170
+event within say content set Y and then this state animation and then we This will then traverse the
+
+24
+00:02:22,470 --> 00:02:30,050
+first event argument that gets called and then automatically call the set value on this that state information.
+
+25
+00:02:30,180 --> 00:02:32,890
+And now that we have this set up for the refresh.
+
+26
+00:02:32,910 --> 00:02:43,270
+This means that as we scroll our enemy values getting set which then this interpolation is being affected
+
+27
+00:02:43,690 --> 00:02:46,140
+and our colors are changing.
+

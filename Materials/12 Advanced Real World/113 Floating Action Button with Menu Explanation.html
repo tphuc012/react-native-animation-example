@@ -1,0 +1,474 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>113 Floating Action Button with Menu Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Intro</p>
+
+<p>A common design paradigm popularized by Material design(?) is a floating action button in the bottom right corner of the screen. In our case we'll be rebuilding the starbucks app pay button. Not only does this have a floating button, it has 2 other floating buttons, and a circular background cover that shoots out to allow you to focus on the options. </p>
+
+
+
+<p>If you need to emphasize a specific piece of content having an animated black background with some opacity that allows you to still see through and keep your context is a great method.</p>
+
+
+
+
+
+<p>Setup</p>
+
+
+
+<p>A standard setup, we have our vector icons, and an animated value. This animated value will only go from <code>0</code> to <code>1</code> so we can keep our animation reversible.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;import React, { Component } from "react";
+import {
+  AppRegistry,
+  StyleSheet,
+  View,
+  Animated,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native";
+
+import Icon from "react-native-vector-icons/MaterialCommunityIcons"
+
+export default class animations extends Component {
+  state = {
+    animation: new Animated.Value(0),
+  };
+  render() {
+    return (
+      &lt;View style={styles.container}&gt;
+
+      &lt;/View&gt;
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
+
+AppRegistry.registerComponent("animations", () =&gt; animations);
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Add Bottom Button</p>
+
+
+
+<p>So first we need to add our main floating action button (FAB). We won't be animating this button, but we will be animating the text.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;return (
+  &lt;View style={styles.container}&gt;
+    &lt;TouchableWithoutFeedback onPress={this.toggleOpen}&gt;
+      &lt;View style={[styles.button, styles.pay]}&gt;
+        &lt;Animated.Text style={[styles.label]}&gt;Pay&lt;/Animated.Text&gt;
+        &lt;Text style={styles.payText}&gt;$5.00&lt;/Text&gt;
+      &lt;/View&gt;
+    &lt;/TouchableWithoutFeedback&gt;
+  &lt;/View&gt;
+);
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>We'll position our button in the corner and create a reusable style so all of our buttons will be the same shape and size. This will allow us to hide them behind our button then animate them visible. Then to make our button green we just add our <code>pay</code> style to add a background color.</p>
+
+
+
+
+
+<p>Additionally we position our text absolutely and render it inside of our button. Without adding any <code>top/left/bottom/right</code> values it'll float freely but still stay centered.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;label: {
+  color: "#FFF",
+  position: "absolute",
+  fontSize: 18,
+  backgroundColor: "transparent",
+},
+button: {
+    width: 60,
+    height: 60,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#333",
+    shadowOpacity: 0.1,
+    shadowOffset: { x: 2, y: 0 },
+    shadowRadius: 2,
+    borderRadius: 30,
+    position: "absolute",
+    bottom: 20,
+    right: 20,
+  },
+  payText: {
+    color: "#FFF",
+  },
+  pay: {
+    backgroundColor: "#00B15E",
+  },
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Add More Buttons</p>
+
+
+
+<p>Now lets add our other buttons. These will need to be animated so we use an <code>Animated.View</code> and choose the appropriate icons. Because our <code>button</code> class is positioning everything in the same spot, and we have placed these buttons above our <code>pay</code> button in the render they will be rendered behind our <code>pay</code> button.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;return (
+  &lt;View style={styles.container}&gt;
+    &lt;TouchableWithoutFeedback&gt;
+      &lt;Animated.View style={[styles.button, styles.other]}&gt;
+        &lt;Animated.Text style={[styles.label]}&gt;Order&lt;/Animated.Text&gt;
+        &lt;Icon name="food-fork-drink" size={20} color="#555" /&gt;
+      &lt;/Animated.View&gt;
+    &lt;/TouchableWithoutFeedback&gt;
+    &lt;TouchableWithoutFeedback&gt;
+      &lt;Animated.View style={[styles.button, styles.other]}&gt;
+        &lt;Animated.Text style={[styles.label]}&gt;Reload&lt;/Animated.Text&gt;
+        &lt;Icon name="reload" size={20} color="#555" /&gt;
+      &lt;/Animated.View&gt;
+    &lt;/TouchableWithoutFeedback&gt;
+    &lt;TouchableWithoutFeedback onPress={this.toggleOpen}&gt;
+      &lt;View style={[styles.button, styles.pay]}&gt;
+        &lt;Animated.Text style={[styles.label]}&gt;Pay&lt;/Animated.Text&gt;
+        &lt;Text style={styles.payText}&gt;$5.00&lt;/Text&gt;
+      &lt;/View&gt;
+    &lt;/TouchableWithoutFeedback&gt;
+  &lt;/View&gt;
+);
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>The only thing we need to do is specify their background color.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  other: {
+    backgroundColor: "#FFF",
+  },
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Add Hidden Background</p>
+
+
+
+<p>We want a circular animated black opaque background, however rather than making it hidden via opacity we'll just treat it like another button and tuck it behind the rest of the buttons.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;return (
+      &lt;View style={styles.container}&gt;
+        &lt;Animated.View style={[styles.background, bgStyle]} /&gt;
+        &lt;TouchableWithoutFeedback&gt;
+          &lt;Animated.View style={[styles.button, styles.other, orderStyle]}&gt;
+            &lt;Animated.Text style={[styles.label, labelStyle]}&gt;Order&lt;/Animated.Text&gt;
+            &lt;Icon name="food-fork-drink" size={20} color="#555" /&gt;
+          &lt;/Animated.View&gt;
+        &lt;/TouchableWithoutFeedback&gt;
+        &lt;TouchableWithoutFeedback&gt;
+          &lt;Animated.View style={[styles.button, styles.other, reloadStyle]}&gt;
+            &lt;Animated.Text style={[styles.label, labelStyle]}&gt;Reload&lt;/Animated.Text&gt;
+            &lt;Icon name="reload" size={20} color="#555" /&gt;
+          &lt;/Animated.View&gt;
+        &lt;/TouchableWithoutFeedback&gt;
+        &lt;TouchableWithoutFeedback onPress={this.toggleOpen}&gt;
+          &lt;View style={[styles.button, styles.pay]}&gt;
+            &lt;Animated.Text style={[styles.label, labelStyle]}&gt;Pay&lt;/Animated.Text&gt;
+            &lt;Text style={styles.payText}&gt;$5.00&lt;/Text&gt;
+          &lt;/View&gt;
+        &lt;/TouchableWithoutFeedback&gt;
+      &lt;/View&gt;
+    );
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Basically the same as the button styling.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;background: {
+  backgroundColor: "rgba(0,0,0,.2)",
+  position: "absolute",
+  width: 60,
+  height: 60,
+  bottom: 20,
+  right: 20,
+  borderRadius: 30,
+},
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Setup Animation on Press</p>
+
+
+
+<p>Because we don't need to toggle pointer events on this animation we just need to save off on the instance whether or not our menu is opened or closed. Then decide to animate to <code>0</code> or <code>1</code>. This will produce a reversible animation that also can be interrupted at any point.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  toggleOpen = () =&gt; {
+    const toValue = this._open ? 0 : 1;
+
+    Animated.timing(this.state.animation, {
+      toValue,
+      duration: 200,
+    }).start();
+
+    this._open = !this._open;
+  };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Animate Buttons</p>
+
+
+
+<p>We'll craft each button animation specifically. This however could be derived if you had any number of button items in the menu.</p>
+
+
+
+
+
+<p>Our reload button will be closest so we'll offset it by <code>-70</code> giving us some padding from the pay button. Our order button will be the last button so we just need to offset it by <code>-140</code> so it will bypass the reload button and also have some padding.</p>
+
+
+
+
+
+<p>Additionally we'll pass in our <code>0&lt;=&gt;1</code> animated value into scale so it will be moving and growing at the same time.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;const reloadInterpolate = this.state.animation.interpolate({
+  inputRange: [0, 1],
+  outputRange: [0, -70],
+});
+
+const orderInterpolate = this.state.animation.interpolate({
+  inputRange: [0, 1],
+  outputRange: [0, -140],
+});
+
+const reloadStyle = {
+  transform: [
+    {
+        scale: this.state.animation
+    },
+    {
+      translateY: reloadInterpolate,
+    },
+  ],
+};
+
+const orderStyle = {
+  transform: [
+    {
+        scale: this.state.animation
+    },
+    {
+      translateY: orderInterpolate,
+    },
+  ],
+};
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Animate Labels</p>
+
+
+
+<p>The label animations are the more difficult of the animations. They start hidden in the center of each individual button. However we don't want the text to appear over our icons and transition out. This would look bad. </p>
+
+
+
+
+
+<p>However what we can do is keep it hidden and keep animating it's location. Then once we know it's cleared the buttons of any overlap we'll fade it in. The text will always be offset by <code>-30</code> and animate to an offset of <code>-90</code> but to accomplish our fade in we'll have it happen after our animation is <code>80%</code> complete. So we'll make a cliff at that point and then quickly fade it in to <code>1</code> over the last <code>20%</code> of the animation.</p>
+
+
+
+
+
+<p>We also want all of our labels to do the same thing so we can pass the same label style into all of our labels.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;const labelPositionInterpolate = this.state.animation.interpolate({
+  inputRange: [0, 1],
+  outputRange: [-30, -90],
+});
+
+const opacityInterpolate = this.state.animation.interpolate({
+  inputRange: [0, 0.8, 1],
+  outputRange: [0, 0, 1],
+});
+
+const labelStyle = {
+  opacity: opacityInterpolate,
+  transform: [
+    {
+      translateX: labelPositionInterpolate,
+    },
+  ],
+};
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Animate Background</p>
+
+
+
+<p>Finally our animated background is simply a scale of our small box. This is an arbitrary number selected, however you could use math to calculate how many times the background needs to scale before it covers the entire view. I picked a large enough number to cover the screen and then some.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;const scaleInterpolate = this.state.animation.interpolate({
+  inputRange: [0, 1],
+  outputRange: [0, 30],
+});
+
+const bgStyle = {
+  transform: [
+    {
+      scale: scaleInterpolate,
+    },
+  ],
+};
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Ending</p>
+
+
+
+<p>Never underestimate just scaling a view really big.</p>
+
+
+
+
+
+<p><a href="https://snack.expo.io/HyaChhPSb" rel="nofollow">Live Demo</a>
+<a href="https://gitlab.com/codedaily/reactnativeanimations/tree/fabButtonMenu" rel="nofollow">Code</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

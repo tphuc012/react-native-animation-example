@@ -1,0 +1,308 @@
+1
+00:00:00,390 --> 00:00:03,130
+Animated doesn't support unmounting animations.
+
+2
+00:00:03,240 --> 00:00:09,270
+However using state and the start callback we can craft something that does and on Mount.
+
+3
+00:00:09,510 --> 00:00:11,850
+So the first thing we need to do is set up some state.
+
+4
+00:00:12,240 --> 00:00:18,210
+So we'll say animation and get a new animated value and we'll pass in one as our default we'll just
+
+5
+00:00:18,210 --> 00:00:20,540
+animate to zero as we're unmounting.
+
+6
+00:00:20,940 --> 00:00:25,040
+And then we will also say visible true.
+
+7
+00:00:25,170 --> 00:00:28,910
+This will allow us to toggle whether or not we have the box mounted or not.
+
+8
+00:00:30,220 --> 00:00:35,500
+And now that we have our animation set up we'll start our animation this animation is called when we
+
+9
+00:00:35,500 --> 00:00:43,890
+press on our box so it was intimated that timing pass in that state that animation will go to value
+
+10
+00:00:43,920 --> 00:00:47,980
+of zero with the duration of 1400 milliseconds.
+
+11
+00:00:48,000 --> 00:00:52,950
+This is quite long however we're just giving ourselves time to be able to press on it to interrupt our
+
+12
+00:00:52,950 --> 00:00:53,780
+animation.
+
+13
+00:00:55,250 --> 00:00:59,590
+And now before we call star on our animation let's set up our animated styles.
+
+14
+00:01:01,060 --> 00:01:07,260
+The first will be our interpellation for translate Why so say conc translate why interpolate.
+
+15
+00:01:07,330 --> 00:01:14,830
+If you go to state that animation inter-relate and then we'll say input range of 0 to 1 with an output
+
+16
+00:01:14,830 --> 00:01:18,310
+range of 500 to 0.
+
+17
+00:01:18,310 --> 00:01:22,750
+And you can see that this maps to what we have here so one to zero.
+
+18
+00:01:22,750 --> 00:01:23,830
+This won't go anywhere.
+
+19
+00:01:23,920 --> 00:01:29,300
+And as you animate towards zero we will move towards 500 and this will animate down.
+
+20
+00:01:29,530 --> 00:01:33,600
+And then we can pass that into context animated styles.
+
+21
+00:01:34,450 --> 00:01:42,940
+And we will also do an opacity so Pasotti this state animation that all happens correctly because it'll
+
+22
+00:01:42,940 --> 00:01:44,410
+go from one to zero.
+
+23
+00:01:44,620 --> 00:01:45,730
+And then there are transform
+
+24
+00:01:48,270 --> 00:01:56,250
+translate y translate Y and interpolate and move past this into our box.
+
+25
+00:01:56,340 --> 00:02:01,140
+So now that we have our styles all set up we can now trigger our animation.
+
+26
+00:02:01,350 --> 00:02:08,530
+We'll just call Start here and see what happens so we press it and we animate down and away.
+
+27
+00:02:08,580 --> 00:02:10,800
+However this is still around.
+
+28
+00:02:10,830 --> 00:02:14,500
+If we were animate back to one this would slide up from the bottom.
+
+29
+00:02:14,730 --> 00:02:17,270
+So let's see what we can do about unmounting it.
+
+30
+00:02:18,370 --> 00:02:19,530
+What we call START.
+
+31
+00:02:19,550 --> 00:02:30,410
+It takes a callback which passes in an object as the first argument and that argument has or that object
+
+32
+00:02:30,410 --> 00:02:32,590
+has a finished flag on it.
+
+33
+00:02:32,690 --> 00:02:38,120
+Now finished is going to tell us whether or not this animation was completed and uninterrupted and when
+
+34
+00:02:38,120 --> 00:02:44,380
+I say uninterrupted I mean that another animation was not triggered on this outstate animation.
+
+35
+00:02:46,040 --> 00:02:55,560
+So if we do a console log of finished and we can go do a de-bug of our G-S remotely and when we press
+
+36
+00:02:55,560 --> 00:03:06,290
+on this our debugger will open and if we press on this you can see that we got a true for our finished
+
+37
+00:03:06,290 --> 00:03:06,880
+value.
+
+38
+00:03:07,190 --> 00:03:14,090
+However when refresh and we press on it again we can see that false was called and then true because
+
+39
+00:03:15,820 --> 00:03:19,310
+we were calling the same exact function star animation.
+
+40
+00:03:19,330 --> 00:03:20,580
+So this was running.
+
+41
+00:03:21,010 --> 00:03:26,410
+We then pressed on it again and this attempted to animate the same exact value.
+
+42
+00:03:26,410 --> 00:03:28,910
+Granted it's still going to zero.
+
+43
+00:03:28,930 --> 00:03:36,070
+So then our start callback was called for our first animation and then the second animation kicked in
+
+44
+00:03:36,070 --> 00:03:37,830
+and continued the animation.
+
+45
+00:03:38,650 --> 00:03:44,350
+And called Finished of true because the second animation did completely finished without us interrupting
+
+46
+00:03:44,350 --> 00:03:44,810
+it.
+
+47
+00:03:46,230 --> 00:03:53,030
+So there are a few ways that we can handle this generally speaking we would probably want to trigger
+
+48
+00:03:53,120 --> 00:04:00,020
+we would want to deviate what function is being called or or what animation is being triggered here
+
+49
+00:04:00,080 --> 00:04:02,180
+whether or not this was running or not.
+
+50
+00:04:02,210 --> 00:04:06,280
+We'll take a slightly lazier route just to a set time out.
+
+51
+00:04:08,040 --> 00:04:18,640
+Of 0 but this will do is when we trigger our first animation and then click on our box again.
+
+52
+00:04:18,850 --> 00:04:21,900
+This will run however it will run synchronously.
+
+53
+00:04:21,940 --> 00:04:24,390
+And then this other second animation will kick in.
+
+54
+00:04:24,580 --> 00:04:30,790
+So this will just say set up our animation stuff to trigger on the next tick.
+
+55
+00:04:31,050 --> 00:04:35,510
+And so technically we'll be animating to zero will be interrupted.
+
+56
+00:04:35,550 --> 00:04:41,950
+It will start animating to zero again and then this set time will tick over and then we will start doing
+
+57
+00:04:41,950 --> 00:04:44,050
+our own animation.
+
+58
+00:04:44,050 --> 00:04:50,240
+So this is less than ideal but its going to make us it easier to understand what's exactly happening.
+
+59
+00:04:51,310 --> 00:05:02,190
+So now that we have our set time out let's refresh this and we'll do and if finished else so if we have
+
+60
+00:05:02,190 --> 00:05:09,850
+success it successfully finished then we can do this set state and we'll toggle our visible to false.
+
+61
+00:05:09,860 --> 00:05:16,660
+That means that our animation has completed and are we're able to then unmount our box.
+
+62
+00:05:16,740 --> 00:05:25,580
+However it hasn't completed that we'll just animate our box with a spring animation so we'll do this
+
+63
+00:05:25,750 --> 00:05:32,760
+state animation to value of one and call star on that.
+
+64
+00:05:32,770 --> 00:05:40,210
+So this gives us the ability to decide whether or not we unmount when we're done or otherwise we need
+
+65
+00:05:40,210 --> 00:05:46,170
+to reset our animated value back to its default so that this whole flow can get triggered again.
+
+66
+00:05:46,180 --> 00:05:48,470
+So refresh this and we test it out.
+
+67
+00:05:51,970 --> 00:05:53,300
+This completed.
+
+68
+00:05:53,500 --> 00:05:58,780
+Now if we did we interrupt it we see that springs back.
+
+69
+00:05:58,800 --> 00:06:03,970
+Now the only thing left to do is toggle are mounted with our visible state.
+
+70
+00:06:04,230 --> 00:06:11,170
+So we will just go on here to our touch without feedback and say this to stay visible and Anne and wrap
+
+71
+00:06:11,170 --> 00:06:11,890
+this.
+
+72
+00:06:11,920 --> 00:06:17,410
+So we start out being visible so this will render and then as soon as we toggle are visible to false
+
+73
+00:06:17,710 --> 00:06:24,480
+then it will unmount give that a shot you can see that we can spring it back and then we let it complete
+
+74
+00:06:25,530 --> 00:06:31,740
+and then it doesn't mount's So using this can be a great way for things like modals or something if
+
+75
+00:06:31,740 --> 00:06:38,430
+you have an API for a reusable component and you want to use animated to control your unmounting animations
+
+76
+00:06:38,880 --> 00:06:46,500
+you animate a way and then do a callback to someone up above and then they can control the unmounting
+
+77
+00:06:46,500 --> 00:06:47,250
+for you.
+

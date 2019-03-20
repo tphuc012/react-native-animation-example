@@ -1,0 +1,260 @@
+1
+00:00:00,260 --> 00:00:03,490
+We'll start by creating a style called Heart position.
+
+2
+00:00:03,840 --> 00:00:09,550
+Absolute top zero and left zero.
+
+3
+00:00:09,800 --> 00:00:11,230
+Now go create some parts.
+
+4
+00:00:11,240 --> 00:00:18,130
+So we'll start creating a heart adding and filled to true in style equals styles.
+
+5
+00:00:20,160 --> 00:00:23,170
+Will copy and paste this six different times.
+
+6
+00:00:26,830 --> 00:00:33,130
+Now go create a function which will call Konst get transformation.
+
+7
+00:00:33,900 --> 00:00:35,760
+Animation which will be a function
+
+8
+00:00:38,620 --> 00:00:49,170
+that takes an animation scale y x rotate and opacity.
+
+9
+00:00:49,190 --> 00:00:53,370
+Now we'll do a series of interpolations on the animation to create or effect.
+
+10
+00:00:53,720 --> 00:01:01,520
+Well first two scale animation and animation interpolate is a function that takes an object in an input
+
+11
+00:01:01,520 --> 00:01:08,540
+range will be 0 to 1 in our output range will be 0 to whatever the scale gets that gets passed and we'll
+
+12
+00:01:08,540 --> 00:01:19,570
+do our X as well so say concert x animation equals animation interpolate input range 0 to 1 and our
+
+13
+00:01:19,670 --> 00:01:26,150
+output range 0 to the X that gets passed in we'll do the same for R Y.
+
+14
+00:01:26,610 --> 00:01:34,160
+So we'll say Why animation instead and translate to our Y do the same for our rotation.
+
+15
+00:01:34,500 --> 00:01:36,990
+So say rotate animation.
+
+16
+00:01:36,990 --> 00:01:43,430
+However instead of 0 we will switch that to 0 degrees and then r rotate.
+
+17
+00:01:43,440 --> 00:01:49,290
+That gets passed in and finally we'll do our opacity animation.
+
+18
+00:01:49,550 --> 00:01:58,500
+So this opacity animation and will do it to the capacity that gets passed in all set up a return value.
+
+19
+00:01:58,540 --> 00:02:06,700
+So an object will say opacity and pass and opacity animation will then do our transform which is an
+
+20
+00:02:06,700 --> 00:02:07,100
+array.
+
+21
+00:02:07,100 --> 00:02:12,970
+I will take a series of transforms our first will be scale lets say scale animation.
+
+22
+00:02:13,170 --> 00:02:19,720
+Our second Oby translate X on passenger X animation.
+
+23
+00:02:19,810 --> 00:02:28,990
+The third will be translate Y or passenger y animation and the fourth will be rotate repassing or rotate
+
+24
+00:02:29,320 --> 00:02:30,880
+animation.
+
+25
+00:02:30,880 --> 00:02:33,490
+Now we'll go plier animations to our hearts.
+
+26
+00:02:34,830 --> 00:02:37,040
+We'll switch all of these over to being arrays
+
+27
+00:02:44,060 --> 00:02:52,850
+and then we'll add get transformation animation and inside of here we'll say this state animations 0
+
+28
+00:02:53,660 --> 00:02:56,060
+and we'll pass in our configuration stuff.
+
+29
+00:02:56,090 --> 00:03:08,240
+So say point eight negative 60 0 35 degrees and point out opacity because you other hearts will follow
+
+30
+00:03:08,240 --> 00:03:14,660
+the same configuration will just remove the five hearts and replace them with five of hearts we just
+
+31
+00:03:14,690 --> 00:03:16,160
+created.
+
+32
+00:03:16,160 --> 00:03:19,800
+Now when you do just each of these hearts to match the configuration.
+
+33
+00:03:19,930 --> 00:03:24,510
+So first we'll change these so that they are referencing different animations.
+
+34
+00:03:25,610 --> 00:03:27,400
+We'll change this to point three.
+
+35
+00:03:27,620 --> 00:03:36,230
+This one 2.3 this one point seven and this on the point for will change this one to negative 120.
+
+36
+00:03:36,350 --> 00:03:39,200
+This one to negative 150.
+
+37
+00:03:39,200 --> 00:03:40,890
+This one a negative 120.
+
+38
+00:03:40,910 --> 00:03:47,330
+This want to know over 120 and this one to negative 280 for X will change this one to negative 120.
+
+39
+00:03:47,330 --> 00:03:49,490
+This one too positive 120.
+
+40
+00:03:49,490 --> 00:03:51,590
+This one a negative 40.
+
+41
+00:03:51,590 --> 00:03:57,010
+This one to 40 and leave this one at zero and Farje agrees this will be negative 35.
+
+42
+00:03:58,170 --> 00:04:00,240
+This one will be negative thirty five as well.
+
+43
+00:04:00,310 --> 00:04:02,020
+It's only negative 45.
+
+44
+00:04:02,040 --> 00:04:06,780
+This will be positive 45 and this one will be positive 10 degrees.
+
+45
+00:04:06,780 --> 00:04:15,830
+Finally we'll change our opacities 2.7 point six point three point five point seven.
+
+46
+00:04:15,830 --> 00:04:20,840
+Now that we have our hearts set up let's configure our animation and trigger like you first need to
+
+47
+00:04:20,840 --> 00:04:31,160
+create Konst show animations which we start state animations map which will be passed in a function
+
+48
+00:04:31,740 --> 00:04:39,930
+which will give us looping over animations and will return animated thought spring animation.
+
+49
+00:04:41,520 --> 00:04:46,750
+To value one with a friction of four.
+
+50
+00:04:46,900 --> 00:04:48,670
+The same thing for a hide animation.
+
+51
+00:04:48,680 --> 00:05:00,150
+So copy this will say hide animations and will change to value to zero a duration of 50 and will changes
+
+52
+00:05:00,250 --> 00:05:04,460
+from animated spring to animated timing and then we'll do a reverse.
+
+53
+00:05:04,510 --> 00:05:06,860
+Our hearts hide in the reverse direction.
+
+54
+00:05:07,060 --> 00:05:13,840
+No coordinate our animations with our bouncing button will say animated up parallel which is a function
+
+55
+00:05:13,840 --> 00:05:15,710
+that takes an array of animations.
+
+56
+00:05:16,570 --> 00:05:22,040
+And we will delete this and paste or animated spring into here.
+
+57
+00:05:22,970 --> 00:05:29,550
+Parel will cause the rest of our animations to trigger at the same time so will then do animated that
+
+58
+00:05:29,550 --> 00:05:35,280
+sequence which will execute one animation one after another which is a function that takes an array
+
+59
+00:05:35,830 --> 00:05:44,060
+was the animated got staggerer 50 milliseconds and then do our show animations and then do an animated
+
+60
+00:05:44,300 --> 00:05:50,250
+delay which will pause for a hundred milliseconds before it goes on to trigger the next animations.
+
+61
+00:05:50,270 --> 00:05:58,350
+There was an animated Stiger again 50 milliseconds and trigger our hide animations that will call start
+
+62
+00:05:58,840 --> 00:06:04,720
+on this set of animations will then add back in our callback function and this is complete and say this
+
+63
+00:06:04,950 --> 00:06:09,520
+state DOT scale that set value to zero to reset our bouncing heart.
+
+64
+00:06:09,520 --> 00:06:15,970
+Animation and when we go refresh emulator and we press ENTER button you can see that our heart bounces
+
+65
+00:06:16,120 --> 00:06:18,370
+and hearts explode and retracked back inside.
+

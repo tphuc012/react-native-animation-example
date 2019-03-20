@@ -1,0 +1,120 @@
+1
+00:00:01,400 --> 00:00:06,850
+Absolutely positioning items we'll take it out of the normal flow of a particular view.
+
+2
+00:00:06,860 --> 00:00:09,570
+So in this case we've positioned it at left and zero.
+
+3
+00:00:09,620 --> 00:00:14,810
+However we have a container that says a line items to the center but it is not respecting that because
+
+4
+00:00:14,930 --> 00:00:16,280
+it is absolutely positioned
+
+5
+00:00:18,970 --> 00:00:23,410
+Typically you'd want to use translate to move things around the screen because it's going to be more
+
+6
+00:00:23,410 --> 00:00:28,250
+performant but in some cases you may need to use absolute position.
+
+7
+00:00:28,280 --> 00:00:35,750
+So we'll start by setting up our state with an animation and this time we will set it to zero as our
+
+8
+00:00:35,750 --> 00:00:44,810
+default will then say Konst animated styles and we'll say top is this state animation and we're also
+
+9
+00:00:44,810 --> 00:00:51,620
+control the left which is this does state that animation will then pass in our enemy and tiles into
+
+10
+00:00:51,620 --> 00:00:52,670
+our animated view.
+
+11
+00:00:53,720 --> 00:01:00,110
+Because we are controlling that we don't necessarily need this left and zero top inside of our styles.
+
+12
+00:01:00,110 --> 00:01:08,590
+However we will leave it just for examples later well then go ahead and set up our start animation and
+
+13
+00:01:08,590 --> 00:01:10,870
+say animated timing.
+
+14
+00:01:11,170 --> 00:01:19,270
+Sequel to this state animation and we'll say to value of 300 over the duration of fifteen hundred milliseconds
+
+15
+00:01:19,360 --> 00:01:21,110
+and then call start.
+
+16
+00:01:21,110 --> 00:01:26,630
+So now when we refresh this and when we press on our box you can see that it translates at this are
+
+17
+00:01:26,860 --> 00:01:34,880
+absolutely positions at the same time it animates from 1 0 0 to 300 on both top and left.
+
+18
+00:01:34,950 --> 00:01:40,670
+If we were to move one of these for example or for your move top it would just animate left.
+
+19
+00:01:40,930 --> 00:01:44,070
+And same goes for left.
+
+20
+00:01:44,290 --> 00:01:47,990
+We'll just animate the top.
+
+21
+00:01:48,120 --> 00:01:49,390
+Let's bring back our left.
+
+22
+00:01:49,500 --> 00:01:53,450
+And you can additionally animate more than just top and left.
+
+23
+00:01:53,520 --> 00:02:02,060
+For example if we were to remove the width here and set right of zero and animate rather than 300 to
+
+24
+00:02:02,140 --> 00:02:04,890
+40 and then pass in.
+
+25
+00:02:05,050 --> 00:02:05,540
+Right.
+
+26
+00:02:05,560 --> 00:02:12,010
+This state animation when this animation happens what's going to happen is this is going to take up
+
+27
+00:02:12,250 --> 00:02:18,250
+the entire screen because we set it at top left right zero with a height of 150.
+
+28
+00:02:18,250 --> 00:02:24,130
+But then it's going to animate to 40 in from the left and from the top and from the right at the same
+
+29
+00:02:24,130 --> 00:02:24,710
+time.
+
+30
+00:02:24,880 --> 00:02:30,840
+So you press this and see that we can both animate the left top and right at the same exact time.
+

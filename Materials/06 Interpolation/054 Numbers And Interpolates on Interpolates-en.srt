@@ -1,0 +1,204 @@
+1
+00:00:00,840 --> 00:00:07,200
+A lot of the power inside of the animated library comes from interpellation you're able to do interpellation
+
+2
+00:00:07,240 --> 00:00:14,460
+on interpolations and it will still be reactive regardless of a timing or anything else that is triggering
+
+3
+00:00:14,460 --> 00:00:15,850
+the animation.
+
+4
+00:00:15,920 --> 00:00:22,840
+So let's go down to render function and set up our first interpellation say Konst animated and interpolate
+
+5
+00:00:23,670 --> 00:00:31,040
+is equal to this state to animation which is our animated value and call and interpolate which takes
+
+6
+00:00:31,040 --> 00:00:37,490
+an object and takes an input range and an output range the input range will be looks at the animated
+
+7
+00:00:37,490 --> 00:00:44,000
+value and then determines how it should be interpreted to the output range the input range must also
+
+8
+00:00:44,000 --> 00:00:45,340
+always be increasing.
+
+9
+00:00:45,350 --> 00:00:56,660
+So when we say input range we can do to 1 0 we would have to do 0 1 to interplay input range is not
+
+10
+00:00:56,660 --> 00:01:01,310
+necessary to start at zero it could start at any numbers we could say negative 1 but it is always must
+
+11
+00:01:01,310 --> 00:01:02,620
+be increasing.
+
+12
+00:01:02,630 --> 00:01:07,190
+Now we'll define our output range output range can be anything and can.
+
+13
+00:01:07,200 --> 00:01:09,430
+Doesn't have to be in an increasing fashion.
+
+14
+00:01:09,440 --> 00:01:16,220
+So in our case we say zero because at the zero mark we don't want anything happening that at the one
+
+15
+00:01:16,340 --> 00:01:23,950
+mark of our animation will say 300 and then we'll bring it back down to zero once we hit to.
+
+16
+00:01:23,960 --> 00:01:28,580
+So now that we have an interpellation Let's go ahead and set up some animated styles.
+
+17
+00:01:28,580 --> 00:01:34,670
+So I say Konst animated styles sequel to transform here.
+
+18
+00:01:35,430 --> 00:01:41,370
+And we'll pass this into to translate Y and pass and animated and interpolate.
+
+19
+00:01:41,850 --> 00:01:49,200
+And now that we have our styles we can take this and place it on our box and Zaal and refresh here and
+
+20
+00:01:49,200 --> 00:01:55,680
+we trigger our animation by pressing on this animation our animation will run and it will then go to
+
+21
+00:01:55,730 --> 00:01:56,850
+from 0 to 1.
+
+22
+00:01:56,910 --> 00:02:02,830
+And once that is complete then it will quickly go to two which will kind of reset back to zero.
+
+23
+00:02:07,660 --> 00:02:13,390
+So one thing to note is that when we do an interpellation it returns a new animated value.
+
+24
+00:02:13,390 --> 00:02:16,620
+What that means is we can interpret off of our interpellation.
+
+25
+00:02:16,720 --> 00:02:23,650
+So we'll say Konst interpolated interpolate and we'll set up an interpolation to control our capacity.
+
+26
+00:02:23,830 --> 00:02:33,310
+So as say animated interpolate to interpret and we're no longer operating off of the 0 1 2 range.
+
+27
+00:02:33,400 --> 00:02:40,540
+We're actually operating off of the zero 300 0 so the output range of an interpret will become the input
+
+28
+00:02:40,540 --> 00:02:43,280
+range of another inter-relate.
+
+29
+00:02:43,300 --> 00:02:54,070
+So that means our input range will be 0 to 300 and our output range will be one to point five.
+
+30
+00:02:54,230 --> 00:03:02,930
+So this will map to an opacity and this will basically as this moves towards 300 This will move towards
+
+31
+00:03:02,930 --> 00:03:04,420
+from one point five.
+
+32
+00:03:04,640 --> 00:03:12,110
+And then this as it moves from 300 back to zero this will basically move from point five back to 1.
+
+33
+00:03:12,110 --> 00:03:19,530
+Now let's apply our interpellation to our capacity so we'll say opacity patient are interpreted interpreted
+
+34
+00:03:20,040 --> 00:03:25,380
+and now want to refresh this we can see as it moves towards 300 it hits the point five of Pasotti and
+
+35
+00:03:25,380 --> 00:03:31,380
+then it goes back to one opacity.
+
+36
+00:03:31,380 --> 00:03:38,160
+Now let's do one more interpellation we could technically interpret all of this and interpolate but
+
+37
+00:03:38,160 --> 00:03:42,210
+we'll continue and off of our animated interpolate up above.
+
+38
+00:03:42,210 --> 00:03:53,190
+So I say Konst translate X interpret Zucco to animated inter-family interpret and that will take an
+
+39
+00:03:53,190 --> 00:04:03,130
+input range and an output range and the range will be something crazy like input range 0 30 50 80 100
+
+40
+00:04:03,250 --> 00:04:06,470
+150 200 Nine-Nine and 300.
+
+41
+00:04:06,520 --> 00:04:09,410
+It doesn't matter how many values are in your output range.
+
+42
+00:04:09,460 --> 00:04:13,350
+You must just have the same amount of values in the output range.
+
+43
+00:04:14,730 --> 00:04:19,540
+And so for output range it doesn't even matter what the values are here either.
+
+44
+00:04:19,580 --> 00:04:22,130
+So we would say 0 and do the exact opposite.
+
+45
+00:04:22,130 --> 00:04:31,170
+Negative 30 negative 50 jump all the way back to 80 back to negative would go to 300 and then 0 and
+
+46
+00:04:31,170 --> 00:04:32,280
+then negative 100.
+
+47
+00:04:32,280 --> 00:04:38,710
+So these are close together so in a very quick span of time it will drop from zero to negative 100.
+
+48
+00:04:38,760 --> 00:04:47,500
+So now we can take this and put it into a new transform translate X and refresh this.
+
+49
+00:04:47,500 --> 00:04:52,000
+And so when we press on this all at the same time we will go from zero to 300.
+
+50
+00:04:52,000 --> 00:04:59,830
+Translate why our Passey will go from 1 to point five and back to 1 and then we will do this crazy sequence
+
+51
+00:04:59,830 --> 00:05:00,610
+of events.
+

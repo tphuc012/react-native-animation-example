@@ -1,0 +1,76 @@
+1
+00:00:00,440 --> 00:00:06,960
+That ad is a helper method that allows you to take an animated value and synchronously add an additional
+
+2
+00:00:06,960 --> 00:00:10,560
+animated value or a normal value to it.
+
+3
+00:00:11,890 --> 00:00:19,990
+This is going to help with libraries and other things that require you to pass in values and synchronously
+
+4
+00:00:19,990 --> 00:00:23,620
+add them rather than using offsets potentially.
+
+5
+00:00:23,800 --> 00:00:27,430
+And then additionally you can nest these as much as you want.
+
+6
+00:00:27,490 --> 00:00:33,100
+So you could create sort of mathematical formulas for your animated values if you needed to do some
+
+7
+00:00:33,100 --> 00:00:36,420
+sort of math based animation.
+
+8
+00:00:36,520 --> 00:00:39,060
+So we're just going to take a look at the basic case.
+
+9
+00:00:39,160 --> 00:00:48,510
+So here we are going to say Kautz new animation is equal to animated ad and the first argument is going
+
+10
+00:00:48,510 --> 00:00:54,220
+to be this does state animation because that's what our enemy of the value is.
+
+11
+00:00:54,350 --> 00:00:57,900
+And then we're just going to pass in a random value.
+
+12
+00:00:57,920 --> 00:00:59,280
+We're going to say 50.
+
+13
+00:00:59,430 --> 00:01:05,910
+However we're just going to sign this here so we say Konst random values equal to 50 past that are in
+
+14
+00:01:05,910 --> 00:01:17,670
+value and now we can see that if we removed this and switched this out to be new animation when we save
+
+15
+00:01:18,290 --> 00:01:22,050
+see it shifted down 50.
+
+16
+00:01:22,170 --> 00:01:28,950
+This will also work with other animated values so we can instead of saying 50 here will say new animated
+
+17
+00:01:29,280 --> 00:01:32,100
+value.
+
+18
+00:01:32,290 --> 00:01:36,850
+And when I save this this will refresh and nothing will have happened.
+
+19
+00:01:36,850 --> 00:01:42,850
+And our animations will still work as normal and this will receive that 50 offset.
+

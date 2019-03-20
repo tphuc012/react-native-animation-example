@@ -1,0 +1,224 @@
+1
+00:00:00,840 --> 00:00:06,930
+Opacity is used to control the visibility of a particular element it helps with a gradual entrance and
+
+2
+00:00:06,930 --> 00:00:12,630
+gradual exit to prevent any sort of jarring lay movements that may affect the user negatively.
+
+3
+00:00:12,660 --> 00:00:17,700
+We'll start with setting up a touchable without feedback which we've imported from re-act native and
+
+4
+00:00:17,750 --> 00:00:21,890
+we've also imported animated in order to use animated styles.
+
+5
+00:00:21,900 --> 00:00:25,830
+We need to use animated view as opposed to a regular view.
+
+6
+00:00:26,810 --> 00:00:32,180
+The enemy that you just wraps a regular view and so you can use all of the normal properties that you
+
+7
+00:00:32,180 --> 00:00:35,780
+would on a typical view that are documented and react needed.
+
+8
+00:00:36,080 --> 00:00:42,380
+Additionally our styles are container and box a container is a flex one which is just wrapping container
+
+9
+00:00:42,470 --> 00:00:45,900
+that will center items vertically and horizontally.
+
+10
+00:00:46,040 --> 00:00:51,120
+And our box is just a width and height of 150 with a background color of tomatoes that we can see it
+
+11
+00:00:52,920 --> 00:00:53,480
+to start.
+
+12
+00:00:53,490 --> 00:00:57,910
+We're going to create an animated value on our state.
+
+13
+00:00:57,970 --> 00:01:00,360
+Now you don't necessarily have to put this on state.
+
+14
+00:01:00,370 --> 00:01:03,630
+It can be put anywhere on this particular component instance.
+
+15
+00:01:03,630 --> 00:01:06,710
+But for the sake of this demo we would be putting it on stage.
+
+16
+00:01:06,970 --> 00:01:12,950
+So we will create a state variable called animation and we'll create a new animated value.
+
+17
+00:01:13,090 --> 00:01:19,780
+And because we're going to be controlling the opacity we want the default opacity to be 1 rather than
+
+18
+00:01:19,780 --> 00:01:21,890
+0 otherwise it would start hidden.
+
+19
+00:01:22,240 --> 00:01:27,940
+And now we'll create a dynamic style you'll need to create a dynamic style which is just an object because
+
+20
+00:01:27,940 --> 00:01:31,700
+we are referencing something that is on state or some other instance.
+
+21
+00:01:31,710 --> 00:01:38,250
+So if we say Konst animated styles which will be of variable name we'll then say opacity because that's
+
+22
+00:01:38,250 --> 00:01:43,640
+how you control the opacity of a style and then we'll simply pass in this state to animation.
+
+23
+00:01:45,210 --> 00:01:49,710
+Now we need to apply this particular style that we've created to our animated view.
+
+24
+00:01:49,710 --> 00:01:57,060
+So in order to apply multiple styles to a particular view we use the syntax array syntax.
+
+25
+00:01:57,140 --> 00:02:02,390
+So now we are applying our enemy and it's tied with the opacity that is driven by this state to intimation
+
+26
+00:02:02,390 --> 00:02:04,990
+and default to one to our enemy to view.
+
+27
+00:02:05,150 --> 00:02:10,540
+So one of the fresh this the opacity will still be one of our view.
+
+28
+00:02:10,620 --> 00:02:15,760
+Now you can see here are touchable without feedback is calling this start animation.
+
+29
+00:02:15,810 --> 00:02:21,720
+However we don't have a star animation function so let's go ahead and create that will create a star
+
+30
+00:02:21,720 --> 00:02:28,240
+animation and use the class property syntax because that's the default re-act native Babel plug in.
+
+31
+00:02:28,410 --> 00:02:33,830
+And this will allow us to bind this particular function to this instance every single time.
+
+32
+00:02:34,020 --> 00:02:39,030
+And that way when when it's bound to this particular instance that means we use this at state and or
+
+33
+00:02:39,060 --> 00:02:46,530
+anything else on this that we need to now use one of the animated functions which will be animated.
+
+34
+00:02:47,540 --> 00:02:55,660
+Timing it means that timing will specify the animation of a single value to another value over a set
+
+35
+00:02:55,670 --> 00:02:56,810
+period of time.
+
+36
+00:02:56,900 --> 00:03:01,100
+So its function signature is animation and then configuration object.
+
+37
+00:03:01,130 --> 00:03:08,270
+So in our case we want to say this state animation and then will provide an object and we'll say to
+
+38
+00:03:08,270 --> 00:03:16,990
+value of zero over a duration of 350 milliseconds in order to start an animation.
+
+39
+00:03:16,990 --> 00:03:19,330
+You need to call start.
+
+40
+00:03:19,430 --> 00:03:26,740
+And so now if we refresh and we have our touch with that feedback and we click on our box it will fade
+
+41
+00:03:26,740 --> 00:03:36,280
+out because it caused certain animation this animation will then be animated to zero over 350 milliseconds.
+
+42
+00:03:36,280 --> 00:03:41,470
+And in our case we're passing the entire capacity which is then being passed into our enemy to view
+
+43
+00:03:41,470 --> 00:03:42,850
+box.
+
+44
+00:03:42,850 --> 00:03:48,070
+Now let's take a look at our animation again what we call start will enemy everything away.
+
+45
+00:03:48,070 --> 00:03:56,500
+However when we pass in a callback to our start function it will get called when the animation is completed.
+
+46
+00:03:56,500 --> 00:04:01,020
+So once this reaches zero in 350 milliseconds this function will be called.
+
+47
+00:04:01,030 --> 00:04:07,150
+This then allows us to do other things like other animations or control some sort of set state and in
+
+48
+00:04:07,150 --> 00:04:11,470
+our case what we're going to do is animate the same exact this just to animation.
+
+49
+00:04:11,480 --> 00:04:13,410
+But we're going to animate it back to one.
+
+50
+00:04:13,420 --> 00:04:22,430
+So we use animated timing again passing this state to animation another configuration object.
+
+51
+00:04:22,450 --> 00:04:25,990
+And in this case because we've animated our value to zero.
+
+52
+00:04:25,990 --> 00:04:32,000
+We're going to animate it back to one and do it over 500 milliseconds.
+
+53
+00:04:32,000 --> 00:04:35,510
+And then once again we're going to call start.
+
+54
+00:04:35,520 --> 00:04:40,500
+So now if we go into fresher's simulator we can see that we have our box back and when we click on it
+
+55
+00:04:40,770 --> 00:04:46,380
+and get away and then immediately come back because the animation is completed and then animated it
+
+56
+00:04:46,500 --> 00:04:47,280
+back to one.
+

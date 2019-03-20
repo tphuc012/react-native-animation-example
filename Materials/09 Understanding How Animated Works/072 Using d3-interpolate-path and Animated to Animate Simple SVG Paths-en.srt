@@ -1,0 +1,104 @@
+1
+00:00:00,480 --> 00:00:05,100
+Animated does not support animating SVGA paths.
+
+2
+00:00:05,310 --> 00:00:12,720
+However D-3 inter-relate does but D-3 interpolate depends on the Dom to parse out the D-3 path.
+
+3
+00:00:12,720 --> 00:00:17,190
+However there is a D-3 inter-relate path that uses just the strings to figure that out.
+
+4
+00:00:17,190 --> 00:00:24,240
+So we'll install D-3 inter-relate path and import inter-relate path to either ensure path does not handle
+
+5
+00:00:24,240 --> 00:00:26,870
+very complex paths unfortunately.
+
+6
+00:00:26,880 --> 00:00:31,490
+So we'll just keep it simple by animating a simple circle to a larger circle.
+
+7
+00:00:31,540 --> 00:00:36,780
+Also use reacting as Fiji because it follows the standards of the web.
+
+8
+00:00:36,870 --> 00:00:39,000
+So let's take a look at our under function.
+
+9
+00:00:39,330 --> 00:00:42,900
+We have a touchable without feedback to trigger a press.
+
+10
+00:00:42,900 --> 00:00:49,620
+We have a SVGA with the width and height of 150 and then we have a path and also we get a ref to that
+
+11
+00:00:49,620 --> 00:00:53,860
+path so we can call set native props in our handle press.
+
+12
+00:00:53,860 --> 00:01:00,610
+We have an animated sequence which will start by animating our default value of 0 to 1.
+
+13
+00:01:00,700 --> 00:01:05,210
+Will then delay for 200 milliseconds and then will animate back to zero.
+
+14
+00:01:06,290 --> 00:01:09,130
+So let's set up in our component amount and interpellation.
+
+15
+00:01:09,140 --> 00:01:16,850
+So say Konst path and interpolate is equal to interpolate path that we've imported from the D-3 inter-relate
+
+16
+00:01:16,850 --> 00:01:26,370
+path and will pass in our start path and our path will then attach our listeners state to animation.
+
+17
+00:01:26,480 --> 00:01:34,150
+Add listner which we call with our value and then will have our function and then we'll say Konst path
+
+18
+00:01:34,240 --> 00:01:38,030
+is equal to path inter-relate value.
+
+19
+00:01:38,170 --> 00:01:42,160
+It doesn't matter that we are estimating from 0 to 1 and then back to zero.
+
+20
+00:01:42,190 --> 00:01:46,240
+This listener will always be called with the value that we are.
+
+21
+00:01:46,270 --> 00:01:52,150
+That is the animated value and this interplay path will always take that value and figure out the appropriate
+
+22
+00:01:52,540 --> 00:01:54,890
+path to give us.
+
+23
+00:01:54,900 --> 00:02:02,610
+So now we can do this path which is our component called Set native props and will update the D prop
+
+24
+00:02:03,060 --> 00:02:05,110
+and will pass in our new path.
+
+25
+00:02:05,140 --> 00:02:12,210
+Now if we go refresh this we can trigger press on our SPG and see that it expanded to a larger circle.
+
+26
+00:02:12,210 --> 00:02:14,030
+Delayed and then animated backdown.
+

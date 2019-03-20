@@ -1,0 +1,549 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>104 Animated Questionnaire Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Intro</p>
+
+<p>This demo is going to show how we can use <code>state</code> and animations to make it look like we have a smooth rendering of items. It is less than ideal to render hundreds of items. We'll use something that I may consider a layout hack + a <code>setState</code> swap. Essentially animating an item to where it will appear on the next state.</p>
+
+
+
+<p>Setup</p>
+
+
+
+<p>We'll setup an array of questions, our active index which we'll default to 0, an animated value for our main animation, and then an animated value for our progress bar along the bottom. Our view will need to be <code>flexDirection: "row"</code>, this will allow us to lay our buttons out on the left and right sides.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;import React, { Component } from "react";
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  Animated,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
+
+export default class animations extends Component {
+  state = {
+    index: 0,
+    questions: [
+      "Do you tend to follow directions when given?",
+      "Are you comfortable with the idea of standing and doing light physical activity most of the day?",
+      "Would you enjoy making sure your customers leave happy?",
+      "Are you willing to work nights and weekends (and possibly holidays)?",
+    ],
+    animation: new Animated.Value(0),
+    progress: new Animated.Value(0),
+  };
+  render() {
+    return (
+      &lt;View style={styles.container}&gt;
+
+      &lt;/View&gt;
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#E22D4B",
+    flexDirection: "row",
+  },
+});
+
+AppRegistry.registerComponent("animations", () =&gt; animations);
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Add Buttons</p>
+
+
+
+<p>Now we need to setup 2 buttons. The one on top will be our No button which because we are in a "row" layout will now be on the left side. Additionally the Yes will be on the right side.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;return (
+      &lt;View style={styles.container}&gt;
+        &lt;TouchableOpacity onPress={this.handleAnswer} style={styles.option} activeOpacity={0.7}&gt;
+          &lt;Text style={styles.optionText}&gt;No&lt;/Text&gt;
+        &lt;/TouchableOpacity&gt;
+        &lt;TouchableOpacity
+          onPress={this.handleAnswer}
+          style={[styles.option, styles.yes]}
+          activeOpacity={0.7}
+        &gt;
+          &lt;Text style={styles.optionText}&gt;Yes&lt;/Text&gt;
+        &lt;/TouchableOpacity&gt;
+      &lt;/View&gt;
+    );
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Our <code>TouchableOpacity</code> is actually an <code>Animated.View</code> so that means we can apply styling to it. It is still in a column direction. So we will apply <code>flex: 1</code> to each button so they will take up each half of the space available. Then we center the content in the middle of the screen with <code>alignItems: "center"</code>, but justify it's content to the end of the screen.</p>
+
+
+
+
+
+<p>The <code>yes</code> button will have an opaque background to it, so we do a rgba of white and a <code>.1</code> opacity.</p>
+
+
+
+
+
+<p>Our <code>optionText</code> which is being justified to the end we can add some margin to bring it up slightly.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;option: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center",
+  },
+  yes: {
+    backgroundColor: "rgba(255,255,255,.1)",
+  },
+  optionText: {
+    fontSize: 30,
+    color: "#FFF",
+    marginBottom: 50,
+  },
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Add Questions</p>
+
+
+
+<p>Now we need to derive both the current question and the next question that should appear on the screen. This will allow us to simultaneously center one, and then offset one. When one is answered we can move one off the screen, move the next one to the middle. Once our animation is complete then we will swap the active index with the index of the question that we moved into the middle of the screen. Nothing will have visibly changed to the user, but we will have our next question waiting off screen.</p>
+
+
+
+
+
+<p>To get this all setup we get both the current and next question if we have one.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;const question = questions[index];
+let nextQuestion;
+if (index + 1 &lt; questions.length) {
+  nextQuestion = questions[index + 1];
+}
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Then we render a view ABOVE our buttons. That way our buttons will be rendered above our question and still be interactable. However because they have transparent backgrounds the questions will appear.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;&lt;View style={[styles.overlay, StyleSheet.absoluteFill]} &gt;
+  &lt;Animated.Text style={[styles.questionText]}&gt;
+    {question}
+  &lt;/Animated.Text&gt;
+  &lt;Animated.Text style={[styles.questionText]}&gt;
+    {nextQuestion}
+  &lt;/Animated.Text&gt;
+&lt;/View&gt;
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Our overlay just centers the question in the middle of the screen. We need to absolutely position our text questions because they are in the same container one will appear below the other. So when it animates into view it would be below, and not inline.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  overlay: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  questionText: {
+    fontSize: 30,
+    color: "#FFF",
+    textAlign: "center",
+    position: "absolute",
+  },
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Add A Reset Button</p>
+
+
+
+<p>We'll just toss a simple <code>X</code> button at the end to reset everything. We'll need to reset our progress value, our animation, and our index back to their defaults.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  reset = () =&gt; {
+    this.state.animation.setValue(0);
+    this.state.progress.setValue(0);
+    this.setState({
+      index: 0,
+    });
+  };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>We put the Close button at the end because it needs to sit on top of our option buttons otherwise it won't be clickable.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;return (
+      &lt;View style={styles.container}&gt;
+        &lt;View style={[styles.overlay, StyleSheet.absoluteFill]} &gt;
+          &lt;Animated.Text style={[styles.questionText]}&gt;
+            {question}
+          &lt;/Animated.Text&gt;
+          &lt;Animated.Text style={[styles.questionText]}&gt;
+            {nextQuestion}
+          &lt;/Animated.Text&gt;
+        &lt;/View&gt;
+
+        &lt;TouchableOpacity onPress={this.handleAnswer} style={styles.option} activeOpacity={0.7}&gt;
+          &lt;Text style={styles.optionText}&gt;No&lt;/Text&gt;
+        &lt;/TouchableOpacity&gt;
+        &lt;TouchableOpacity
+          onPress={this.handleAnswer}
+          style={[styles.option, styles.yes]}
+          activeOpacity={0.7}
+        &gt;
+          &lt;Text style={styles.optionText}&gt;Yes&lt;/Text&gt;
+        &lt;/TouchableOpacity&gt;
+        &lt;TouchableOpacity style={styles.close} onPress={this.reset}&gt;
+          &lt;Text style={styles.closeText}&gt;X&lt;/Text&gt;
+        &lt;/TouchableOpacity&gt;
+      &lt;/View&gt;
+    );
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;close: {
+    position: "absolute",
+    top: 30,
+    right: 30,
+    backgroundColor: "transparent",
+  },
+  closeText: {
+    fontSize: 30,
+    color: "#FFF",
+  },
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Animate Questions</p>
+
+
+
+<p>First up when our button is clicked we don't care whether it was a yes or no, we'll animate it off the screen. We'll trigger 2 animations to happen at the same time. One we aren't using yet and it's our progress bar, but we'll still animate it.</p>
+
+
+
+
+
+<p>We animate it to the current index to the next index. Then our animated value to <code>1</code>. Once it's complete and our next question is in the middle, we will swap the current question and next question. Then in our <code>componentDidUpdate</code> callback we need to reset our animated value back to 0 for our next question.</p>
+
+
+
+
+
+<p>Basically it goes
+1) Move current question out of screen and next question into middle
+2) Make question in the middle now the active question
+3) Next question is now off screen
+4) Reset back to 0 so our active question while our new active question won't appear offset</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;handleAnswer = () =&gt; {
+    Animated.parallel([
+      Animated.timing(this.state.progress, {
+        toValue: this.state.index + 1,
+        duration: 400,
+      }),
+      Animated.timing(this.state.animation, {
+        toValue: 1,
+        duration: 400,
+      }),
+    ]).start(() =&gt; {
+      this.setState(
+        state =&gt; {
+          return {
+            index: state.index + 1,
+          };
+        },
+        () =&gt; {
+          this.state.animation.setValue(0);
+        }
+      );
+    });
+  };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Our interpolates will be the reverse of each other. Both will take an inputRange of <code>[0, 1]</code>. However we need to craft our outputRange correctly. </p>
+
+
+
+
+
+<p>Our main question at <code>0</code> needs to appear in the middle of the screen. Then when the animation moves to <code>1</code> it needs to animate the <code>width</code> of the screen. Because we want it to animate left, we need to move it in a negative direction.</p>
+
+
+
+
+
+<p>Then our next interpolated question we want to render it but offset it the width of the screen to start. Then as we animate towards <code>1</code> it will reduce it to <code>0</code> and be in the middle of the screen.</p>
+
+
+
+
+
+<p>Finally we craft up our styling for our <code>translateX</code> for each question.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  const { index, questions } = this.state;
+  const { width } = Dimensions.get("window");
+
+  const nextQuestionInterpolate = this.state.animation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [width, 0],
+  });
+
+  const mainQuestionInterpolate = this.state.animation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, -width],
+  });
+
+
+  const mainQuestionStyle = {
+    transform: [
+      {
+        translateX: mainQuestionInterpolate,
+      },
+    ],
+  };
+
+  const nextQuestionStyle = {
+    transform: [
+      {
+        translateX: nextQuestionInterpolate,
+      },
+    ],
+  };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Then we need to pass each style into their respective questions.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;&lt;View style={[styles.overlay, StyleSheet.absoluteFill]} &gt;
+  &lt;Animated.Text style={[styles.questionText, mainQuestionStyle]}&gt;
+    {question}
+  &lt;/Animated.Text&gt;
+  &lt;Animated.Text style={[styles.questionText, nextQuestionStyle]}&gt;
+    {nextQuestion}
+  &lt;/Animated.Text&gt;
+&lt;/View&gt;
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Progress Bar</p>
+
+
+
+<p>We need a progress indicator. It doesn't matter where this sits but putting it above the buttons so the buttons are always on top will allow the user to tap on the bar and still answer the question.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;        &lt;View style={styles.progress}&gt;
+          &lt;Animated.View style={[styles.bar, progressStyle]} /&gt;
+        &lt;/View&gt;
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Our interpolations can be dynamic based upon state. In this case we set it up so that it starts at <code>0</code> and then won't fill up till we answer based on the length of the questions. This will interpolate automatically to filling up our bar using percentage width values.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;    const progressInterpolate = this.state.progress.interpolate({
+      inputRange: [0, questions.length],
+      outputRange: ["0%", "100%"],
+    });
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Finally our styling is a absolutely positioning view that we put at the bottom (no top value), and give it a height of 10. Then our inner bar will confine itself to the entire height of it's parent which is just <code>10</code> and the progressInterpolate will control the width.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  progress: {
+    position: "absolute",
+    left: 0,
+    bottom: 0,
+    right: 0,
+    height: 10,
+  },
+  bar: {
+    height: "100%",
+    backgroundColor: "#FFF",
+  },
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Ending</p>
+
+
+
+<p><a href="https://snack.expo.io/Hkq4WD_SZ" rel="nofollow">Live Demo</a>
+<a href="https://gitlab.com/codedaily/reactnativeanimations/tree/animatedQuestionnaire" rel="nofollow">Code</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

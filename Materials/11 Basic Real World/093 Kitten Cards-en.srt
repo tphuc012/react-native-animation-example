@@ -1,0 +1,1044 @@
+1
+00:00:00,330 --> 00:00:06,320
+Decision making via swiping cards or some sort of gesture has become ubiquitous on the mobile platform.
+
+2
+00:00:07,090 --> 00:00:13,270
+We have for cat pictures and we've set up a swipe threshold and this is going to be the direction in
+
+3
+00:00:13,270 --> 00:00:18,080
+which we swipe that will determine what a decision is.
+
+4
+00:00:18,310 --> 00:00:22,060
+And then we have some other set up of items to render.
+
+5
+00:00:22,210 --> 00:00:28,330
+And then finally we have a top and this will hold our content our cards and then we have the bottom
+
+6
+00:00:28,330 --> 00:00:29,360
+button bar.
+
+7
+00:00:29,410 --> 00:00:30,080
+Take a look at this.
+
+8
+00:00:30,080 --> 00:00:37,030
+We have some padding so that it's removed a little bit from the bottom and then some other flex friction
+
+9
+00:00:37,030 --> 00:00:41,010
+bro and aligning our buttons in the middle.
+
+10
+00:00:41,070 --> 00:00:48,030
+So as we learned in the break down there's going to be some sort of animated value x y as well as when
+
+11
+00:00:48,030 --> 00:00:51,400
+the decision is made the opacity will change.
+
+12
+00:00:51,540 --> 00:00:56,940
+And then there's some sort of animation on the background card that scales in.
+
+13
+00:00:57,000 --> 00:01:01,260
+So with that that means we're likely going to need three different animated values.
+
+14
+00:01:01,380 --> 00:01:08,250
+Well set the first one up as animation then animated value x y to store our cards swipe location and
+
+15
+00:01:08,250 --> 00:01:14,230
+then will also create an opacity one that would just be a normal animated value value and then defaulted
+
+16
+00:01:14,250 --> 00:01:18,430
+to one with our enemy the value x y set up.
+
+17
+00:01:18,440 --> 00:01:21,960
+Let's take a look at creating our pan responder.
+
+18
+00:01:21,980 --> 00:01:30,280
+So we're going to take it will mount this pan responder and there was just run a normal pan responded
+
+19
+00:01:30,280 --> 00:01:31,560
+creation.
+
+20
+00:01:31,560 --> 00:01:38,850
+Now because we aren't leaving the card in any particular location then we don't actually need to use
+
+21
+00:01:38,850 --> 00:01:40,870
+the On Pain responded Grant.
+
+22
+00:01:40,890 --> 00:01:48,330
+However we will need to do our own parents plan or move and release because the only animations that
+
+23
+00:01:48,330 --> 00:01:52,210
+we saw were driven based upon the direction that we were driving.
+
+24
+00:01:52,230 --> 00:01:59,210
+Are X and Y values we can just assume that animated that event will be enough for us.
+
+25
+00:02:01,680 --> 00:02:08,350
+Person all here and just get access to just your state and they will pipe in DX to this animation X
+
+26
+00:02:08,660 --> 00:02:12,660
+and then D-y to this animation y.
+
+27
+00:02:12,890 --> 00:02:19,660
+Now that we have this set up we need to go render some images and we only need to render the first one
+
+28
+00:02:20,090 --> 00:02:21,570
+and the second one.
+
+29
+00:02:21,590 --> 00:02:30,740
+So in our top here we're going to say this does state that items slice 0 2 and then will reverse it
+
+30
+00:02:30,830 --> 00:02:36,030
+so that the first one will be on top because that's the one that we want to provide our gestures to
+
+31
+00:02:37,440 --> 00:02:47,720
+and then we can map over this which receive our callback function and then we will do structure image
+
+32
+00:02:48,080 --> 00:02:53,380
+ID and text from our array of items here.
+
+33
+00:02:54,630 --> 00:03:04,530
+We'll also get access to the index and the items in total from here will want to build out our view
+
+34
+00:03:04,830 --> 00:03:05,750
+our cars.
+
+35
+00:03:06,000 --> 00:03:13,230
+So without doing any sort of animations or anything we're going to create an animated view close that
+
+36
+00:03:13,240 --> 00:03:23,560
+off and then we're going out to do an image so say animated image and we'll pass and this source be
+
+37
+00:03:23,630 --> 00:03:32,780
+our image and we'll get it resized mode cover and then below our image we want to display some text
+
+38
+00:03:32,850 --> 00:03:33,820
+screen to say view
+
+39
+00:03:38,100 --> 00:03:42,570
+then here we can do text and pass in our text.
+
+40
+00:03:42,580 --> 00:03:48,040
+Close that off and then we'll provide our key to the outside animated view which will be our idea.
+
+41
+00:03:48,100 --> 00:03:51,790
+It's just one two three four but we could use the index in that case.
+
+42
+00:03:51,850 --> 00:03:57,630
+But when doing this kind of stuff we want to provide some sort of unique identifier that isn't the index.
+
+43
+00:03:57,840 --> 00:04:05,040
+And the reason why that is in this case is that the indexes are either going to be 0 or 1 and we want
+
+44
+00:04:05,040 --> 00:04:05,930
+this to be unique.
+
+45
+00:04:05,930 --> 00:04:12,450
+So when a vendor happens that this actually will get unmounted and change otherwise it will continue
+
+46
+00:04:12,630 --> 00:04:19,590
+and there may be issues with the image not changing so we will need to style some of this stuff.
+
+47
+00:04:19,910 --> 00:04:26,530
+And so we're going to start by just applying some styles and say style equals style card.
+
+48
+00:04:27,730 --> 00:04:34,100
+And then we're also going to need to style him insurance's style equals styles image.
+
+49
+00:04:34,120 --> 00:04:40,000
+And any time I have an animated view or an animated image or anything that's animated I always just
+
+50
+00:04:40,000 --> 00:04:45,520
+default to adding an array because I know that I'm likely going to be putting in animated styles and
+
+51
+00:04:45,520 --> 00:04:53,380
+dynamically and then down here you can say style equals style start lower text.
+
+52
+00:04:53,470 --> 00:04:58,780
+Now that we've applied our style names now we can go actually build out the styles.
+
+53
+00:04:58,990 --> 00:05:08,260
+So the first one is card and we're going to give it with 300 a height of 300 and then position absolute
+
+54
+00:05:09,950 --> 00:05:13,260
+We won't give it any left top right or bottom.
+
+55
+00:05:13,300 --> 00:05:18,010
+And that way it will adhere to the line item and just have a content of center.
+
+56
+00:05:18,300 --> 00:05:27,170
+And then we'll go a border radius of three and then apply some shadow so shadow color just be black
+
+57
+00:05:28,070 --> 00:05:31,830
+shadow opacity will be point 1.
+
+58
+00:05:33,450 --> 00:05:41,550
+Our Shadow offset will be 0 and y zero.
+
+59
+00:05:42,010 --> 00:05:55,720
+And then our shadow radius be 5 then we'll also add a border with 1 and a border color of white.
+
+60
+00:05:55,750 --> 00:06:00,980
+So as we move along you can always refresh this as much as you want and see exactly what's being created.
+
+61
+00:06:01,150 --> 00:06:04,960
+And we can see that this is not ideal because our image is very big.
+
+62
+00:06:04,960 --> 00:06:11,670
+So we have a style that next and we'll just override the width to know the height to know.
+
+63
+00:06:12,010 --> 00:06:21,100
+So that way we can apply a flex property to make it adhere to the with that flexible defined sort of
+
+64
+00:06:21,100 --> 00:06:26,940
+say flex of three so that the image is three times as big as our lower text when we define that.
+
+65
+00:06:27,160 --> 00:06:35,010
+And then we'll go to a border radius of two and then for our lower text when you say flex 1 and then
+
+66
+00:06:35,010 --> 00:06:41,930
+a background color of white and then of hatting of five on all sides.
+
+67
+00:06:41,950 --> 00:06:50,740
+Now we can refresh this and we now have our card lay out with our images correctly sized in our text
+
+68
+00:06:51,070 --> 00:06:57,390
+taking up one third the space that's over here and we are ready to start dragging now.
+
+69
+00:06:57,860 --> 00:07:02,770
+So let's come back to render and we're going to set up our interpolations first.
+
+70
+00:07:02,830 --> 00:07:08,770
+So we're going to say Konst animation equals this Stut state so we can always just reference our animation
+
+71
+00:07:09,190 --> 00:07:16,700
+and then we're just fine our rotate for our card say animation X because it's all driven off of the
+
+72
+00:07:16,760 --> 00:07:24,040
+x axis say Dot and interpolate and then we're going to define our input range in our input range is
+
+73
+00:07:24,040 --> 00:07:31,000
+going to need to be negative which is when you swipe to the left and then also positive when you swipe
+
+74
+00:07:31,000 --> 00:07:34,170
+to the right and then net zero will be our stationary position.
+
+75
+00:07:34,180 --> 00:07:37,350
+So going to the input range negative 200.
+
+76
+00:07:37,360 --> 00:07:44,380
+So once the user has swiped this direction 200 will reach its maximum rotation zero will be stable and
+
+77
+00:07:44,380 --> 00:07:48,180
+then 200 will be the maximum on the right side.
+
+78
+00:07:48,190 --> 00:07:57,060
+Now we can put our output range to be negative 30 degrees zero degrees and then 30 degrees.
+
+79
+00:07:57,330 --> 00:08:07,380
+And so it does not continue to rotate past 30 degrees will do and extrapolate clamp the next one will
+
+80
+00:08:07,380 --> 00:08:10,250
+be our opacity sort of say Konst opacity.
+
+81
+00:08:10,430 --> 00:08:16,650
+See what the animation that exed interpolate and we'll do a similar input range.
+
+82
+00:08:16,650 --> 00:08:22,380
+We're just going to do a negative 200 0 and 200 and then adjust our output range.
+
+83
+00:08:22,380 --> 00:08:26,900
+So our output range will be point five one and point five.
+
+84
+00:08:27,060 --> 00:08:32,940
+And then we can also do an extrapolate clamp here if we don't want our opacity to go anywhere beyond
+
+85
+00:08:33,510 --> 00:08:35,370
+50 percent.
+
+86
+00:08:35,550 --> 00:08:43,800
+And now that we have or rotate and our opacity which are two of the animations for the card we can then
+
+87
+00:08:43,800 --> 00:08:47,600
+build out our animated cards stylings.
+
+88
+00:08:47,640 --> 00:08:55,160
+So this opacity actually will drive the image styling whereas the opacity of the card itself fading
+
+89
+00:08:55,170 --> 00:09:00,450
+out all of it will be driven by this opacity that we created right here.
+
+90
+00:09:00,480 --> 00:09:08,820
+So let's put out both the card styles and the image stylus windsock Konst animated card styles.
+
+91
+00:09:09,010 --> 00:09:13,770
+It's going to be our opacity with that state opacity.
+
+92
+00:09:14,430 --> 00:09:21,310
+And then our transform and inside of here we're going to spread our state.
+
+93
+00:09:21,410 --> 00:09:28,860
+Animation does get translate transform and this will return our translate X translate y former animated
+
+94
+00:09:28,880 --> 00:09:36,760
+value x y and then we're also going to add our rotate and then with this opacity here we're going to
+
+95
+00:09:36,760 --> 00:09:44,740
+set up our Konst animated image styles and pass in opacity.
+
+96
+00:09:44,760 --> 00:09:51,700
+So if we come down for our render to apply it we're looping over the two cards.
+
+97
+00:09:52,020 --> 00:09:58,970
+And so we need to know exactly which card we're looking at whether it's the front card or the back card.
+
+98
+00:09:59,280 --> 00:10:07,070
+So we're going to define some helpers for us to say Konst is last item and we're in index equal to item
+
+99
+00:10:07,070 --> 00:10:12,580
+stat length minus 1 or if it's the second to last
+
+100
+00:10:15,590 --> 00:10:21,050
+going to say Index items that length minus 2.
+
+101
+00:10:21,050 --> 00:10:26,210
+Now we only have 2 cards so it's either going to be this is the top card or this is going to be the
+
+102
+00:10:26,270 --> 00:10:27,230
+back card.
+
+103
+00:10:27,560 --> 00:10:33,810
+But if we potentially had more cards we would only want to control the the first and the last potentially.
+
+104
+00:10:34,070 --> 00:10:40,300
+But this is just going to help us do a front item back item.
+
+105
+00:10:40,330 --> 00:10:44,580
+So now we can determine a couple of different things.
+
+106
+00:10:44,630 --> 00:10:51,290
+One our panhandlers to the card style and then three the image style.
+
+107
+00:10:51,550 --> 00:10:56,710
+So we're going to say Konst panhandlers and is equal to.
+
+108
+00:10:56,740 --> 00:11:03,750
+If it's the last item then I will say this pan responder dot pan handlers or we're just sort of turn
+
+109
+00:11:03,760 --> 00:11:09,580
+an object and that way we can just continue to do a spread on every card and the first card it's in
+
+110
+00:11:09,580 --> 00:11:16,150
+front will always receive the panhandlers and we're going to say cants cards style is equal to if it's
+
+111
+00:11:16,150 --> 00:11:18,530
+the last item or the one in front.
+
+112
+00:11:18,820 --> 00:11:21,610
+Animated card styles that we just created.
+
+113
+00:11:21,850 --> 00:11:23,320
+Otherwise undefined.
+
+114
+00:11:23,320 --> 00:11:33,810
+And finally our image style is the same thing animated image styles that we set up or undefined.
+
+115
+00:11:33,900 --> 00:11:39,390
+And now with these three variables set up we can go ahead and start applying them so we can do a spread
+
+116
+00:11:39,390 --> 00:11:40,920
+here of our panhandlers.
+
+117
+00:11:40,920 --> 00:11:42,860
+So now we're able to drag.
+
+118
+00:11:43,140 --> 00:11:50,570
+We'll then also pass in our animated card style so our rotate and our translate X Y will be applied.
+
+119
+00:11:50,880 --> 00:11:55,390
+And then here we will apply our image style.
+
+120
+00:11:55,420 --> 00:12:00,550
+So let's switch this back to card style because that way it's only being applied from this variable
+
+121
+00:12:00,570 --> 00:12:01,240
+here.
+
+122
+00:12:01,900 --> 00:12:04,990
+And now we are set up to refresh.
+
+123
+00:12:05,410 --> 00:12:12,220
+And now if you start dragging and see that our interpretations are taking effect on just this front
+
+124
+00:12:12,220 --> 00:12:19,580
+card and our pin handlers are working and you can actually drop that because we have not set up our
+
+125
+00:12:19,810 --> 00:12:22,740
+on Pan respond to release yet.
+
+126
+00:12:22,760 --> 00:12:30,890
+So before we get to our release you can see that this card back here is exactly the same size as this
+
+127
+00:12:30,920 --> 00:12:36,740
+front one and we actually wanted this one to be a little smaller with some scale so that when we make
+
+128
+00:12:36,770 --> 00:12:40,400
+a decision that this springs forward.
+
+129
+00:12:40,400 --> 00:12:47,960
+So that means that we need to go set up a nother animated value or just call it next to an animated
+
+130
+00:12:47,960 --> 00:12:50,650
+value and we're going to default at two point nine.
+
+131
+00:12:50,990 --> 00:12:56,420
+And with that we can then come down to render here.
+
+132
+00:12:57,420 --> 00:13:05,660
+And we can use our second to last or is this one in the back essentially and say Konst next style.
+
+133
+00:13:06,500 --> 00:13:09,030
+Equals is second to last.
+
+134
+00:13:09,040 --> 00:13:17,770
+And if it is then we will return it transform with a scale and this dot next.
+
+135
+00:13:17,950 --> 00:13:20,310
+So this at state DOT next.
+
+136
+00:13:20,720 --> 00:13:23,360
+Otherwise it'll be undefined.
+
+137
+00:13:23,360 --> 00:13:28,890
+And then we can now take that next and pass it into our card.
+
+138
+00:13:28,940 --> 00:13:35,910
+And so if we refresh we can see that now that card is just slightly smaller because it is scaled 2.9
+
+139
+00:13:36,630 --> 00:13:38,780
+the size of its actual size.
+
+140
+00:13:40,740 --> 00:13:49,800
+So with our drag in place and our next style being applied to the back card we can start we can start
+
+141
+00:13:49,800 --> 00:13:56,040
+actually deriving what to do in the on and pander on Pan responder least we can derive the decision
+
+142
+00:13:56,040 --> 00:14:03,190
+that is being made in our pan responder at least we get access to a few different variables on our gesture
+
+143
+00:14:03,190 --> 00:14:03,880
+state.
+
+144
+00:14:03,910 --> 00:14:07,920
+We know that the delta x is there and that's the thing that we care about.
+
+145
+00:14:07,930 --> 00:14:13,720
+We also want to get access to the velocity on the extraction and the velocity in the wind direction
+
+146
+00:14:14,470 --> 00:14:21,550
+and that will help us do a decay when we swipe and release or if it hasn't gone far enough then we can
+
+147
+00:14:21,550 --> 00:14:24,400
+actually bounce it back to the center.
+
+148
+00:14:24,520 --> 00:14:30,510
+So we're going to say let velocity and we're not going to assign it to anything.
+
+149
+00:14:30,800 --> 00:14:39,710
+And if we have a velocity that is greater or equal to zero then it's moving in a positive direction
+
+150
+00:14:39,860 --> 00:14:41,900
+to the right else.
+
+151
+00:14:41,920 --> 00:14:46,890
+If we have a velocity that is less than zero.
+
+152
+00:14:47,240 --> 00:14:53,260
+Then we know that it's moving in a negative direction and that way we can use our clamp that we we had
+
+153
+00:14:53,260 --> 00:14:59,740
+about above so that we don't define a velocity that just throws it way off the page.
+
+154
+00:14:59,740 --> 00:15:06,610
+And so we're going to say velocity is equal to clamp and where it's a velocity x and it's going to have
+
+155
+00:15:06,610 --> 00:15:11,700
+a minimum of five and a mat or a minimum of three and a maximum of five.
+
+156
+00:15:11,860 --> 00:15:13,900
+And then for here we'll do the same thing.
+
+157
+00:15:13,900 --> 00:15:20,740
+Velocity is equal to clamp and we're going to get the absolute value of our velocity.
+
+158
+00:15:21,860 --> 00:15:29,080
+And then 3 5 and it is going to multiply by negative ones so we get a negative number again.
+
+159
+00:15:29,150 --> 00:15:37,940
+And so with that you can now say if our math absolute of our Delta X so that's as far as the card has
+
+160
+00:15:37,940 --> 00:15:41,300
+been dragged is greater than our Swype threshold.
+
+161
+00:15:44,730 --> 00:15:47,680
+Then we will make a decision.
+
+162
+00:15:48,060 --> 00:15:50,530
+Otherwise we will spring back to middle.
+
+163
+00:15:50,520 --> 00:15:58,540
+So let's do our animated spring first and say this state animation and our two value will be zero and
+
+164
+00:15:58,760 --> 00:15:59,330
+zero.
+
+165
+00:15:59,460 --> 00:16:05,290
+So we can just reset it and the friction will drop to 4.
+
+166
+00:16:05,500 --> 00:16:12,430
+And now if we refresh and kind of drag this card and we haven't gone far enough and we released we can
+
+167
+00:16:12,430 --> 00:16:16,250
+see that it will spring back to its original position.
+
+168
+00:16:17,560 --> 00:16:25,780
+Now if we have met our threshold then we will consider it a throw and use animated to K to move it to
+
+169
+00:16:25,810 --> 00:16:27,840
+its final resting spot.
+
+170
+00:16:28,060 --> 00:16:38,990
+So say this state animation and we'll say velocity is going to be X which is going to be our velocity
+
+171
+00:16:39,350 --> 00:16:42,710
+x and then WHY would just be R V Y.
+
+172
+00:16:43,130 --> 00:16:49,490
+And then we will set our deceleration to point 9:8 which I believe is the default.
+
+173
+00:16:49,490 --> 00:16:51,620
+And then we'll call start.
+
+174
+00:16:51,650 --> 00:17:01,250
+So now we refresh and we move past our threshold and see that it will end up moving correctly and decaying
+
+175
+00:17:01,310 --> 00:17:06,020
+all the way until its final position to make our decision.
+
+176
+00:17:06,060 --> 00:17:10,890
+We need to call a function here after the start has happened.
+
+177
+00:17:10,890 --> 00:17:17,100
+However we want to make sure that we can actually reuse this same transition for when you press either
+
+178
+00:17:17,340 --> 00:17:19,530
+the yes or no buttons down here.
+
+179
+00:17:19,530 --> 00:17:24,680
+So we're going to set up a function called Transition next
+
+180
+00:17:27,580 --> 00:17:33,910
+and this will transition the cards from the current card to the next card and control all of the animations
+
+181
+00:17:34,000 --> 00:17:42,320
+as well as the popping of the arrays so because we want to remove the top card from our animation or
+
+182
+00:17:42,320 --> 00:17:48,690
+from our array we're going to just do a steady state and then both say we'll make this an update or
+
+183
+00:17:48,690 --> 00:17:55,110
+function because are going to reference our previous state and say return items is going to be equal
+
+184
+00:17:55,110 --> 00:18:00,670
+to the state that item's removing the first one.
+
+185
+00:18:00,800 --> 00:18:05,840
+So now that we have this function set up we can just pass that into our decision.
+
+186
+00:18:05,950 --> 00:18:07,110
+So there's that transition next.
+
+187
+00:18:07,120 --> 00:18:12,850
+So this will be the callback of Whenever we've made our decision and it hits its final resting place.
+
+188
+00:18:13,090 --> 00:18:23,400
+And if we refresh this and we swipe we can see that it does in fact rotate but a very jarring fashion.
+
+189
+00:18:23,410 --> 00:18:28,810
+So in order to kind of fix that jarring animation we're going to do a couple of different things.
+
+190
+00:18:28,810 --> 00:18:36,100
+One when the decision is made we're going to first do the opacity fade on the dragged card the main
+
+191
+00:18:36,100 --> 00:18:41,620
+card and then also spring in that second card before we swap it.
+
+192
+00:18:41,620 --> 00:18:51,390
+So that means we're going to need to do an animated parallel to receive that array of our animations
+
+193
+00:18:51,740 --> 00:18:57,380
+so that opacity to value of zero.
+
+194
+00:18:57,410 --> 00:19:03,740
+Because we animate our main card out over the course of 300 milliseconds and then we're also just going
+
+195
+00:19:03,740 --> 00:19:07,970
+to spring that card into place animated that spring.
+
+196
+00:19:08,000 --> 00:19:15,360
+This testate next to value of one with a friction of four.
+
+197
+00:19:15,450 --> 00:19:22,890
+And now we can call start passing our callback so that the animations are completed before we transition
+
+198
+00:19:22,890 --> 00:19:23,610
+our card.
+
+199
+00:19:26,810 --> 00:19:30,370
+So let's refresh and see what happens when we answer this question.
+
+200
+00:19:32,930 --> 00:19:33,100
+All right.
+
+201
+00:19:33,360 --> 00:19:33,660
+Cool.
+
+202
+00:19:33,690 --> 00:19:35,660
+So that is kind of working.
+
+203
+00:19:36,850 --> 00:19:43,360
+But the problem is is that we haven't actually reset our animations so it transitioned cards.
+
+204
+00:19:43,510 --> 00:19:48,300
+But the next card which was the other cat is now thrown off the page.
+
+205
+00:19:48,370 --> 00:19:52,580
+So we now need to transition and then reset all of our animations.
+
+206
+00:19:52,770 --> 00:19:58,800
+And so we can do that in our component update function of that state.
+
+207
+00:19:58,870 --> 00:20:07,330
+So we need to reset the opacity to one the next scale back to point nine.
+
+208
+00:20:07,420 --> 00:20:11,890
+And then also the animated value x y back to zeros.
+
+209
+00:20:11,920 --> 00:20:17,230
+So that way it just resets us to a clean slate ready to be dragged again.
+
+210
+00:20:17,230 --> 00:20:24,420
+So when you say this that state next set value point nine and we don't need to animate anything we just
+
+211
+00:20:24,420 --> 00:20:32,460
+need to reset it as quickly as possible and say this that state that opacity set value one and then
+
+212
+00:20:32,460 --> 00:20:41,690
+we'll set our animation to x zero and y zero.
+
+213
+00:20:41,710 --> 00:20:49,690
+So now we refresh and we throw our card that fades in and then bounces and then our animation is reset
+
+214
+00:20:49,780 --> 00:20:56,290
+and there's no other card that is seen except for that and back there which is now our next card.
+
+215
+00:20:56,290 --> 00:21:02,850
+So we continue throw it and throw it and have our animations take effect and then reset immediately.
+
+216
+00:21:02,870 --> 00:21:13,110
+So now let's add our buttons and because we have this transition too the next thing we can use this
+
+217
+00:21:13,320 --> 00:21:15,530
+when our buttons are pressed.
+
+218
+00:21:15,720 --> 00:21:21,270
+And so let's come down here and in our button bar I'm just going to paste in a couple of buttons and
+
+219
+00:21:21,270 --> 00:21:23,240
+then we'll go adjust the styling.
+
+220
+00:21:23,250 --> 00:21:34,060
+Someone will say no and then we'll say yes and now add some styling so we just have a general button.
+
+221
+00:21:34,120 --> 00:21:39,350
+And then the shadow color for our buttons will be different colors.
+
+222
+00:21:39,550 --> 00:21:46,120
+So for the red for the No it will be red color and for the yes it will be a green color and these we'll
+
+223
+00:21:46,120 --> 00:21:49,500
+call are handled now or handle Yes.
+
+224
+00:21:49,510 --> 00:21:53,160
+So that's set those up and see what that looks like.
+
+225
+00:21:53,410 --> 00:21:59,340
+So crate handle no and handle Yes.
+
+226
+00:22:01,560 --> 00:22:07,980
+So the idea here is that just because we are driving an animated value x y based upon an animated event
+
+227
+00:22:08,370 --> 00:22:12,740
+does not mean that we can't independently control it with a separate animation.
+
+228
+00:22:12,930 --> 00:22:19,750
+So for example we want to do a a movement of the X to either yes direction or no direction.
+
+229
+00:22:19,890 --> 00:22:27,630
+We can just use animated timing or spring and animate this state to animation X and we can do it to
+
+230
+00:22:27,630 --> 00:22:37,080
+value and when it's no mean to say negative Swype threshold and then start it and then transition to
+
+231
+00:22:37,080 --> 00:22:38,060
+the next card.
+
+232
+00:22:38,920 --> 00:22:46,370
+And we can do the same thing for the yes and just go to the Swype threshold.
+
+233
+00:22:47,370 --> 00:22:54,940
+And because we're doing an interpellation based upon the X we can just animate the X.
+
+234
+00:22:54,970 --> 00:23:02,290
+So now when we refresh and we press on one of these buttons you'll see it rotate and move to each direction
+
+235
+00:23:02,440 --> 00:23:04,830
+and then trigger our transition next call
+
+236
+00:23:08,190 --> 00:23:12,250
+to one final piece that we're missing is the Knope and the yes.
+
+237
+00:23:12,440 --> 00:23:17,500
+And I'm just going to add those because they don't really matter.
+
+238
+00:23:17,600 --> 00:23:27,010
+But if we paste them in here we want to only show them on this front card and add some styling and some
+
+239
+00:23:27,010 --> 00:23:35,010
+animation to that because we want to have it scale and fade in.
+
+240
+00:23:35,160 --> 00:23:45,130
+And so we can take and do an interpolation based upon the x axis just like we've done of our others
+
+241
+00:23:45,140 --> 00:23:47,830
+so let's do this really quickly.
+
+242
+00:23:48,040 --> 00:23:53,840
+We're going to get the opacity based upon the X and our input range is 150 with an output of zero to
+
+243
+00:23:53,840 --> 00:23:57,510
+1 and then we're also going to do a scale.
+
+244
+00:23:57,510 --> 00:24:06,140
+I'm going to start at point 5 and then move towards a scale of 1 and then also we'll build up our animated
+
+245
+00:24:06,140 --> 00:24:13,220
+styles with our scale and we'll just define a generic rotate of negative 30 and then our opacity and
+
+246
+00:24:13,220 --> 00:24:17,270
+then the no version of that is the exact opposite.
+
+247
+00:24:17,270 --> 00:24:21,150
+So now if we refresh as we swipe in a direction
+
+248
+00:24:25,140 --> 00:24:30,340
+we can see that we have a Yup there you see it below but we haven't yet styled it.
+
+249
+00:24:30,840 --> 00:24:40,190
+So if we go look at what styles to apply it's our Yup and nope and we can just go apply those here.
+
+250
+00:24:40,280 --> 00:24:47,120
+We're just going to add a border and a width and position the text and the view in either the top left
+
+251
+00:24:47,120 --> 00:24:50,980
+corner or the top right corner depending on which direction we're going.
+
+252
+00:24:50,990 --> 00:24:53,760
+We just swap out right or left.
+
+253
+00:24:54,110 --> 00:25:01,900
+And now for refresh we drag and see it so it fades in from a scale of point five and opacity to complete
+
+254
+00:25:03,020 --> 00:25:04,350
+and then the other direction.
+
+255
+00:25:04,580 --> 00:25:08,310
+The same thing.
+
+256
+00:25:08,340 --> 00:25:16,850
+So the key takeaways with doing these decision drags is for the most part all you have to do is in your
+
+257
+00:25:16,870 --> 00:25:24,840
+on Pan respond to release based upon the either or distance that has been dragged in a particular direction.
+
+258
+00:25:25,020 --> 00:25:32,550
+You can then derive actions to be taken whether it's resetting the animation or doing a decay to do
+
+259
+00:25:32,550 --> 00:25:33,680
+a throw.
+
+260
+00:25:33,780 --> 00:25:40,470
+And then once that animation is complete you can do a transition next which includes are more animations
+
+261
+00:25:40,710 --> 00:25:46,100
+but also state to set up the next drag or to set up the next few.
+

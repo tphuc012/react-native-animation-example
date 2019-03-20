@@ -1,0 +1,64 @@
+1
+00:00:00,680 --> 00:00:07,430
+Some common animations that occur are on Mount animations so basically animation happens to kind of
+
+2
+00:00:07,430 --> 00:00:14,120
+focus your attention on a particular item of importance to this happens in Google now cards or in some
+
+3
+00:00:14,120 --> 00:00:16,840
+cases form fields like we have here.
+
+4
+00:00:16,850 --> 00:00:26,050
+So now if we refresh and see that each of these staggers in its opacity and has a slight movement one
+
+5
+00:00:26,050 --> 00:00:30,290
+of my favorite features is the zoom feature the access feature on Mac.
+
+6
+00:00:30,370 --> 00:00:38,310
+So we're going to zoom zoom in on our form field and then when we refresh can see that there is a slight
+
+7
+00:00:38,310 --> 00:00:41,280
+movement we start up here.
+
+8
+00:00:41,580 --> 00:00:48,250
+And then it animates down about five or so offset.
+
+9
+00:00:48,270 --> 00:00:54,660
+So in terms of a breakdown each of these could be an interpolation but we'll set it up as each individual
+
+10
+00:00:54,660 --> 00:00:57,260
+estimated values so we can use daggar.
+
+11
+00:00:57,540 --> 00:01:03,930
+And then it looks like there might be an interpolation on the zero to one of the animation that offsets
+
+12
+00:01:03,990 --> 00:01:06,610
+each of these about five and then transitions.
+
+13
+00:01:06,630 --> 00:01:15,210
+And that's a saw common technique is you set up your thing using lay out and then you set values that
+
+14
+00:01:15,210 --> 00:01:18,510
+will offset it to begin and then animate it back in.
+
+15
+00:01:18,500 --> 00:01:24,990
+And that way you don't have to control the positioning of your of your item you just let the layout
+
+16
+00:01:24,990 --> 00:01:30,120
+take effect and user translates to offset it correctly.
+

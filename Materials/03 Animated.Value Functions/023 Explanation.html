@@ -1,0 +1,269 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>023 Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Animated values are the instances that wrap around the values to animate. They provide the hooks for <code>Animated.View</code>s and <code>Animated</code> methods to operate and notify each other that animations are happening.</p>
+
+<p>Animated.Value</p>
+
+
+
+<p>This is the basic value unit of <code>Animated</code>. It holds a singular value and is what is passed into <code>Animated.View</code>, any <code>Animated</code> animation method, and is used for <code>interpolate</code>.</p>
+
+
+
+
+
+<p>Animated.ValueXY</p>
+
+
+
+<p>This is a combination of 2 <code>Animated.Value</code>s, an <code>x</code> and a <code>y</code>. The only difference is that <code>Animated.ValueXY</code> provides helper methods for things like <code>translate</code> transforms and or <code>absolute</code> position animations. Those methods are <code>getTranslateTransform</code> and <code>getLayout</code>.</p>
+
+
+
+
+
+<p><code>getTranslateTransform</code> will return an array that a can be passed directly to a transform. However if you are using other transforms you'll need to combine the arrays.</p>
+
+
+
+
+
+<p>These 2 are equivalent</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code&gt;const animatedStyle = {
+  transform: this._animation.getTranslateTransform()
+}
+const animatedStyle = {
+  transform: [{
+    translateX: this._animation.x
+  }, {
+    translateY: this._animation.y
+  }]
+}
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>The same goes for <code>getLayout</code>. This will return a <code>top</code> and <code>left</code> object.</p>
+
+
+
+
+
+<p>These 2 are also equivalent</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code&gt;const animatedStyle = this._animation.getLayout()
+
+const animatedStyle = {
+  top: this._animation.y,
+  left: this._animation.x
+}
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>setValue</p>
+
+
+
+<p>Both <code>Animated.Value</code> and <code>Animated.ValueXY</code> have a <code>setValue</code> function. This will immediately adjust the animated value. There will be no animation, any <code>Animated.View</code> that has received the particular <code>Animated.Value</code> will adjust appropriately.</p>
+
+
+
+
+
+<p>This is a typical way to reset an animation, or to set starting values when dealing with dynamic values.</p>
+
+
+
+
+
+<p>The only difference is that <code>Animated.ValueXY</code> can receive a single value <code>setValue(0)</code> which will set both the <code>x</code> and the <code>y</code> values to 0. The other method is to pass an object specifying the <code>x</code> and <code>y</code> values to set like <code>setValue({ x: 5, y: 0 })</code>. 
+Finally you can also reference the <code>.x</code> and <code>.y</code> and call <code>setValue</code> on them directly like <code>this._animation.x.setValue(5)</code>.</p>
+
+
+
+
+
+<p>Neither method is wrong, it all depends on personal preference, your needs, and or what you have access to.</p>
+
+
+
+
+
+<p>Listeners</p>
+
+
+
+<p>Sometimes you may need raw access to an animated value. Due to the nature of <code>Animated</code> being async you must supply a listener. You define this with <code>addListener</code> and provide a callback. It is necessary that this is async because if the animation is being driven/calculated by the native world the exactly value will not be synchronously available.</p>
+
+
+
+
+
+<p>The syntax looks like this.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;this._animation.addListener(({ value }) =&gt; {
+  // Do something here
+  // Keep track of the value this.animatedValue = value
+  // Trigger other animations
+})
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>The listener gets called with an object, and with a <code>value</code> key. In the case of <code>Animated.Value</code> the <code>value</code> key will refer to single number. In the case of <code>Animated.ValueXY</code> this will be an object with <code>x</code>, and <code>y</code> keys with their respective values.</p>
+
+
+
+
+
+<p>Offset</p>
+
+
+
+<p>Using <code>setOffset</code> is underutilized but beneficial when dealing with gestures and animations. It allows you to set an initial offset value to be added into the animated value.</p>
+
+
+
+
+
+<p>So if we had <code>this._animation = Animated.Value(0)</code> and then called <code>this._animation.setOffset(15)</code>. The <code>Animated.Value</code> is still set to <code>0</code> but then will have <code>15</code> added to it. So the actual value when accessed would be 15 and not 0.</p>
+
+
+
+
+
+<p>Offset is necessary for gestures as you typically want to use <code>translateX</code> and <code>translateY</code> to move an item in conjunction with the <code>dx/dy</code>. The delta X and delta Y, which are the deltas of the touch from the original position.
+Using <code>setOffset</code> allows you to use <code>Animated.event</code> in conjunction with a <code>PanResponder</code> and <code>addListener</code> to set the offset to the previous animated position. Then you can simply feed the <code>dx/dy</code> into the <code>Animated.ValueXY</code>. We will explain this more in depth when we are dealing with gestures, and show a few examples.</p>
+
+
+
+
+
+<p>Just know that the syntax for setting offset matches <code>setValue</code>. So for <code>Animated.Value</code> it's simply <code>this._animation.setValue(15)</code>, and for <code>Animated.ValueXY</code> you'd pass in <code>this._animation.setOffset({x: 5, y: 15 })</code>.</p>
+
+
+
+
+
+<p>Additionally there are <code>flattenOffset</code> and <code>extractOffset</code>. These operate in a reverse manner. </p>
+
+
+
+
+
+<p><code>flattenOffset</code> will take the offset and merge into the <code>value</code> of the <code>Animated.Value</code> and set the offset to <code>0</code>.</p>
+
+
+
+
+
+<p>Example:</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;this._animation = Animated.Value(15);
+this._animation.setOffset(5);
+
+this._animation.flattenOffset();
+
+//value = 20;
+//offset = 0;
+//overall value = 20;
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p><code>extractOffset</code> will take the value of the <code>Animated.Value</code> merge it into the offset, and set the <code>value</code> to <code>0</code>.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;this._animation = Animated.Value(15);
+this._animation.setOffset(5);
+
+this._animation.extractOffset();
+
+//value = 0;
+//offset = 20;
+//overall value = 20
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Both of these calls would be consider noops. Because the value of an <code>Animated.Value</code> is just <code>offset + value</code>, when these commands are executed there would not be a visible animation effect as the derived values will be the same.</p>
+
+
+
+
+
+<p><code>extractOffset</code> will be heavily used for dragging operations.</p>
+
+
+
+
+
+<p>Remove Listeners</p>
+
+
+
+<p>If you attach a listener it is absolutely crucial that you call <code>removeAllListeners</code> or <code>removeListener</code> in <code>componentWillUnmount</code> otherwise memory leaks will happen. This will cause your application to eat up more memory, and keep instances around that aren't necessary.</p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

@@ -1,0 +1,56 @@
+1
+00:00:00,850 --> 00:00:06,220
+Animated modules that allows you to do modulo arithmetic and get the remainder after division essentially
+
+2
+00:00:06,220 --> 00:00:11,590
+you do the division of the two values take the result multiplied by the divisor which is the bottom
+
+3
+00:00:11,590 --> 00:00:12,240
+number.
+
+4
+00:00:12,490 --> 00:00:17,740
+Then take the dividend which is a top to him and said tracked out that resulting number the value is
+
+5
+00:00:17,890 --> 00:00:20,320
+the modulo.
+
+6
+00:00:20,340 --> 00:00:24,830
+Now one of the main uses for this is clock arithmetic.
+
+7
+00:00:24,840 --> 00:00:33,920
+However we'll just do some spinning in our demo so we'll first set up a random value which will assign
+
+8
+00:00:33,920 --> 00:00:42,800
+to three and then will say it's new animation is equal to animated modulo.
+
+9
+00:00:42,860 --> 00:00:47,370
+So this state animation and our random value.
+
+10
+00:00:48,030 --> 00:00:53,660
+And then we'll do an interpellation on this and say Konst interpolated Ziegel to a new animation button
+
+11
+00:00:53,760 --> 00:01:07,490
+Triple-A input range from zero to three in our output range will be 0 degrees to 270 degrees.
+
+12
+00:01:08,490 --> 00:01:14,750
+And then we will pass this in as a rotate transform.
+
+13
+00:01:14,910 --> 00:01:20,430
+And now as this animates it will be continually divided and we'll take the remainder interpret it and
+
+14
+00:01:20,430 --> 00:01:24,600
+then we'll figure out a rotation so we can do that and see that it spins.
+

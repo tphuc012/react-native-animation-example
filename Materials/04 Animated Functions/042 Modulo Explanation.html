@@ -1,0 +1,63 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>042 Modulo Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Returns the non-negative modulo of the 2 values. Modulo is the remainder after division. The modulo JavaScript operator is the <code>%</code>. Modular arithmetic is commonly used in time calculations, but there are many other usages as well.</p>
+
+<p>Here is a quick math demo of the <code>%</code> in action.</p>
+
+
+
+
+
+<p>Essentially, you do the division of the 2 values. Take the result multiplied by the divisor (bottom number), then take the dividend (top number) and subtract out the resulting number. That values is the modulus.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code&gt;16 % 6 = 4
+
+//OR
+
+16 \ 6 = 2
+2 * 6 = 12
+16 - 12 = 4
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;const dividend = new Animated.Value(16);
+const divisor = new Animated.Value(6);
+
+const modulo = Animated.modulo(dividend, divisor);
+
+// value = 4;
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p><a href="https://snack.expo.io/ryYSPX3rb" rel="nofollow">Live Demo</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

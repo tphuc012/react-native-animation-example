@@ -1,0 +1,136 @@
+1
+00:00:00,410 --> 00:00:02,810
+Set props is how animated works.
+
+2
+00:00:02,820 --> 00:00:06,450
+So let's go take a look at how we can use set native props.
+
+3
+00:00:06,450 --> 00:00:09,790
+One thing many people attempt to do is disable a scroll view.
+
+4
+00:00:09,930 --> 00:00:15,600
+However sometimes there's a significant amount of content and calling a state may cause performance
+
+5
+00:00:15,600 --> 00:00:16,720
+issues.
+
+6
+00:00:16,740 --> 00:00:21,840
+So let's take a look at how we can use set of props to bypass set state.
+
+7
+00:00:21,970 --> 00:00:26,370
+Now we start by setting and enabled true on our component instance.
+
+8
+00:00:26,460 --> 00:00:32,570
+And that's because our scroll view here is always going to have scroll enabled defaulted to true.
+
+9
+00:00:32,820 --> 00:00:38,910
+The key here is that we need to get this scroll which is our reference to our this particular component
+
+10
+00:00:38,910 --> 00:00:43,430
+instance otherwise we won't be able to call setting of props.
+
+11
+00:00:43,430 --> 00:00:52,570
+So now up in our handle toggle we can just do a scroll native prop's
+
+12
+00:00:55,790 --> 00:01:03,900
+and we need to pass in an object and then scroll and enabled this dot enabled.
+
+13
+00:01:04,020 --> 00:01:08,800
+We don't need to pass back all of the props that are being passed into the scroll you just the ones
+
+14
+00:01:08,800 --> 00:01:10,150
+that we want to change.
+
+15
+00:01:11,210 --> 00:01:16,980
+Now we're always just setting this to you so let's just talk let's say this dot enabled equals not the
+
+16
+00:01:17,030 --> 00:01:18,980
+start enabled.
+
+17
+00:01:19,220 --> 00:01:23,690
+So that way if it's true it would target the false and if it's false it will be targeted to true.
+
+18
+00:01:23,690 --> 00:01:30,090
+So now if we go out and we refresh this and see that when we're scrolling in the background will change.
+
+19
+00:01:30,190 --> 00:01:35,820
+However we toggle and we can no longer scroll toggle back.
+
+20
+00:01:35,900 --> 00:01:39,170
+And now we're back to being able to scroll.
+
+21
+00:01:39,200 --> 00:01:41,330
+This also works with styles.
+
+22
+00:01:41,450 --> 00:01:47,250
+Do you know that the style is a single prop so passing over a new style with set props.
+
+23
+00:01:47,350 --> 00:01:53,720
+We'll blow all the sow's away so make sure you send over the ones that you are currently applied to
+
+24
+00:01:53,720 --> 00:01:57,530
+the scroll of you not just the ones that you want to change.
+
+25
+00:01:57,710 --> 00:02:05,120
+So let's set up a styles would say style equals an array and styles that scroll.
+
+26
+00:02:05,320 --> 00:02:21,090
+And if we're not unable then we'll say style push styles that hide outs will just say style push styles
+
+27
+00:02:21,090 --> 00:02:26,900
+that show and then we can pass in our style here to our set native props.
+
+28
+00:02:26,910 --> 00:02:32,310
+So this is just going to tile an array of styles that we're sending over and if we look here our height
+
+29
+00:02:32,330 --> 00:02:35,700
+and show are just setting opacity of either 0 or 1.
+
+30
+00:02:35,700 --> 00:02:43,140
+So now if we refresh this and scroll be disabled as well as toggling the opacity so we toggle and we
+
+31
+00:02:43,140 --> 00:02:44,890
+can take it back.
+
+32
+00:02:44,970 --> 00:02:52,000
+I don't recommend using Set native props as in lieu of using set state but sometimes you need to bypass
+
+33
+00:02:52,140 --> 00:02:57,040
+state and the defense and the overhead that comes with updating all of the views.
+
+34
+00:02:57,090 --> 00:03:00,050
+So use it but use it sparingly.
+

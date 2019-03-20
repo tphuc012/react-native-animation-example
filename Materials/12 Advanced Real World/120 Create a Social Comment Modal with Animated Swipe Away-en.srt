@@ -1,0 +1,336 @@
+1
+00:00:00,180 --> 00:00:03,600
+Let's take a look at what we currently have set up we've got an animated view.
+
+2
+00:00:03,620 --> 00:00:09,970
+That's our motile instead of that we have a comment wrapping a scroll view inside of our scroll though
+
+3
+00:00:09,970 --> 00:00:12,170
+you have some fake text at the top.
+
+4
+00:00:12,170 --> 00:00:18,290
+We have fake comments in the middle which is just a view with a thousand pixels of height and some background
+
+5
+00:00:18,290 --> 00:00:18,800
+color.
+
+6
+00:00:19,070 --> 00:00:23,700
+And then we have some fake text at the bottom so they know that we hit the bottom.
+
+7
+00:00:23,840 --> 00:00:27,290
+Now in our component will now will create a few things.
+
+8
+00:00:27,290 --> 00:00:33,410
+The first will be this animated which is just going to be a new animated value that we control then
+
+9
+00:00:33,410 --> 00:00:40,520
+additionally will create this dot animated margin is a new animated value as well which will help us
+
+10
+00:00:41,090 --> 00:00:50,390
+add the crushing swipe down effect to our motile and then we'll also create this scroll offset this
+
+11
+00:00:50,450 --> 00:00:52,190
+Staat content.
+
+12
+00:00:53,710 --> 00:00:57,130
+And this scroll of view.
+
+13
+00:00:57,810 --> 00:01:05,640
+I will just initialize those all to zero Roughead and we'll set up our stylings for our animated values.
+
+14
+00:01:05,640 --> 00:01:09,900
+So I'll say conc spacer style is equal to margin top.
+
+15
+00:01:10,110 --> 00:01:19,270
+And then we'll just pass it on to this animated Marjan will then do a concert opacity interpolate and
+
+16
+00:01:19,270 --> 00:01:27,550
+will operate off of this to animated inter-relate So to take an input range because we can Faid going
+
+17
+00:01:27,550 --> 00:01:28,860
+both up and down.
+
+18
+00:01:28,900 --> 00:01:35,510
+We'll start our input range it's negative 400 0 and then 400 so that we can use the same opacity interplay
+
+19
+00:01:35,580 --> 00:01:44,860
+for both interactions and then our output range will be 0 1 and 0.
+
+20
+00:01:46,360 --> 00:01:55,340
+Now we can set up our model south so say conc modal style is equal to an object transform which takes
+
+21
+00:01:55,340 --> 00:02:01,550
+a translate Y and we'll just pass in this to animated so that we can control the swiping up and down
+
+22
+00:02:01,910 --> 00:02:04,260
+or moving our motile out of the screen.
+
+23
+00:02:04,400 --> 00:02:08,050
+And then we'll also apply our capacity here with our capacity.
+
+24
+00:02:08,290 --> 00:02:15,830
+Interpolate now set up our styles and apply them to our certain views so will create an animated view
+
+25
+00:02:15,830 --> 00:02:16,500
+here.
+
+26
+00:02:17,820 --> 00:02:21,470
+Say style equals our margin or space or style.
+
+27
+00:02:23,620 --> 00:02:30,780
+We'll then also add in our modal style to our modal also need to capture some of the data from our scroll
+
+28
+00:02:30,790 --> 00:02:31,170
+view.
+
+29
+00:02:31,390 --> 00:02:36,520
+So the first thing we'll do is add scroll event throttle and we'll set it to 16 milliseconds so that
+
+30
+00:02:36,520 --> 00:02:43,660
+we're notified every 60 milliseconds that a scroll happened in or on scroll of that callback will say
+
+31
+00:02:43,660 --> 00:02:48,770
+event and then will assign the properties that we set up above.
+
+32
+00:02:48,770 --> 00:03:01,720
+So this scroll offset will be equal to our event native event content offset that Y and then will say
+
+33
+00:03:01,780 --> 00:03:13,640
+this scroll view height is equal to or event need event to lay out measurements that height will also
+
+34
+00:03:14,240 --> 00:03:18,370
+get the content size of the entire scroll of view innards.
+
+35
+00:03:18,440 --> 00:03:27,800
+So say on content size change which will then receive the content with the content right.
+
+36
+00:03:28,790 --> 00:03:37,190
+However we currently only care about the height so say this content height equals content height.
+
+37
+00:03:37,190 --> 00:03:44,110
+Now let's go back up to our component will mount and will simply create a pan responder will assign
+
+38
+00:03:44,110 --> 00:03:48,910
+it to this not pan responder.
+
+39
+00:03:49,090 --> 00:03:53,840
+The pan responder will allow us to act on the gestures and when we want to start and stop them.
+
+40
+00:03:54,050 --> 00:03:59,560
+So first of all move the On-Star should set pan responder will focus on the move.
+
+41
+00:03:59,570 --> 00:04:07,920
+Only this will allow us to control when we want to start our takeover of the gestures.
+
+42
+00:04:08,060 --> 00:04:13,180
+So say Konst DIY which is our Delta y gesture state.
+
+43
+00:04:15,600 --> 00:04:22,590
+It we'll get a total scroll which is total scroll high which is a combination of this scroll offset
+
+44
+00:04:23,600 --> 00:04:29,450
+Plus this scroll view height.
+
+45
+00:04:29,460 --> 00:04:33,260
+Now we want to set up our conditions for when this pan responder should respond.
+
+46
+00:04:33,510 --> 00:04:38,320
+So we'll say if and our first will be this scroll offset.
+
+47
+00:04:38,460 --> 00:04:40,160
+It's less than equal to zero.
+
+48
+00:04:40,380 --> 00:04:43,030
+And our Delta Y is greater than zero.
+
+49
+00:04:43,470 --> 00:04:48,300
+This one is for when we are at the top and we are dragging downwards and we want to crush our mobile
+
+50
+00:04:48,300 --> 00:04:49,040
+out of the way.
+
+51
+00:04:50,080 --> 00:04:54,630
+The second one will be for when we're at the bottom and we're dragging up and we want to swipe it away.
+
+52
+00:04:54,630 --> 00:05:00,790
+This you can tell by saying total scroll height is greater than or equal to this stock content right.
+
+53
+00:05:02,270 --> 00:05:04,550
+And our D-y is less than zero.
+
+54
+00:05:05,550 --> 00:05:12,280
+In these cases we want to return true which will trigger our pan responder and allow us to interact
+
+55
+00:05:12,280 --> 00:05:14,900
+with the gesture.
+
+56
+00:05:14,910 --> 00:05:20,460
+Now it's set up when we actually do our move so we can delete the arm pan responded Grant and just deal
+
+57
+00:05:20,460 --> 00:05:30,490
+with our move say Konst do you I see call to are just your state and if our D-y is less than zero.
+
+58
+00:05:30,750 --> 00:05:40,760
+Will say this animated set value are D-y or Delta y otherwise OutServe fire D-y is greater than zero.
+
+59
+00:05:40,800 --> 00:05:42,700
+We just control our animated margins.
+
+60
+00:05:42,720 --> 00:05:50,820
+This animated margin not set value of D-y to make them work.
+
+61
+00:05:50,840 --> 00:06:01,410
+We need to go down toward motile and do our spread of this pan responder type panhandlers will spread
+
+62
+00:06:01,410 --> 00:06:05,360
+those on to our motile.
+
+63
+00:06:05,430 --> 00:06:10,410
+Now you can go ahead and refresher emulator and see that if we scroll down and once we get the bottom
+
+64
+00:06:10,410 --> 00:06:17,760
+we can swipe our moral away or scroll down and then come back to the top and drag down.
+
+65
+00:06:17,760 --> 00:06:20,740
+We can actually crush our modal.
+
+66
+00:06:20,870 --> 00:06:23,780
+Finally we need to control what happens when we release.
+
+67
+00:06:23,780 --> 00:06:34,170
+So we'll get our D-y from our just your state and if our Delta Y is less than 150 which is just an arbitrary
+
+68
+00:06:34,170 --> 00:06:45,710
+threshold it will do an animated parallel we'll say animated that timing on this animated will say to
+
+69
+00:06:45,710 --> 00:06:52,860
+value negative 400 which translate Y will make our our model go up in a duration of 150.
+
+70
+00:06:53,240 --> 00:07:00,990
+Then we'll also do an animated timing on this animated margin and we'll just animate that back to zero
+
+71
+00:07:01,790 --> 00:07:03,450
+of a duration of 150
+
+72
+00:07:06,250 --> 00:07:15,730
+that will set up our LCF for DUI is greater than negative 150 and our DeWyze less than 150.
+
+73
+00:07:15,790 --> 00:07:23,900
+We haven't gone anywhere outside our threshold so we'll do an animated parallel animated timing this
+
+74
+00:07:24,150 --> 00:07:37,270
+animated to value zero for the duration of 150 and then we're also animated timing this animated margin
+
+75
+00:07:38,130 --> 00:07:39,230
+to zero.
+
+76
+00:07:40,040 --> 00:07:44,960
+Duration 150 This will allow us to release and then go back to a neutral position.
+
+77
+00:07:45,020 --> 00:07:50,320
+Finally LCF our Delta Y is greater than 150.
+
+78
+00:07:50,450 --> 00:08:00,980
+We want to do an animated timing on this animated and in this case we're swiping down so we'll just
+
+79
+00:08:00,980 --> 00:08:06,090
+say to value of 400 and a duration of 300 milliseconds.
+
+80
+00:08:06,500 --> 00:08:10,580
+Now I also need to call star on all of these otherwise our animations won't trigger so we'll go call
+
+81
+00:08:10,580 --> 00:08:17,460
+start on our parallel and also cost on our parallel up here for a refresher emulator.
+
+82
+00:08:17,530 --> 00:08:22,180
+You can see that we can crush it and it will snap back or if we hit our threshold then it will zoom
+
+83
+00:08:22,180 --> 00:08:28,450
+away and fade out or we can scroll to the bottom once at the bottom we can swipe it away and it'll snap
+
+84
+00:08:28,450 --> 00:08:33,270
+back if you don't hit 150 or you can hit the threshold and zoom away.
+

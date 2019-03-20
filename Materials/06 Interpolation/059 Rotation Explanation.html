@@ -1,0 +1,88 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>059 Rotation Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Rotation also requires you to use interpolate because the <code>rotation</code> transform properties must be given a value in degrees, or in radians. The most common is going to be degrees. The value provided would look like <code>90deg</code>. However you can also use radians if you prefer.</p>
+
+<p>You may want to just do a <code>rotate</code> which will rotate both <code>x</code> and <code>y</code>. However you can additionally rotate each piece independently.</p>
+
+
+
+
+
+<p>Lets take a look at example of animating each of these separately.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;export default class animations extends Component {
+  state = {
+    animation: new Animated.Value(0),
+  };
+  startAnimation = () =&gt; {
+    Animated.timing(this.state.animation, {
+      toValue: 1,
+      duration: 1500,
+    }).start(() =&gt; {
+      this.state.animation.setValue(0);
+    });
+  };
+
+  render() {
+    const xInterpolate = this.state.animation.interpolate({
+      inputRange: [0, 1],
+      outputRange: ["0deg", "360deg"],
+    });
+
+    const yInterpolate = this.state.animation.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: ["0deg", "0deg", "180deg"],
+    });
+
+    const animatedStyles = {
+      transform: [{ rotateX: xInterpolate }, { rotateY: yInterpolate }],
+    };
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;TouchableWithoutFeedback onPress={this.startAnimation}&gt;
+          &lt;Animated.View style={[styles.box, animatedStyles]} /&gt;
+        &lt;/TouchableWithoutFeedback&gt;
+      &lt;/View&gt;
+    );
+  }
+}
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>We interpolate the X to do a full <code>360</code> degrees, however half way through the animation we will animate the <code>y</code> 180 degrees.</p>
+
+
+
+
+
+<p><img alt="" src="https://images.codedaily.io/animations/InterpolateRotate.gif"></p>
+
+
+
+
+
+<p><a href="https://snack.expo.io/S1rRwN3Sb" rel="nofollow">Live Demo</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

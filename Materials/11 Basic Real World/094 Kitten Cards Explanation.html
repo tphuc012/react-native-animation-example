@@ -1,0 +1,856 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>094 Kitten Cards Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Intro</p>
+
+<p>Dragging cards left/right has become the new way to quickly make decisions on apps. Adding draggable card stacks can take some fine tuning to get the ideal feeling for your app. We'll walk through how to implement the drag and additionally add an extra animation step to scale in the next card.</p>
+
+
+
+<p>Setup</p>
+
+
+
+<p>We'll need to gather a few images, and install a module from npm. 
+I've provided the images but if you prefer non-cat related images you can pick your own set.</p>
+
+
+
+
+
+<p>We'll use the <code>clamp</code> module from npm to be able to clamp our velocity so we don't throw cards off the screen.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code&gt;npm install clamp
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Now our basic setup will include some structure on our state, and also setting up a <code>SWIPE_THRESHOLD</code>. This threshold will define how far you want to be able to drag a card before it is considered a decision. This is an arbitrary number, but you may want to base it off of screen size, or something else.</p>
+
+
+
+
+
+<p>Additionally we'll setup 3 animated values. One for the dragging of the card that is on top. The second for the fade out opacity of the card once a decision has been made. The third for the scale of the card behind the top card to add a subtle pop in effect.</p>
+
+
+
+
+
+<p>We want to add a button bar on the bottom, so we'll add a wrapping container, and then an additional top container to hold our cards. This will keep space for our button bar on the bottom.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;import React, { Component } from "react";
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  Animated,
+  PanResponder,
+  TouchableWithoutFeedback,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
+
+import clamp from "clamp";
+
+import Cat1 from "./cat1.jpeg";
+import Cat2 from "./cat2.jpeg";
+import Cat3 from "./cat3.jpeg";
+import Cat4 from "./cat4.jpeg";
+
+const SWIPE_THRESHOLD = 120;
+const { height } = Dimensions.get("window");
+
+export default class animations extends Component {
+  state = {
+    items: [
+      {
+        image: Cat1,
+        id: 1,
+        text: "Sweet Cat",
+      },
+      {
+        image: Cat2,
+        id: 2,
+        text: "Sweeter Cat",
+      },
+      {
+        image: Cat3,
+        id: 3,
+        text: "Sweetest Cat",
+      },
+      {
+        image: Cat4,
+        id: 4,
+        text: "Aww",
+      },
+    ],
+    animation: new Animated.ValueXY(),
+    opacity: new Animated.Value(1),
+    next: new Animated.Value(0.9),
+  };
+
+  render() {
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;View style={styles.top}&gt;
+
+        &lt;/View&gt;
+      &lt;/View&gt;
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  top: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
+
+AppRegistry.registerComponent("animations", () =&gt; animations);
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Add The Cards</p>
+
+
+
+<p>We will use <code>slice</code> and <code>reverse</code> to get the first 2 cat items. Then reverse so that the first one will be rendered on top and be touchable. Only rendering 2 items will allow us to handle any significant amount as we won't render all of the cards but we'll make it look like it's an infinite list with all rendered. Additionally this will allow us to focus our animations on a subset of views without worrying about other views.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;return (
+      &lt;View style={styles.container}&gt;
+        &lt;View style={styles.top}&gt;
+          {this.state.items.slice(0, 2).reverse().map(({ image, id, text }, index, items) =&gt; {
+            return (
+              &lt;Animated.View style={[styles.card]} key={id}&gt;
+                &lt;Animated.Image
+                  source={image}
+                  style={[styles.image]}
+                  resizeMode="cover"
+                /&gt;
+                &lt;View style={styles.lowerText}&gt;
+                  &lt;Text&gt;
+                    {text}
+                  &lt;/Text&gt;
+                &lt;/View&gt;
+              &lt;/Animated.View&gt;
+            );
+          })}
+        &lt;/View&gt;
+      &lt;/View&gt;
+    );
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>The key piece of styling here is the <code>position: "absolute"</code> on the card without <code>left/top</code> positioning. This means the <code>alignItems: "center"</code> and <code>justifyContent: "center"</code> will effect the cards and allow them to float freely on top of each other.</p>
+
+
+
+
+
+<p>On Android you need to add an <code>elevation</code> to the card if you want a shadow to appear. Shadows do not work on Android yet.</p>
+
+
+
+
+
+<p>Also rather than defining a set width/height of our image or text we can use <code>flex</code>. If we clear <code>width/height</code> to null, we can specify that our image should take up <code>3</code> times as much space as the lower text container.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;card: {
+    width: 300,
+    height: 300,
+    position: "absolute",
+    borderRadius: 3,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { x: 0, y: 0 },
+    shadowRadius: 5,
+    borderWidth: 1,
+    borderColor: "#FFF",
+  },
+  lowerText: {
+    flex: 1,
+    backgroundColor: "#FFF",
+    padding: 5,
+  },
+  image: {
+    width: null,
+    height: null,
+    borderRadius: 2,
+    flex: 3,
+  },
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Drag a Card</p>
+
+
+
+<p>We setup a <code>PanResponder</code>, and because we don't intend for the cards to ever be dragged after they already were dragged we do not need to call <code>extractOffset</code>.</p>
+
+
+
+
+
+<p>Then we will use <code>Animated.event</code> to map our <code>dx/dy</code> to our animated values for dragging.</p>
+
+
+
+
+
+<p>Our release will be the key area as this is where the drag needs to be analyzed and a decision made.</p>
+
+
+
+
+
+<p>We first need to figure out the velocity. If our velocity was 0 or positive then we will <code>clamp</code> it between <code>3</code> and <code>5</code> for our decay.</p>
+
+
+
+
+
+<p>If it's negative we will use <code>Math.abs</code> to flip it to positive value, clamp it, and then multiply by <code>-1</code> to convert it back to a negative value.</p>
+
+
+
+
+
+<p>Then we need to decide on if we met our threshold for a decision. We'll convert our <code>dx</code> drag to an always positive number with <code>Math.abs</code> and see if exceeded our threshold. If it did then we will continue our <code>decay</code> animation and the velocity that we had figured out. Then we can call our <code>transitionNext</code> function.</p>
+
+
+
+
+
+<p>Otherwise it didn't meet our threshold we can animate back to <code>0</code>.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;componentWillMount() {
+    this._panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: () =&gt; true,
+      onMoveShouldSetPanResponder: () =&gt; true,
+      onPanResponderMove: Animated.event([
+        null,
+        {
+          dx: this.state.animation.x,
+          dy: this.state.animation.y,
+        },
+      ]),
+      onPanResponderRelease: (e, { dx, vx, vy }) =&gt; {
+        let velocity;
+
+        if (vx &gt;= 0) {
+          velocity = clamp(vx, 3, 5);
+        } else if (vx &lt; 0) {
+          velocity = clamp(Math.abs(vx), 3, 5) * -1;
+        }
+
+        if (Math.abs(dx) &gt; SWIPE_THRESHOLD) {
+          Animated.decay(this.state.animation, {
+            velocity: { x: velocity, y: vy },
+            deceleration: 0.98,
+          }).start(this.transitionNext);
+        } else {
+          Animated.spring(this.state.animation, {
+            toValue: { x: 0, y: 0 },
+            friction: 4,
+          }).start();
+        }
+      },
+    });
+  }
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>This is an arbitrary function that can be called after a decision has been made. It can be used for the swipe, as well as the yes/no buttons. </p>
+
+
+
+
+
+<p>Once our animation is complete then we will trigger a <code>setState</code> and remove our top card with <code>slice(1)</code>. Because we are referencing our previous state we'll use the <code>updater</code> method of <code>setState</code> which is a function that receives the existing state and will trigger a setState with returned object.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;transitionNext = () =&gt; {
+  this.setState(
+    state =&gt; {
+      return {
+        items: state.items.slice(1),
+      };
+    });
+};
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Now we need to apply our panHandlers to the top view. We reversed the 2 items, so that means the view on top will be the last item in the list. So we just grab the 3rd argument which is the list of items we are mapping over and then see if it's the last item.</p>
+
+
+
+
+
+<p>We can then either return our <code>panHandlers</code> or an empty object to make it easy to spread onto our view.</p>
+
+
+
+
+
+<p>Our animation style is built using our <code>this.state.opacity</code> directly, as well as the <code>getTranslateTransform</code> transform helper.</p>
+
+
+
+
+
+<p>We'll add in an arbitrary <code>200</code> on either side drag with an <code>outputRange</code> of <code>30deg</code> and clamp it so that our card cannot turn more than 30 degrees to either side.</p>
+
+
+
+
+
+<p>We'll also apply an opacity with the same <code>200</code> range and fade out the image slightly as the card is being dragged in a particular direction. This will then allow us to emphasize the yes/no as it scales in and our image fades out.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;const { animation } = this.state;
+
+const rotate = animation.x.interpolate({
+  inputRange: [-200, 0, 200],
+  outputRange: ["-30deg", "0deg", "30deg"],
+  extrapolate: "clamp",
+});
+
+const opacity = animation.x.interpolate({
+  inputRange: [-200, 0, 200],
+  outputRange: [0.5, 1, 0.5],
+});
+
+const animatedCardStyles = {
+  transform: [{ rotate }, ...this.state.animation.getTranslateTransform()],
+  opacity: this.state.opacity,
+};
+
+const animatedImageStyles = {
+  opacity,
+};
+
+
+{this.state.items.slice(0, 2).reverse().map(({ image, id, text }, index, items) =&gt; {
+            const isLastItem = index === items.length - 1;
+            const panHandlers = isLastItem ? this._panResponder.panHandlers : {};
+
+            const imageStyle = isLastItem ? animatedImageStyles : undefined;
+            const cardStyle = isLastItem ? animatedCardStyles : undefined;
+
+            return (
+              &lt;Animated.View {...panHandlers} style={[styles.card]} key={id}&gt;
+                &lt;Animated.Image
+                  source={image}
+                  style={[styles.image, imageStyle]}
+                  resizeMode="cover"
+                /&gt;
+                &lt;View style={styles.lowerText}&gt;
+                  &lt;Text&gt;
+                    {text}
+                  &lt;/Text&gt;
+                &lt;/View&gt;
+              &lt;/Animated.View&gt;
+            );
+          })}
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Yes/No</p>
+
+
+
+<p>The <code>yes/no</code> appearing are all controlled based upon the direction that the drag is happening. We will want to control the <code>scale</code> and <code>opacity</code> of the yes/no that is sitting inside the card, on top of the image. We will also just add a static <code>rotate</code> of <code>30deg</code>. This could be placed in our <code>StyleSheet</code> but you may want to make this dynamic so I've placed it here.</p>
+
+
+
+
+
+<p>We'll only want to show them on top of the top card, aka the last item. So we will only render it if it's the last item using our <code>isLastItem</code> variable.</p>
+
+
+
+
+
+<p>The ranges for the <code>yes/no</code> are again arbitrary, but it's key to note that the <code>inputRange</code> will correspond with the direction that the cards are dragged.</p>
+
+
+
+
+
+<p>To the right (yes) will be positive values, so at <code>0</code> nothing is shown so we can see the <code>0</code> in the inputRange maps to a <code>0</code> in the output range. Then as we drag towards <code>150</code> on the right it will slowly scale in.</p>
+
+
+
+
+
+<p>For our no, we need to handle when we drag to the left, aka going negative on our x animation. In our case we have <code>-150</code> as the first value because we start at <code>0</code>. inputRanges always need to be going in a ascending fashion. So from either (0 or negative) =&gt; greater value. </p>
+
+
+
+
+
+<p>This is why we then need to flip out <code>outputRange</code>, because the <code>0</code> in is the second argument and at <code>0</code> we want no animation to be applied.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;const yesOpacity = animation.x.interpolate({ inputRange: [0, 150], outputRange: [0, 1] });
+const yesScale = animation.x.interpolate({
+  inputRange: [0, 150],
+  outputRange: [0.5, 1],
+  extrapolate: "clamp",
+});
+const animatedYupStyles = {
+  transform: [{ scale: yesScale }, { rotate: "-30deg" }],
+  opacity: yesOpacity,
+};
+
+const noOpacity = animation.x.interpolate({ inputRange: [-150, 0], outputRange: [1, 0] });
+const noScale = animation.x.interpolate({
+  inputRange: [-150, 0],
+  outputRange: [1, 0.5],
+  extrapolate: "clamp",
+});
+const animatedNopeStyles = {
+  transform: [{ scale: noScale }, { rotate: "30deg" }],
+  opacity: noOpacity,
+};
+
+{this.state.items.slice(0, 2).reverse().map(({ image, id, text }, index, items) =&gt; {
+            const isLastItem = index === items.length - 1;
+            const isSecondToLast = index === items.length - 2;
+
+            const panHandlers = isLastItem ? this._panResponder.panHandlers : {};
+            const cardStyle = isLastItem ? animatedCardStyles : undefined;
+
+            return (
+              &lt;Animated.View {...panHandlers} style={[styles.card, cardStyle]} key={id}&gt;
+                &lt;Animated.Image
+                  source={image}
+                  style={[styles.image, imageStyle]}
+                  resizeMode="cover"
+                /&gt;
+                &lt;View style={styles.lowerText}&gt;
+                  &lt;Text&gt;
+                    {text}
+                  &lt;/Text&gt;
+                &lt;/View&gt;
+
+                {isLastItem &amp;&amp;
+                  &lt;Animated.View style={[styles.nope, animatedNopeStyles]}&gt;
+                    &lt;Text style={styles.nopeText}&gt;Nope!&lt;/Text&gt;
+                  &lt;/Animated.View&gt;}
+
+                {isLastItem &amp;&amp;
+                  &lt;Animated.View style={[styles.yup, animatedYupStyles]}&gt;
+                    &lt;Text style={styles.yupText}&gt;Yup!&lt;/Text&gt;
+                  &lt;/Animated.View&gt;}
+              &lt;/Animated.View&gt;
+            );
+          })}
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Then we do some styling, we setup a green border, with coloring, and position in the <code>top/left</code> for yes, and <code>top/right</code> for nope. These will be on the opposite directions of the drag so they can stay visible to the user.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;yup: {
+    borderColor: "green",
+    borderWidth: 2,
+    position: "absolute",
+    padding: 20,
+    borderRadius: 5,
+    top: 20,
+    left: 20,
+    backgroundColor: "#FFF",
+  },
+  yupText: {
+    fontSize: 16,
+    color: "green",
+  },
+  nope: {
+    borderColor: "red",
+    borderWidth: 2,
+    position: "absolute",
+    padding: 20,
+    borderRadius: 5,
+    right: 20,
+    top: 20,
+    backgroundColor: "#FFF",
+  },
+  nopeText: {
+    fontSize: 16,
+    color: "red",
+  },
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Pop and Transition To Next Card</p>
+
+
+
+<p>The only addition here to the map is that we need to know if it's the <code>secondToLastItem</code> aka the card behind our top card. We could check if we're at the <code>0</code> index, but if you're rendering more than 1 card in the future this math will work.</p>
+
+
+
+
+
+<p>Regardless we create a new transform and just pass our <code>this.state.next</code> animated value into scale and apply it to our card as <code>nextStyle</code>.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;{this.state.items.slice(0, 2).reverse().map(({ image, id, text }, index, items) =&gt; {
+            const isLastItem = index === items.length - 1;
+            const isSecondToLast = index === items.length - 2;
+
+            const panHandlers = isLastItem ? this._panResponder.panHandlers : {};
+            const cardStyle = isLastItem ? animatedCardStyles : undefined;
+            const imageStyle = isLastItem ? animatedImageStyles : undefined;
+            const nextStyle = isSecondToLast
+              ? { transform: [{ scale: this.state.next }] }
+              : undefined;
+
+            return (
+              &lt;Animated.View {...panHandlers} style={[styles.card, cardStyle, nextStyle]} key={id}&gt;
+                &lt;Animated.Image
+                  source={image}
+                  style={[styles.image, imageStyle]}
+                  resizeMode="cover"
+                /&gt;
+                &lt;View style={styles.lowerText}&gt;
+                  &lt;Text&gt;
+                    {text}
+                  &lt;/Text&gt;
+                &lt;/View&gt;
+
+                {isLastItem &amp;&amp;
+                  &lt;Animated.View style={[styles.nope, animatedNopeStyles]}&gt;
+                    &lt;Text style={styles.nopeText}&gt;Nope!&lt;/Text&gt;
+                  &lt;/Animated.View&gt;}
+
+                {isLastItem &amp;&amp;
+                  &lt;Animated.View style={[styles.yup, animatedYupStyles]}&gt;
+                    &lt;Text style={styles.yupText}&gt;Yup!&lt;/Text&gt;
+                  &lt;/Animated.View&gt;}
+              &lt;/Animated.View&gt;
+            );
+          })}
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Here we do our pop and opacity fade out at the same time. Our opacity is for the front card that's been moved out of the way, and the <code>next</code> is the scale transition that will make the card look as if it's springing into place.</p>
+
+
+
+
+
+<p>The key here is our callback to our <code>setState</code>. The callback is a <code>componentDidUpdate</code> callback. This means that we've removed the card that was swiped and now our previous card that popped into place will now officially be the card stacked on top.</p>
+
+
+
+
+
+<p>We need to reset all our values now since it's a fresh card so we'll set our <code>opacity</code> to <code>1</code>, and then our <code>next</code> scale we'll reset back to <code>.9</code> to spring into place. Then finally we reset our drag position to be <code>0</code> again.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;transitionNext = () =&gt; {
+    Animated.parallel([
+      Animated.timing(this.state.opacity, {
+        toValue: 0,
+        duration: 300,
+      }),
+      Animated.spring(this.state.next, {
+        toValue: 1,
+        friction: 4,
+      }),
+    ]).start(() =&gt; {
+      this.setState(
+        state =&gt; {
+          return {
+            items: state.items.slice(1),
+          };
+        },
+        () =&gt; {
+          this.state.next.setValue(0.9);
+          this.state.opacity.setValue(1);
+          this.state.animation.setValue({ x: 0, y: 0 });
+        }
+      );
+    });
+  };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Add Buttons</p>
+
+
+
+<p>Below our <code>top</code> container we add our button bar. These are just a few styled buttons for yes and no.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;&lt;View style={styles.buttonBar}&gt;
+  &lt;TouchableOpacity onPress={this.handleNo} style={[styles.button, styles.nopeButton]}&gt;
+    &lt;Text style={styles.nopeText}&gt;NO&lt;/Text&gt;
+  &lt;/TouchableOpacity&gt;
+
+  &lt;TouchableOpacity onPress={this.handleYes} style={[styles.button, styles.yupButton]}&gt;
+    &lt;Text style={styles.yupText}&gt;YES&lt;/Text&gt;
+  &lt;/TouchableOpacity&gt;
+&lt;/View&gt;
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>The button bar is set to <code>flexDirection: "row"</code> and we center our buttons on the screen.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;buttonBar: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 10,
+  },
+  button: {
+    marginHorizontal: 10,
+    padding: 20,
+    borderRadius: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    shadowOpacity: 0.3,
+    shadowOffset: { x: 0, y: 0 },
+    shadowRadius: 5,
+  },
+  yupButton: {
+    shadowColor: "green",
+  },
+  nopeButton: {
+    shadowColor: "red",
+  },
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Finally with our arbitrary <code>transitionNext</code> call setup we can emulate what a drag to the perfect position would have been. We simply animate our <code>x</code> position which has our <code>rotate</code>, and our <code>yes/no</code> values interpolated off of to our desired <code>SWIPE_THRESHOLD</code>.</p>
+
+
+
+
+
+<p>For our no we need to animate to a negative <code>SWIPE_THRESHOLD</code>, and for yes a positive <code>SWIPE_THRESHOLD</code>.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  handleNo = () =&gt; {
+    Animated.timing(this.state.animation.x, {
+      toValue: -SWIPE_THRESHOLD,
+    }).start(this.transitionNext);
+  };
+  handleYes = () =&gt; {
+    Animated.timing(this.state.animation.x, {
+      toValue: SWIPE_THRESHOLD,
+    }).start(this.transitionNext);
+  };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Ending</p>
+
+
+
+<p><a href="https://snack.expo.io/BybknvqB-" rel="nofollow">Live Demo</a>
+<a href="https://gitlab.com/codedaily/reactnativeanimations/tree/tinder" rel="nofollow">Code</a></p>
+
+
+
+
+
+<p>Just understand that when you are dealing with drags, you can animate at any point depending on what you are attempting to accomplish.</p>
+
+
+
+
+
+<p>You have <code>onPanResponderGrant</code>, <code>onPanResponderMove</code>, and <code>onPanResponderRelease</code> at your disposal. Think of these as life cycle methods of React, but for a drag.</p>
+
+
+
+
+
+<p>The <code>onPanResponderGrant</code> will be called once per drag when it starts. This is where we do any setup necessary to prepare for the drag. Typically you'll be doing stuff for your animated values that will be effected by the <code>onPanResponderMove</code>. However you could imagine that you want to trigger a start animation.</p>
+
+
+
+
+
+<p>The <code>onPanResponderMove</code> will be called for every drag operation that happens. You likely will be piping this into an <code>Animated.ValueXY</code>, however there could be case that you need to trigger an animation based upon the position of a drag.
+Do realize that using <code>Animated.event</code> is calling <code>setValue</code> which is technically triggering an animation. So don't hesitate to trigger animations in <code>onPanResponderMove</code>. Like animating a color if the drag goes too far, and we need that in real time.</p>
+
+
+
+
+
+<p>The <code>onPanResponderRelease</code> is post-drag. This is generally going to be when you either reset an animation back to it's normal state. Like when a user doesn't drag far enough on our cards up above.
+Additionally this is also when you can do some sort of completion animation. This is where we can also use <code>setState</code> to effect layouts because this only called once.</p>
+
+
+
+
+
+<p>There are even more <code>PanResponder</code> methods but these are the most important 3. Play around with executing animations in each function and see what you can do.</p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

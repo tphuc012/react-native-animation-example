@@ -1,0 +1,102 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>029 Loop</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>This is used when an animation needs to keep repeating. One thing to note here is that the <code>loop</code> will reset the <code>Animated.Value</code> back to it's original value before starting the animation over.</p>
+
+<p>So unless your animation ends back where it started you will see a jump. For example</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;this._animation = new Animated.Value(0);
+
+Animated.loop(Animated.timing(this._animation, {
+  toValue: 100,
+  duration: 500
+})).start();
+
+const animatedStyle = {
+  transform: [
+    { 
+      translateY: this._animation
+    }
+  ]
+}
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>This animation will start at <code>0</code>, translate to <code>100</code> then revert back to <code>0</code>. This is not a typical use of <code>Animated.loop</code>. Something a little more typical may be a constantly spinning view.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;this._animation = new Animated.Value(0);
+
+Animated.loop(Animated.timing(this._animation, {
+  toValue: 1,
+  duration: 500
+})).start();
+
+const interpolated = this._animation.interpolate({
+  inputRange: [0, 1],
+  outputRange: ["0deg", "360deg"]
+});
+
+const animatedStyle = {
+  transform: [
+    { 
+      rotate: interpolated
+    }
+  ]
+}
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Here you can see we are interpolating <code>0deg</code> =&gt; <code>360deg</code>. This is a complete rotation and then the animation will restart at the same point. Thus creating a smooth, looping animation.
+If you need something that animates smoothly in reverse you will need to craft this yourself. It can be done using the <code>start</code> function. This is not something that will be covered, merely a warning/recommendation.</p>
+
+
+
+
+
+<p>Additionally in the configuration of <code>loop</code> you can specify the number of <code>iterations</code> that the animation should loop.</p>
+
+
+
+
+
+<p><a href="https://gitlab.com/codedaily/reactnativeanimations/tree/timingLoop" rel="nofollow">Code</a></p>
+
+
+
+
+
+<p><a href="https://snack.expo.io/BkqY9SLDW" rel="nofollow">Live Demo</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

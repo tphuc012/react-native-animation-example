@@ -1,0 +1,342 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>088 4 Corners Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Intro</p>
+
+<p>In this demo we'll walk through sequence of animating to 4 corners of the screen. We'll take advantage of <code>Dimensions</code>, <code>Animated.ValueXY</code>, <code>Animated.sequence</code>, and <code>Animated.spring</code>. We will gather the layout dynamically and animate the view to all the corners.</p>
+
+
+
+<p>Setup</p>
+
+
+
+<p>We'll setup a basic React Native component. We'll add 3 additional imports, <code>Animated</code>, <code>TouchableWithoutFeedback</code>, and <code>Dimensions</code>.</p>
+
+
+
+
+
+<p>We'll create a state variable called <code>animation</code> to hold our <code>Animated.ValueXY</code>.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;import React, { Component } from "react";
+import { AppRegistry, StyleSheet, Text, View, Animated, TouchableWithoutFeedback, Dimensions } from "react-native";
+
+export default class animations extends Component {
+  state = {
+    animation: new Animated.ValueXY(),
+  };
+
+  render() {
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;TouchableWithoutFeedback&gt;
+          &lt;Animated.View style={[styles.box]} /&gt;
+        &lt;/TouchableWithoutFeedback&gt;
+      &lt;/View&gt;
+    );
+
+  }
+}
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Our <code>TouchableWithoutFeedback</code> will use the <code>React.cloneElement</code> command and apply properties to our child view without adding any additional layout items. This means that we should apply our box styling to the <code>Animated.View</code>. This is different than other <code>Touchable</code> elements as they usually wrap the child element in an <code>Animated.View</code> which will effect positioning.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  box: {
+    width: 150,
+    height: 150,
+    backgroundColor: "tomato",
+    position: "absolute",
+    top: 0,
+    left: 0,
+  }
+});
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Get the Box Layout</p>
+
+
+
+<p>A key concept in animating some complex animations is having to know the current dimensions of a particular element and or a target element. There are a few methods but one of the most basic is using the <code>onLayout</code> prop. Due to the layout calculations occurring on the native side, we need to pass a callback so we can get the values once the view layout completes.</p>
+
+
+
+
+
+<p>We will also need to pass them to our <code>TouchableWithoutFeedback</code> because of the way it is structured to use <code>React.cloneElement</code> and it explicitly overrides the <code>onLayout</code> of the child view. So if we passed it to our <code>Animated.View</code> it would never be called.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;&lt;TouchableWithoutFeedback 
+  onPress={this.startAnimation} 
+  onLayout={this.saveDimensions}
+&gt;
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Here we simply save off the width and height so we can access it later.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  saveDimensions = e =&gt; {
+    this._width = e.nativeEvent.layout.width;
+    this._height = e.nativeEvent.layout.height;
+  };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Animate to the corners</p>
+
+
+
+<p>Now we'll need to also know the height and width of the window, so we'll use our <code>Dimensions</code> import and get the <code>width</code> and <code>height</code> of our window.</p>
+
+
+
+
+
+<p>For our first corner animation, we'll go down the left side of the screen. Meaning we'll need to animate the <code>y</code> value of our <code>Animated.ValueXY</code>. We need to animate to the <code>height</code> of the screen minus the size of our <code>box</code> which we put at <code>this._height</code>.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  startAnimation = () =&gt; {
+    const { width, height } = Dimensions.get("window");
+
+    Animated.spring(this.state.animation.y, {
+      toValue: height - this._height
+    })
+
+  }
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>The next corner will be the bottom right. Which means we need to animate across our screen. We already animated our <code>y</code> position so now we just need to animate our <code>x</code> position. Just like height we'll need to use our screen <code>width</code> minus the <code>box</code> width we saved at <code>this._width</code>.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  Animated.spring(this.state.animation.x, {
+    toValue: width - this._width,
+  })
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Now we're in the bottom right, and we'll move our box back up to the top right. We don't need to know the height as we are just animating our <code>y</code> back to the beginning which is <code>0</code>.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;Animated.spring(this.state.animation.y, {
+  toValue: 0
+})
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Finally we animate our <code>x</code> back to <code>0</code> where it started and we're officially at the start.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;Animated.spring(this.state.animation.x, {
+  toValue: 0
+})
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Now to combine all of our animations to happen one after the other we can simply use <code>Animated.sequence</code> and pass the entire series of animations in as an array.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  startAnimation = () =&gt; {
+    const { width, height } = Dimensions.get("window");
+
+    Animated.sequence([
+      Animated.spring(this.state.animation.y, {
+        toValue: height - this._height
+      }),
+      Animated.spring(this.state.animation.x, {
+        toValue: width - this._width,
+      }),
+      Animated.spring(this.state.animation.y, {
+        toValue: 0
+      }),
+      Animated.spring(this.state.animation.x, {
+        toValue: 0
+      })
+    ]).start();
+  }
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Apply Style</p>
+
+
+
+<p>We need to apply our style, and <code>Animated.ValueXY</code> comes with a handy transform shorthand. The <code>getTranslateTransform</code> will return an array of transforms for <code>translateX</code> and <code>translateY</code>.</p>
+
+
+
+
+
+<p>The equivalent would be </p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;[
+ { translateX: this.state.animation.x },
+ { translateY: this.state.animation.y }
+]
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  render() {
+    const animatedStyles = {
+      transform: this.state.animation.getTranslateTransform()
+    }
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;TouchableWithoutFeedback 
+          onPress={this.startAnimation} 
+          onLayout={this.saveDimensions}
+        &gt;
+          &lt;Animated.View style={[styles.box, animatedStyles]} /&gt;
+        &lt;/TouchableWithoutFeedback&gt;
+      &lt;/View&gt;
+    );
+  }
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Ending</p>
+
+
+
+<p>This demo is not complex by any means, the purpose is to focus on how we can use the Dimensions of the screen and dynamically measure the view so we can move it around the screen. The animation doesn't have to be completed all at the same time either. Using sequence and other animation combinators like parallel and stagger we can progressively move items around using the same animated value. This is a crucial concept to understand especially when it comes to dealing with interpolations.</p>
+
+
+
+
+
+<p><a href="https://snack.expo.io/r156WRISZ" rel="nofollow">Live Demo</a></p>
+
+
+
+
+
+<p><a href="https://gitlab.com/codedaily/reactnativeanimations/tree/4corners" rel="nofollow">Code</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

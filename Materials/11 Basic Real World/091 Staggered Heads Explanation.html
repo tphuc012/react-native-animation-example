@@ -1,0 +1,310 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>091 Staggered Heads Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Intro</p>
+
+<p>Facebook introduced a feature of messenger where heads sit on your screen and are able to be dragged around. There is a primary head and the rest will follow behind. We'll now learn how to handle animations in our <code>onPanResponderMove</code> function rather than just directly setting them with <code>Animated.event</code>.</p>
+
+
+
+<p>Setup</p>
+
+
+
+<p>We'll setup a basic center container view, and setup our <code>heads</code> on our state. Each head will have it's own <code>Animated.ValueXY</code> as they will each have their own position even though they'll follow the leader and end up at the same spot.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;import React, { Component } from "react";
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Animated,
+  PanResponder,
+} from "react-native";
+
+import Vjeux from "./vjeux.jpg";
+
+export default class animations extends Component {
+  state = {
+    heads: [
+      {
+        image: Vjeux,
+        animation: new Animated.ValueXY(),
+        text: "Drag Me",
+      },
+      {
+        image: Vjeux,
+        animation: new Animated.ValueXY(),
+      },
+      {
+        image: Vjeux,
+        animation: new Animated.ValueXY(),
+      },
+      {
+        image: Vjeux,
+        animation: new Animated.ValueXY(),
+      },
+    ],
+  };
+
+  render() {
+    return (
+      &lt;View style={styles.container}&gt;
+
+      &lt;/View&gt;
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
+
+AppRegistry.registerComponent("animations", () =&gt; animations);
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Render Images</p>
+
+
+
+<p>We'll need to render our heads in a specific order so that they stack correctly. We could also use zIndex in this case, but this is a little more explicit.</p>
+
+
+
+
+
+<p>We <code>slice(0)</code> to clone our array since <code>reverse</code> will mutate, then we call reverse. That means our draggable head on top, will be the last item rendered.</p>
+
+
+
+
+
+<p>We apply our style, and then additionally use the <code>getTranslateTransform</code> helper to build out our <code>transform</code> for us.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;render() {
+    return (
+      &lt;View style={styles.container}&gt;
+        {this.state.heads.slice(0).reverse().map((item, index, items) =&gt; {
+          return (
+            &lt;Animated.Image
+              {...pan}
+              key={index}
+              source={item.image}
+              style={[styles.head, { transform: item.animation.getTranslateTransform() }]}
+            &gt;
+              &lt;Text&gt;
+                {item.text}
+              &lt;/Text&gt;
+            &lt;/Animated.Image&gt;
+          );
+        })}
+      &lt;/View&gt;
+    );
+  }
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Our style for each head is just declaring that it's positioned absolutely, and defining a width, height and border radius to round it.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;head: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Setup PanResponder</p>
+
+
+
+<p>We need to setup our basic <code>PanResponder</code>. However rather than using <code>Animated.event</code> for the <code>onPanResponderMove</code> we need to set this up as a function as we will do a few more things for making our heads stagger.</p>
+
+
+
+
+
+<p>You can also see in our <code>onPanResponderGrant</code> we will call <code>extractOffset</code> to move the previous <code>dx</code>, and <code>dy</code> to our offset. That way our new deltas on the new touch will work. Additionally <code>setValue</code> to <code>0</code> for x and y needs to happen. The <code>extractOffset</code> moves the value of animated into the offset, and then sets the value to <code>0</code>.</p>
+
+
+
+
+
+<p>When an animation is happening the <code>Animated.Value</code> is tagged with the animation that is currently taking place. If a new animation tries to take over it will first stop the previous animation.</p>
+
+
+
+
+
+<p>However <code>extractOffset</code> presently mutates the underlying value and offset without calling <code>stop</code> on the previous running animation. This was causing issues when you didn't let the heads complete their spring before tapping or dragging again.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;componentWillMount() {
+    this._panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: () =&gt; true,
+      onMoveShouldSetPanResponder: () =&gt; true,
+      onPanResponderGrant: () =&gt; {
+        this.state.heads.map(({ animation }) =&gt; {
+          animation.extractOffset();
+          // setValue Animated bug fix
+          animation.setValue({ x: 0, y: 0 });
+        });
+      },
+      onPanResponderMove: (e, { dx, dy }) =&gt; {
+        this.state.heads[0].animation.setValue({
+          x: dx,
+          y: dy,
+        });
+    });
+  }
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Stagger the Heads</p>
+
+
+
+<p>There a few methods we could use here and one of them isn't stagger. If we were to use <code>stagger</code> any time a new animation started (which occurs every drag) then the other head animations will stop. This is because of how the <code>Animated</code> library works. </p>
+
+
+
+
+
+<p>The <code>onPanResponderMove</code> gets called one every drag, with the stagger the animations to the new position will be delayed by the amount we stagger. If there was another drag that happened the <code>Animated.stagger</code> would get triggered again. This would stop all animations previously even though they may not have executed yet. That means all the other heads would just sit there and do nothing.</p>
+
+
+
+
+
+<p>So we essentially need to replicate <code>stagger</code> but on at an individual head level.</p>
+
+
+
+
+
+<p>Before we move on this is actually a great place for a <code>tracking</code> animation. Which just means passing another animation value as the <code>toValue</code>. How it would work is we would pass in our main drag head animated value into our <code>Animated.spring</code>. Anytime the head would move the other heads would follow.</p>
+
+
+
+
+
+<p>We'll use a slightly different technique because we have access to the actual values <code>dx</code> and <code>dy</code>, and also want to stagger each heads start. </p>
+
+
+
+
+
+<p>We'll use <code>slice(1)</code> to skip the first head which is our drag head, and then use <code>Animate.sequence</code> to execute 2 animations one after the other. We'll use <code>delay</code> with the <code>index</code> multiplied by how many milliseconds between each head. In our case each head will be staggered by 10 milliseconds.</p>
+
+
+
+
+
+<p>Each head will be in it's own <code>sequence</code> so we won't run into the same issue with the <code>stagger</code> where setting the new value on the first head would cause the rest to stop.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;onPanResponderMove: (e, { dx, dy }) =&gt; {
+  this.state.heads[0].animation.setValue({
+    x: dx,
+    y: dy,
+  });
+
+  this.state.heads.slice(1).map(({ animation }, index) =&gt; {
+    return Animated.sequence([
+      Animated.delay(index * 10),
+      Animated.spring(animation, {
+        toValue: { x: dx, y: dy },
+      }),
+    ]).start();
+  });
+},
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Ending</p>
+
+
+
+<p><a href="https://snack.expo.io/r1Eo1ZPrb" rel="nofollow">Live Demo</a>
+<a href="https://gitlab.com/codedaily/reactnativeanimations/tree/staggerHeads" rel="nofollow">Code</a></p>
+
+
+
+
+
+<p>That's it. We recreated a stagger on each and when we drag the first head the other heads will follow it around. They are all just transforming around. We do not do anything in our <code>onPanResponderRelease</code> but theoretically you could animate and lock a head to either the left or right side depending on it's position.</p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

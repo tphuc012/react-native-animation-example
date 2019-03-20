@@ -1,0 +1,124 @@
+1
+00:00:00,750 --> 00:00:06,360
+Skill is a way to control the size of a particular element without actually controlling its layout.
+
+2
+00:00:07,380 --> 00:00:15,020
+Additionally scale can be used for other things like flipping items over on a reflection point to start
+
+3
+00:00:15,110 --> 00:00:22,670
+we'll create our state and create an animation and create another enemy to add value because the zero
+
+4
+00:00:22,670 --> 00:00:24,670
+scale would be non-existent.
+
+5
+00:00:24,680 --> 00:00:31,610
+The item would not appear on our screen will default one because that is going to be what scale defaults
+
+6
+00:00:31,610 --> 00:00:38,360
+to meaning it's just going to be a normal size of whatever the layout defined for then go set up Konst
+
+7
+00:00:38,660 --> 00:00:47,120
+animated styles and scale is going to be another transform objects will say transform which is an array
+
+8
+00:00:47,660 --> 00:00:54,220
+and pass and scale and say this Stut state animation and then we'll pass our enemy of styles into our
+
+9
+00:00:54,220 --> 00:00:55,000
+box.
+
+10
+00:00:57,320 --> 00:01:05,790
+And then create our start animation function for our touch without feedback and we'll say animated timing.
+
+11
+00:01:06,110 --> 00:01:11,510
+And so this state animation set to value of two.
+
+12
+00:01:11,520 --> 00:01:20,610
+So basically I will double its size say duration of 1300 milliseconds and then call start and now when
+
+13
+00:01:20,610 --> 00:01:25,990
+we refresh and we press on our box you can see that it grows to twice the size.
+
+14
+00:01:26,770 --> 00:01:30,960
+Besides growing larger scale also allows you to only scale the x value.
+
+15
+00:01:30,970 --> 00:01:38,160
+So if we refreshed this we can scale just horizontally or if we switched to scale why
+
+16
+00:01:41,970 --> 00:01:44,370
+it then scale vertically.
+
+17
+00:01:44,550 --> 00:01:49,650
+We'll flip this back to Y and change this to negative 2 rather than 2.
+
+18
+00:01:49,650 --> 00:01:50,640
+Additionally.
+
+19
+00:01:50,740 --> 00:01:53,570
+And some text inside of our animated view.
+
+20
+00:01:53,610 --> 00:01:55,730
+So I'll say this side forward
+
+21
+00:01:58,560 --> 00:02:02,300
+and then we'll also have to close our animated view.
+
+22
+00:02:02,350 --> 00:02:05,400
+So now enter refresh we will have some text inside of it.
+
+23
+00:02:05,530 --> 00:02:10,180
+However because we're animating to negative to what's going to happen is this is going to animate out
+
+24
+00:02:10,480 --> 00:02:13,840
+and then reflect and be the opposite direction.
+
+25
+00:02:13,840 --> 00:02:17,710
+So we press this is now flipped upside down.
+
+26
+00:02:18,750 --> 00:02:21,570
+This works for both scale x and scale y.
+
+27
+00:02:21,570 --> 00:02:29,070
+So if we change this to scale x we can see that it does a flip card animation to two times the size
+
+28
+00:02:29,710 --> 00:02:31,150
+but reversed.
+
+29
+00:02:31,150 --> 00:02:40,370
+Same goes for scale Y when we refresh it or flip over its horizontal axis and then all be scaled to
+
+30
+00:02:40,370 --> 00:02:41,410
+two times its size.
+
+31
+00:02:41,420 --> 00:02:42,320
+But in reverse.
+

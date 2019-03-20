@@ -1,0 +1,82 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>007 Opacity Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>One of the most used animations is opacity. Animating elements visible or animating them hidden. Opacity is a style property that is defined between <code>0</code> (meaning hidden) and <code>1</code> being completely visible. Anything in between <code>0</code> and <code>1</code> will add transparency. This will allow you to see through the element and potentially expose other elements underneath.</p>
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;componentWillMount() {
+  this._animation = new Animated.Value(0);
+}
+
+componentDidMount() {
+  Animated.timing(this._animation, {
+    toValue: 1,
+    duration: 500,
+  }).start()
+}
+render() {
+  const animatedStyle = {
+    opacity: this._animation
+  }
+  return &lt;Animated.View style={[styles.box, animatedStyle]} /&gt;
+}
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p>A very basic animation would look like the code above. We've defined an animation and set the default to <code>0</code>. We pass our <code>this._animation</code> into a generic style object on the <code>opacity</code> key.</p>
+
+
+
+
+
+
+
+<p>Then we use an array to combine multiple styles <code>style={[styles.box, animatedStyle]}</code>. This way we can have default styling for our view and only declare the properties we want to animate.</p>
+
+
+
+
+
+
+
+<p>The key here is that our animation gets kicked off in our <code>componentDidMount</code> and will animate to <code>1</code> over 500 milliseconds. This will be a casual fade in.</p>
+
+
+
+
+
+
+
+<p>Opacity is purely visual and operates the same as it does on the web. Meaning the element will have layout, the item just won't be visible. If there is any content behind the element with opacity they will become visible but will not be interactable with.</p>
+
+
+
+
+
+
+
+
+
+<p><a href="https://snack.expo.io/rk5HJLYVW" rel="nofollow" target="_blank">Live Demo</a><br></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

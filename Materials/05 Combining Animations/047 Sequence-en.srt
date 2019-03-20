@@ -1,0 +1,76 @@
+1
+00:00:00,720 --> 00:00:07,090
+Animated sequence allows us to call animations in a line one after the other.
+
+2
+00:00:07,110 --> 00:00:10,690
+So in our case we're going to have a color animation and a scale animation.
+
+3
+00:00:10,800 --> 00:00:15,870
+They are going to use inter-relate and we're going to go from our tomato to a purplish color and then
+
+4
+00:00:15,870 --> 00:00:19,780
+additionally we're going to scale our box out.
+
+5
+00:00:19,910 --> 00:00:25,170
+So the equivalent of doing an animated sequence with how to sync with us would be to do an animated
+
+6
+00:00:25,350 --> 00:00:35,750
+timing and say this state color animation and our two value will be one and then duration of five hundred
+
+7
+00:00:35,750 --> 00:00:36,620
+milliseconds.
+
+8
+00:00:36,740 --> 00:00:44,960
+The MacColl start here and then because it's going after the animation with a start and then animated
+
+9
+00:00:45,110 --> 00:00:56,580
+timing just at state DOT scale animation which will go to a value of two and a duration of 300 and then
+
+10
+00:00:56,580 --> 00:00:57,930
+more calls start.
+
+11
+00:00:58,350 --> 00:01:06,350
+So now if we were to refresh this and press on our box would turn blue and then scale up.
+
+12
+00:01:06,380 --> 00:01:11,560
+So now with animated sequence we can remove all of this weird nesting.
+
+13
+00:01:11,660 --> 00:01:18,260
+And so we can switch this to animated that sequence.
+
+14
+00:01:19,320 --> 00:01:23,950
+And just like others we will pass in an array of animations.
+
+15
+00:01:25,460 --> 00:01:31,880
+And we will then put our enemy in the timing of our skill animation there and we'll close this off and
+
+16
+00:01:31,880 --> 00:01:34,680
+then we'll just call start on our enemy in sequence.
+
+17
+00:01:34,750 --> 00:01:40,980
+And so this will wait for this to be completed first and then it will execute this and then our start
+
+18
+00:01:41,030 --> 00:01:43,630
+callback will be complete will be called.
+
+19
+00:01:43,680 --> 00:01:49,890
+And so once again we can refresh this press on it and see that this accomplished the same exact effect.
+

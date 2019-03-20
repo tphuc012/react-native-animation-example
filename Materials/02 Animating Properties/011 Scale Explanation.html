@@ -1,0 +1,197 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>011 Scale Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Scale is a way to animate the size of an element. It can be used to increase or decrease the size. What it's actually doing is defining how much to scale the coordinates. That means you can define the scale of <code>x</code> and <code>y</code> independently to have non-linear scaling. Scale defaults to 1 for both <code>x</code> and <code>y</code>. This just means scale to the size you have defined by your layout. </p>
+
+<p>The scale will transform from the center of the element. That means if you scale X it will scale on the left/right sides evenly. Lets look at an example.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;export default class animations extends Component {
+  render() {
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;View&gt;
+          &lt;View style={styles.box} /&gt;
+        &lt;/View&gt;
+      &lt;/View&gt;
+    );
+
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  box: {
+    width: 100,
+    height: 100,
+    backgroundColor: "tomato",
+    transform: [
+      {
+        scaleX: .5
+      }
+    ]
+  }
+});
+}
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>If we scale by <code>.5</code> on just the X side we will scale towards the middle evenly, removing <code>25</code> from both sides. We can see below that our wrapping <code>View</code> still maintains the layout of <code>100x100</code>. However when we actually select our box we can see that it's measurements is <code>50</code>. We know it's <code>50</code> because we can just take <code>100</code> for the width and multiply it by <code>.5</code>, <code>100 * .5 = 50</code>.</p>
+
+
+
+
+
+<p><img alt="" src="https://images.codedaily.io/animations/ScaleXWrap.png">
+<img alt="" src="https://images.codedaily.io/animations/ScaleXBox.png"></p>
+
+
+
+
+
+<p>I point this out as you may need to do math based upon the scale for positioning, or making a decision, or anything else you can think of. Understanding that scale transforms from the center, and that you can take the scale value and determine it's new size, you can control your animations correctly.</p>
+
+
+
+
+
+<p>Additionally when scale is negative a point reflection is created. What that means is it will flip over the opposite axis. So if we provide a <code>-1</code> on <code>scaleY</code>, it will flip over the X axis. </p>
+
+
+
+
+
+<p>We won't apply this to animation, but it's a good technique to know. This is how libraries like <code>react-native-invertible-scroll-view</code> and <code>react-native-reversed-flat-list</code> have their content set on the bottom. They do a reflection point on the element, and then on each individual row do another reflection point.</p>
+
+
+
+
+
+<p>Lets take a look at an example of this.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;export default class animations extends Component {
+  render() {
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;View&gt;
+          &lt;View style={styles.box}&gt;&lt;Text&gt;Hello&lt;/Text&gt;&lt;/View&gt;
+        &lt;/View&gt;
+      &lt;/View&gt;
+    );
+
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  box: {
+    width: 100,
+    height: 100,
+    backgroundColor: "tomato",
+    transform: [
+      {
+        scaleY: -1
+      }
+    ]
+  },
+});
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>We will first use a <code>scaleY: -1</code> to flip our box over the x axis and relfect it on the other side. You can see that our text is reflected.</p>
+
+
+
+
+
+<p><img alt="" src="https://images.codedaily.io/animations/ScaleYReflectionPoint.png"></p>
+
+
+
+
+
+<p>Now in order to get a double reflection point we need to apply the same transform and reflect back to the other side. We can apply this to just our text and flip it back to be able to be read normally. We apply a <code>scaleY: -1</code>.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  return (
+    &lt;View style={styles.container}&gt;
+      &lt;View&gt;
+        &lt;View style={styles.box}&gt;&lt;Text style={styles.textFlip}&gt;Hello&lt;/Text&gt;&lt;/View&gt;
+      &lt;/View&gt;
+    &lt;/View&gt;
+  );
+
+  textFlip: {
+    transform: [
+      {
+        scaleY: -1
+      }
+    ]
+  }
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Now that it has been reflected we can read it, but our box view still stays reflected which is why our text is still on the bottom.</p>
+
+
+
+
+
+<p><img alt="" src="https://images.codedaily.io/animations/ScaleYReflectText.png"></p>
+
+
+
+
+
+<p><a href="https://snack.expo.io/ryBO2vY4-" rel="nofollow">Live Demo</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

@@ -1,0 +1,100 @@
+1
+00:00:00,990 --> 00:00:08,700
+The animated delay function allows us to add a millisecond delay in between a sequence or a chain of
+
+2
+00:00:08,790 --> 00:00:18,240
+animations which means it can only be used with a series of animations like sequence parallel or staggerer
+
+3
+00:00:19,750 --> 00:00:20,360
+to use it.
+
+4
+00:00:20,380 --> 00:00:23,320
+We need to find a sequence of animations.
+
+5
+00:00:23,410 --> 00:00:31,140
+So say animated that sequence which will then take an array of our animations will say animated that
+
+6
+00:00:31,190 --> 00:00:39,380
+timing which trigger this state color animation to value of one the duration of five hundred milliseconds.
+
+7
+00:00:39,440 --> 00:00:50,210
+Well then say animated timing for this state scale animation so the value of to the duration of 300
+
+8
+00:00:50,360 --> 00:00:51,430
+milliseconds.
+
+9
+00:00:51,680 --> 00:01:03,640
+So this will cause our animation to change colors and then also scale up well then to an animated delay
+
+10
+00:01:04,680 --> 00:01:07,540
+of 1300 milliseconds.
+
+11
+00:01:07,590 --> 00:01:13,120
+So if we just call star on this refresh we can see what happens this fall.
+
+12
+00:01:13,290 --> 00:01:16,920
+Both do a sequence of timing So first this one and then this one
+
+13
+00:01:21,270 --> 00:01:26,900
+the start function would then be delayed 5400 milliseconds while we waited for this animated delay to
+
+14
+00:01:26,900 --> 00:01:27,520
+happen.
+
+15
+00:01:27,680 --> 00:01:30,270
+However there's other things that you could potentially do.
+
+16
+00:01:30,320 --> 00:01:37,040
+You could then use something like an animated parallel or some other sequence to animate more animations
+
+17
+00:01:37,130 --> 00:01:40,420
+or the same animations back to its starting position.
+
+18
+00:01:40,640 --> 00:01:50,060
+So in our case we'll do an animated parallel and that will take an array within the animated timing
+
+19
+00:01:51,100 --> 00:01:59,170
+and color animation to value of zero which was the starting position with a duration of 500 milliseconds.
+
+20
+00:01:59,420 --> 00:02:10,290
+And then we'll also do our animated timing of this state scale animation to value of one the duration
+
+21
+00:02:10,380 --> 00:02:12,600
+of 300 milliseconds as well.
+
+22
+00:02:12,820 --> 00:02:20,520
+See here we have a delay in between these two that executed one after the other and then another series
+
+23
+00:02:20,520 --> 00:02:23,950
+of animations that will then execute at the same time.
+
+24
+00:02:23,970 --> 00:02:30,960
+So if we refresh this you see that this will then wait for 200 milliseconds and then do the these two
+
+25
+00:02:30,960 --> 00:02:32,560
+animations in parallel.
+

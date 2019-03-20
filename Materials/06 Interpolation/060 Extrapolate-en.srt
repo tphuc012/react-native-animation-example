@@ -1,0 +1,188 @@
+1
+00:00:00,970 --> 00:00:04,960
+Interpolations take more than just input range and output range.
+
+2
+00:00:04,960 --> 00:00:12,400
+They also take an extrapolate value this extrapolate value defaults to extend which just says it's going
+
+3
+00:00:12,400 --> 00:00:16,810
+to extend the range beyond whatever the output range is.
+
+4
+00:00:16,810 --> 00:00:19,490
+So let's take a look at a quick example of this.
+
+5
+00:00:19,510 --> 00:00:23,010
+We have our animation that goes to.
+
+6
+00:00:23,290 --> 00:00:28,530
+And then once it's completed it will animate to one back to its beginning.
+
+7
+00:00:29,480 --> 00:00:35,700
+And because we have to find the input range from one to two and our output range from one to two these
+
+8
+00:00:35,730 --> 00:00:38,810
+will this map linearly to the values.
+
+9
+00:00:38,810 --> 00:00:45,260
+So if we refresh this and press on it as we animated to will animate to the two times the scale and
+
+10
+00:00:45,260 --> 00:00:49,050
+then back down to one with this animation here.
+
+11
+00:00:49,050 --> 00:00:55,520
+So let's take a look if we comment out this two and switch it to two values of three.
+
+12
+00:00:55,530 --> 00:00:57,990
+Now our input range does not go to three.
+
+13
+00:00:58,320 --> 00:01:04,670
+And so what will happen is it will analyze this step range between 1 and 2 to the output range of 1
+
+14
+00:01:04,770 --> 00:01:09,570
+and 2 and then figure out what this third value will be.
+
+15
+00:01:09,570 --> 00:01:16,790
+So now if we refreshed this and press on it rather than animating to to animate to three times a scale
+
+16
+00:01:18,180 --> 00:01:20,220
+this can be something that is beneficial.
+
+17
+00:01:20,220 --> 00:01:23,490
+However there are times where you want a separate thing to happen.
+
+18
+00:01:23,700 --> 00:01:29,940
+So for example there's extrapolate clamp extrapolate clamp will take a look at the output range and
+
+19
+00:01:29,940 --> 00:01:38,250
+once the input range is beyond it on either the left or right side whatever this is at it will not be
+
+20
+00:01:38,330 --> 00:01:40,770
+onto or go be on one.
+
+21
+00:01:40,780 --> 00:01:46,670
+So now if we refresh even though we're animating to 3 would be over here and with the default of extend
+
+22
+00:01:46,670 --> 00:01:50,390
+it would figure out that we need to go to a a scale of three.
+
+23
+00:01:50,420 --> 00:01:51,680
+It will stop at two
+
+24
+00:01:55,500 --> 00:02:02,730
+the other extrapolation value is identity what identity will do is once the input range has exceeded
+
+25
+00:02:03,330 --> 00:02:09,390
+rather than clamping like we have here it will just assume the value of the animated value.
+
+26
+00:02:09,840 --> 00:02:17,670
+So let's switch it over to identity and rather than animating 2 to 1 to 2 for output range we'll do
+
+27
+00:02:17,670 --> 00:02:18,810
+one 1.1.
+
+28
+00:02:19,110 --> 00:02:23,160
+So once your input range and our estimate of value is exceeded at the 2.
+
+29
+00:02:23,220 --> 00:02:30,480
+It will immediately skip to a scale of 2 and then animate to 3 and we can see that by refreshing here
+
+30
+00:02:32,580 --> 00:02:36,330
+slowly to one point one hits two and continues to three.
+
+31
+00:02:36,330 --> 00:02:43,590
+However when this animates backwards to 1 from 3 Once it is then within the two range.
+
+32
+00:02:43,590 --> 00:02:50,180
+Now our IMPA range in our output range in our interpellation will kick in and we can see it do it step
+
+33
+00:02:50,180 --> 00:02:51,810
+backwards as well.
+
+34
+00:02:51,840 --> 00:02:57,730
+Let's switch back to how we can see that we also have extrapolate left and extrapolate right.
+
+35
+00:02:57,800 --> 00:03:02,900
+So you can define how something should happen on the left and the right.
+
+36
+00:03:02,900 --> 00:03:10,130
+So let's switch this and put an extrapolate left with a clamp and we'll add instead of a two value of
+
+37
+00:03:10,130 --> 00:03:10,640
+one.
+
+38
+00:03:10,660 --> 00:03:12,640
+What added to a value of zero.
+
+39
+00:03:12,700 --> 00:03:16,640
+However we're still animating to a value of three to begin.
+
+40
+00:03:16,850 --> 00:03:22,510
+And because we are not defining and extrapolate right of clamp this will then continue on to three.
+
+41
+00:03:22,760 --> 00:03:29,060
+And once it tries to animate back down to zero which would then continue this along and animate this
+
+42
+00:03:29,060 --> 00:03:31,940
+value this box to disappear.
+
+43
+00:03:31,940 --> 00:03:33,290
+It will stop at one.
+
+44
+00:03:33,710 --> 00:03:40,240
+So we can see that we press this enemy to three sheets back down to one but our animated values actually
+
+45
+00:03:40,240 --> 00:03:41,230
+down at zero.
+
+46
+00:03:41,440 --> 00:03:44,740
+And that's because you've defined and extrapolate left side.
+
+47
+00:03:44,740 --> 00:03:46,810
+So over here of clamp.
+

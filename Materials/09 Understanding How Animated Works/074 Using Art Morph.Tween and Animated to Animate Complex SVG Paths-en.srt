@@ -1,0 +1,100 @@
+1
+00:00:00,610 --> 00:00:05,760
+Reacting of ships with re-acting of art bindings However you need to install the art library to take
+
+2
+00:00:05,760 --> 00:00:06,850
+advantage of it.
+
+3
+00:00:06,870 --> 00:00:11,850
+The only issue with Art is it does not conform to the web standards like reacting to Fiji.
+
+4
+00:00:11,940 --> 00:00:14,050
+So I still use re-active as.
+
+5
+00:00:14,140 --> 00:00:19,820
+However we use some of the helper methods from the art library that we installed some of the power of
+
+6
+00:00:19,880 --> 00:00:26,500
+art comes from being able to target both canvas as Fiji via all with the same exact API.
+
+7
+00:00:27,470 --> 00:00:33,490
+It comes with helpers like tweeting that helps you morph SVGA pads from one to the other.
+
+8
+00:00:33,560 --> 00:00:39,730
+So we're going to take advantage of the CEG path and the tween function from the art library.
+
+9
+00:00:39,800 --> 00:00:45,120
+So we have our start path which is a arrow and our end path which is a checkmark.
+
+10
+00:00:45,410 --> 00:00:52,600
+So we also have a similar animation and a path rendering our start path.
+
+11
+00:00:52,610 --> 00:00:55,990
+So again we need to create a path interpolator.
+
+12
+00:00:56,180 --> 00:01:01,700
+So say Konst path and interpolate and we'll say tween.
+
+13
+00:01:02,070 --> 00:01:09,900
+And that takes the start path and the path tween from Art can handle significantly more complex paths
+
+14
+00:01:10,160 --> 00:01:13,770
+than D-3 interpolate path.
+
+15
+00:01:13,790 --> 00:01:24,190
+The next thing we need to do is set up a empty path so say Konst P is equal to a new SPG path.
+
+16
+00:01:24,260 --> 00:01:31,610
+Then once again we'll set up our listeners say state animations add listener take a function and give
+
+17
+00:01:31,610 --> 00:01:40,190
+us our value and then our path internally has a tween function on it and that will receive the value
+
+18
+00:01:40,250 --> 00:01:45,870
+between 0 and 1 so say path and interpolate tween pasand our value.
+
+19
+00:01:46,320 --> 00:01:51,940
+And then it also has a the ability to apply to an arbitrary path and so was a path.
+
+20
+00:01:51,990 --> 00:01:58,780
+Interpolate apply to path and paths in our path.
+
+21
+00:01:58,800 --> 00:02:05,370
+So this does a lot of mutations rather than being a pure function.
+
+22
+00:02:05,390 --> 00:02:12,770
+So then we just need to call our set of props so we say this stop path set need of props and just D
+
+23
+00:02:12,890 --> 00:02:19,460
+and our path will be to SVGA so it will return a SPG path that we can use.
+
+24
+00:02:19,460 --> 00:02:24,710
+So now one we're refreshed this and we trigger our animation we can watch it transform to a check mark
+
+25
+00:02:25,640 --> 00:02:27,050
+and then transform back to an arrow.
+

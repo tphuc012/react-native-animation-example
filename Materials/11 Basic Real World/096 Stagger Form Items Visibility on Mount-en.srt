@@ -1,0 +1,300 @@
+1
+00:00:00,490 --> 00:00:07,500
+For are staggered form fields will only go over the animations and not the lay out of our screen here.
+
+2
+00:00:07,520 --> 00:00:09,580
+However we'll run through it really quickly.
+
+3
+00:00:09,580 --> 00:00:15,040
+We have a container in our image background with an absolute fill and A with a height and also that
+
+4
+00:00:15,040 --> 00:00:17,650
+the image is sized correctly.
+
+5
+00:00:17,710 --> 00:00:21,160
+We then have a view here and a view here.
+
+6
+00:00:21,160 --> 00:00:29,590
+Those views are flex 1 and that way we have spacing exactly the same spacing for our view in the middle.
+
+7
+00:00:29,590 --> 00:00:31,680
+Now we're using a keyboard avoiding view.
+
+8
+00:00:31,690 --> 00:00:37,570
+Not a big fan of this but we're going to use it so that when we focus on a particular form in this case
+
+9
+00:00:37,570 --> 00:00:44,200
+we have a command K to open up our keyboard that it will actually move this form correctly so that we
+
+10
+00:00:44,200 --> 00:00:49,690
+can access the email the password and the logon button which is important for accessibility and just
+
+11
+00:00:49,690 --> 00:00:55,870
+not pissing off your users in terms of things that we needed to do.
+
+12
+00:00:55,870 --> 00:01:00,590
+We needed to create an animated text input for both of these because we'll be animating those.
+
+13
+00:01:00,700 --> 00:01:06,390
+And then additionally we're going to get a ref to our animated text input that we want to focus first.
+
+14
+00:01:06,490 --> 00:01:12,490
+So that way once our animation is complete we can focus on this email field and then the keyboard will
+
+15
+00:01:12,490 --> 00:01:13,540
+come up.
+
+16
+00:01:13,540 --> 00:01:19,600
+Rather than focusing and having the keyword come up during the animation and then finally we just have
+
+17
+00:01:19,600 --> 00:01:25,190
+a touch for opacity button that doesn't do too much in terms of styling.
+
+18
+00:01:25,240 --> 00:01:27,390
+You can take a look at the styling here.
+
+19
+00:01:27,490 --> 00:01:33,920
+We just have a background color on our form that is a dark with a 25 percent opacity.
+
+20
+00:01:34,000 --> 00:01:39,160
+So you can see the background and have a slight focus on our field content.
+
+21
+00:01:40,180 --> 00:01:45,670
+Now each of these inputs and button will need their own animated values so we're going to set up our
+
+22
+00:01:45,670 --> 00:01:53,840
+state and we'll have an email and I a value of zero a password
+
+23
+00:01:56,480 --> 00:02:04,830
+with another estimated value and that our button with an estimated value because each of the animations
+
+24
+00:02:04,890 --> 00:02:06,890
+are going to be exactly the same.
+
+25
+00:02:06,900 --> 00:02:12,990
+We can take make a function that takes an animated value and return styling that we are render stays
+
+26
+00:02:12,990 --> 00:02:21,210
+kind of clean so we can go out and set up a contest create animation style which will take an animation
+
+27
+00:02:21,900 --> 00:02:29,470
+and then return some styling for us so because we know that our animation is going from 0 to 1 we can
+
+28
+00:02:29,470 --> 00:02:34,630
+return a style with our opacity because that was a part of the breakdown with our animation so that
+
+29
+00:02:34,630 --> 00:02:37,560
+way and 0 to 1 on the opacity.
+
+30
+00:02:37,590 --> 00:02:42,160
+However with our translator why we're going to need to do a interpellation.
+
+31
+00:02:42,190 --> 00:02:46,830
+So say Conte's translate why and then animation interpret
+
+32
+00:02:49,550 --> 00:02:59,240
+and because we're going from 0 to 1 we need to start slightly higher and animate to zero offset.
+
+33
+00:02:59,310 --> 00:03:04,790
+So the output range which will be negative 5 so it offsets at 5.
+
+34
+00:03:04,790 --> 00:03:12,990
+Just start and then animate to a zero offset then we can pass that into a transform where that translate
+
+35
+00:03:13,500 --> 00:03:26,030
+y as our only transform So now that we have our transform all set up we can create each style so we
+
+36
+00:03:26,030 --> 00:03:34,610
+see Konst email style so you can create animation style and we're just passing this email then do the
+
+37
+00:03:34,610 --> 00:03:35,700
+same for the others.
+
+38
+00:03:35,710 --> 00:03:37,600
+This app password stylo.
+
+39
+00:03:38,000 --> 00:03:41,890
+So you could create animation style the state password.
+
+40
+00:03:42,290 --> 00:03:48,650
+And then finally button style to go create animation style of this state.
+
+41
+00:03:48,730 --> 00:03:56,840
+But we already have a bunch of stuff set up so we can go down here and say email style and pass in our
+
+42
+00:03:57,790 --> 00:03:59,140
+email style.
+
+43
+00:04:00,820 --> 00:04:04,070
+Same goes for our password style.
+
+44
+00:04:04,600 --> 00:04:08,930
+And then we'll pass in a button style.
+
+45
+00:04:09,040 --> 00:04:15,020
+Do note that this is kind of unnecessary touchable opacity uses an animated view behind it.
+
+46
+00:04:15,020 --> 00:04:19,910
+So we could pass on our button south here in this view animated views kind of unnecessary because you
+
+47
+00:04:19,910 --> 00:04:26,210
+could style or touchable opacity but we'll add an animated view here to be explicit about what we are
+
+48
+00:04:26,210 --> 00:04:27,480
+creating and styling.
+
+49
+00:04:28,300 --> 00:04:33,720
+So now we have our defaults to zero and our animations are being created.
+
+50
+00:04:33,730 --> 00:04:40,740
+So now if we refresh nothings in a show up because everything is at a zero opacity with a slight offset.
+
+51
+00:04:40,840 --> 00:04:46,840
+So let's do our mounting animation and to do that we'll use the component did MT lifecycle method inside
+
+52
+00:04:46,840 --> 00:04:54,470
+of re-act will use the animated stagger so that way we don't have to craft our own Stiger.
+
+53
+00:04:54,750 --> 00:05:02,070
+We'll do a staggerer which the first argument is the staggerer between each animation and I would say
+
+54
+00:05:02,070 --> 00:05:03,520
+100 milliseconds.
+
+55
+00:05:03,720 --> 00:05:10,520
+And then it takes our array of animations we'll just do animated timings over a set duration so they
+
+56
+00:05:10,530 --> 00:05:17,290
+are animated that timing passen or this state e-mail because that's the first one that we want to animate
+
+57
+00:05:17,920 --> 00:05:19,670
+to value of one.
+
+58
+00:05:20,080 --> 00:05:24,790
+And then a duration of two hundred will then call start.
+
+59
+00:05:24,790 --> 00:05:30,250
+Be sure to pass our callback here so that we can know exactly when we need to focus on our e-mail input
+
+60
+00:05:31,000 --> 00:05:37,200
+and we'll give this a go will refresh see that it had the appropriate animation.
+
+61
+00:05:37,660 --> 00:05:40,070
+So we'll start adding in the rest of ours.
+
+62
+00:05:40,150 --> 00:05:48,410
+So we'll do an animated timing this state password to a value of one duration.
+
+63
+00:05:48,420 --> 00:05:54,350
+Two hundred and you could create separate animations or different animations for each of these.
+
+64
+00:05:54,370 --> 00:05:56,670
+We're just going to keep them all the same.
+
+65
+00:06:02,750 --> 00:06:08,510
+All right so now we have all of our animations set up we should be able to refresh this and have them
+
+66
+00:06:08,540 --> 00:06:14,880
+all fade in and I make a slight transition translate down.
+
+67
+00:06:15,080 --> 00:06:20,100
+The only other thing that we need to be concerned about is focusing on that e-mail input.
+
+68
+00:06:20,240 --> 00:06:26,870
+We want to give the user the keyboard pop up and be able to type the stuff immediately without having
+
+69
+00:06:26,870 --> 00:06:33,620
+to have them do a separate tap to focus on the appropriate field so we can do that by saying this underscore
+
+70
+00:06:33,650 --> 00:06:41,060
+e-mail and because we use that create animated component call to wrap our text input to get access to
+
+71
+00:06:41,060 --> 00:06:43,370
+the actual text input so we can call focus.
+
+72
+00:06:43,370 --> 00:06:50,550
+We need to use the got to get node data access the the node the actual text but text input node.
+
+73
+00:06:50,720 --> 00:06:52,460
+And then we'll call focus.
+
+74
+00:06:52,490 --> 00:07:01,010
+So if I refresh and let me toggle the the keyboard here and refresh again I can see that we animated
+
+75
+00:07:01,010 --> 00:07:06,730
+in and then our keyboards split up and with a keyboard inverting view we can still see all of the content.
+

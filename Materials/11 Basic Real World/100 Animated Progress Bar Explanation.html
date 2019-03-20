@@ -1,0 +1,422 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>100 Animated Progress Bar Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Intro</p>
+
+<p>This is a rebuild of a demo I saw on <a href="https://demo.tutorialzine.com/2013/10/buttons-built-in-progress-meters/" rel="nofollow">tutorialzine</a>. This is nothing unique to this tutorial but demonstrates a decent animation. It provides the user with instant feedback and localized to the action that they took. </p>
+
+
+
+<p>We'll use the same animated value, and show how we can pass in the interpolations to different style values to achieve different animations.</p>
+
+
+
+
+
+<p>Setup A Button</p>
+
+
+
+<p>We could potentially use a single animated value with interpolate. However you may want to make this a reusable component with a piped in user value. This could potentially make things complicated if you wanted a secondary animation after the value reached 100%.</p>
+
+
+
+
+
+<p>So instead of one we'll start with 2 animated values. The first will be for progress the bar behind, and the second will be for fading out the animated background.</p>
+
+
+
+
+
+<p>Also we setup a button that's a <code>TouchableWithoutFeedback</code>, with our button view and text. Our styling is just setting an arbitrary background color, centering our content which is just our text, and also ensuring we add a <code>backgroundColor: "transparent"</code> to the text.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;import React, { Component } from "react";
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  Animated,
+  TouchableWithoutFeedback,
+} from "react-native";
+
+export default class animations extends Component {
+  state = {
+    animation: new Animated.Value(0),
+    opacity: new Animated.Value(1),
+  };
+  render() {
+
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;TouchableWithoutFeedback onPress={this.handlePress}&gt;
+          &lt;View style={styles.button}&gt;
+            &lt;Text style={styles.buttonText}&gt;Get it!&lt;/Text&gt;
+          &lt;/View&gt;
+        &lt;/TouchableWithoutFeedback&gt;
+      &lt;/View&gt;
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  button: {
+    backgroundColor: "#e6537d",
+    borderRadius: 2,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 60,
+    paddingVertical: 10,
+    overflow: "hidden",
+  },
+  buttonText: {
+    color: "#FFF",
+    fontSize: 24,
+    backgroundColor: "transparent",
+  },
+});
+
+AppRegistry.registerComponent("animations", () =&gt; animations);
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Add our Covering View</p>
+
+
+
+<p>We will add a covering view to contain our animation, this will just use the <code>StyleSheet.absoluteFill</code> to cover the existing space, and ensure that when we use our percentage based interpolation that it's values are accurate and don't go outside the bounds of our button.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;&lt;View style={styles.button}&gt;
+  &lt;View style={StyleSheet.absoluteFill}&gt;
+
+  &lt;/View&gt;
+  &lt;Text style={styles.buttonText}&gt;Get it!&lt;/Text&gt;
+&lt;/View&gt;
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Full Cover Background</p>
+
+
+
+<p>Now we'll setup our animated view inside of our wrapping container. We'll apply a partial progress styling. This will position our view absolutely so it'll be with in the bounds of our button, and then in the top left corner. However we'll use our dynamic styling next to be able to control the style of the progress animation.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  &lt;View style={StyleSheet.absoluteFill}&gt;
+    &lt;Animated.View style={[styles.progress, styles.opacityBackground]} /&gt;
+  &lt;/View&gt;
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  progress: {
+    position: "absolute",
+    left: 0,
+    top: 0,
+  },
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>The Animation</p>
+
+
+
+<p>Depending on the requirements of your app will depend on how you handle a press on the button while an animation is happening. You may want to potentially disable the button, but we'll just reset our animation instead using <code>setValue</code>.</p>
+
+
+
+
+
+<p>We'll animate to <code>1</code> over 1500 milliseconds. Then if we successfully finished our animation, meaning it wasn't interrupted by another button tap, then we'll trigger our second animation and animate our opacity to <code>0</code> for our progress bar.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  handlePress = () =&gt; {
+    this.state.animation.setValue(0);
+    this.state.opacity.setValue(1);
+
+    Animated.timing(this.state.animation, {
+      duration: 1500,
+      toValue: 1,
+    }).start(({ finished }) =&gt; {
+      if (finished) {
+        Animated.timing(this.state.opacity, {
+          toValue: 0,
+          duration: 200,
+        }).start();
+      }
+    });
+  };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Interpolate</p>
+
+
+
+<p>Now to make our animation work we need to setup some interpolations. The first will be a progress interpolation that will out put a percentage. This will just interpolate from <code>0%</code> to <code>100%</code>, and clamp it so it will never go more than <code>100%</code> or less than <code>0%</code>.</p>
+
+
+
+
+
+<p>Our color interpolation will also operate off of our <code>this.state.animation</code>. This could be user supplied as long as it was an rgba/rgb value, or any other non-hex color.</p>
+
+
+
+
+
+<p>Then we finally pipe our color and our opacity animation into our styling.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;const progressInterpolate = this.state.animation.interpolate({
+      inputRange: [0, 1],
+      outputRange: ["0%", "100%"],
+      extrapolate: "clamp",
+    });
+
+    const colorInterpolate = this.state.animation.interpolate({
+      inputRange: [0, 1],
+      outputRange: ["rgb(71,255,99)", "rgb(99,71,255)"],
+    });
+
+    const progressStyle = {
+      opacity: this.state.opacity,
+      backgroundColor: colorInterpolate,
+    };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Apply the style object to the view.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  &lt;View style={StyleSheet.absoluteFill}&gt;
+    &lt;Animated.View style={[styles.progress, progressStyle, styles.opacityBackground]} /&gt;
+  &lt;/View&gt;
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Left to Right</p>
+
+
+
+<p>In order to control our animation style we will use our <code>progressInterpolate</code> in different ways. For a class left to right animation we need to add 2 values.</p>
+
+
+
+
+
+<p>The first is our <code>width</code> which will be a percentage, and then our <code>bottom: 0</code> which will tell our progress view to expand all the way the bottom of the button. Remember our <code>progress</code> styling already has <code>top: 0, left: 0</code> on it.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;    const progressStyle = {
+      width: progressInterpolate,
+      bottom: 0,
+
+      opacity: this.state.opacity,
+      backgroundColor: colorInterpolate,
+    };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Top Down</p>
+
+
+
+<p>For a top down animation, we'll need to pipe our <code>progressInterpolate</code> into height. The width will always be the entire button so rather than a <code>bottom: 0</code> we can add in a <code>right: 0</code>. Then the height will be our percentage that goes from <code>0%</code> to <code>100%</code>.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;    const progressStyle = {
+      height: progressInterpolate,
+      right: 0,
+      opacity: this.state.opacity,
+      backgroundColor: colorInterpolate,
+    };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Small Bottom</p>
+
+
+
+<p>Finally what if we wanted a small progress bar at the bottom of the button. We already specified <code>top: 0</code> in our <code>progress</code> style so we can simply override that with <code>top: null</code> as long as we place our <code>progressStyle</code> object after our <code>styles.progress</code> in the array.</p>
+
+
+
+
+
+<p>We'll then position it at the bottom, give it a small height, and pass in our <code>progressInterpolate</code> to width.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;    const progressStyle = {
+      top: null,
+      bottom: 0,
+      width: progressInterpolate,
+      height: 5,
+      opacity: this.state.opacity,
+      backgroundColor: colorInterpolate,
+    };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Opacity Background</p>
+
+
+
+<p>Rather than having a color we could also define a default white background color with 50% opacity, so that our pink background will be visible. This would be applied with any of the effects above and we could then ditch the <code>backgroundColor</code> interpolation, and just place the <code>opacityBackground</code> style in the array of the progress bar.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  opacityBackground: {
+    backgroundColor: "rgba(255,255,255,.5)",
+  },
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;&lt;Animated.View style={[styles.progress, progressStyle, styles.opacityBackground]} /&gt;
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Ending</p>
+
+
+
+<p>This demo takes advantage of a handy technique which is interpolating <code>%</code>. Do note that this is effecting a layout value. This is not ideal but just understand that animating layout values can effect performance but are sometimes necessary. Just be cognizant that if you are seeing performance issues you may need to switch to using <code>transform</code>s.</p>
+
+
+
+
+
+<p><a href="https://snack.expo.io/Sy4WDDKHb" rel="nofollow">Live Demo</a>
+<a href="https://gitlab.com/codedaily/reactnativeanimations/tree/buttonWithProgress" rel="nofollow">Code</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

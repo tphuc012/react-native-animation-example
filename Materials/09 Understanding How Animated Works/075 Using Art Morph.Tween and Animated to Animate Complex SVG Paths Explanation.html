@@ -1,0 +1,148 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>075 Using Art Morph.Tween and Animated to Animate Complex SVG Paths Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Art is a library maintained by Facebook. The same API can be used across the web and native, and additionally on the web can point to SVG or Canvas. It has not gained popularity as it diverges from web SVG naming conventions but it is a very powerful tool for cross platform drawing. </p>
+
+<p>However much of it's power comes from the <code>art</code> library it self and not necessarily using the React Native views that come standard in React Native core.</p>
+
+
+
+
+
+<p>It has path tweening built in and is actually generates a relatively good transformation. Also because there are multiple modes in <code>art</code> (canvas/svg/vml) we need to grab the appropriate path builder. We will import <code>SVGPath</code> from <code>"art/modes/svg/path"</code> so that it will return an svg path string. Additionally there is a generic <code>Tween</code> from <code>"art/morph/path"</code>.</p>
+
+
+
+
+
+<p>Our SVGs are an arrow, that will transform to a check mark and then back.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;import React, { Component } from "react";
+
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  Animated,
+  TouchableWithoutFeedback,
+} from "react-native";
+
+import Svg, { Path } from "react-native-svg";
+
+import SVGPath from "art/modes/svg/path";
+import { Tween } from "art/morph/path";
+
+const startPath = `M32,16.009c0-0.267-0.11-0.522-0.293-0.714  l-9.899-9.999c-0.391-0.395-1.024-0.394-1.414,0c-0.391,0.394-0.391,1.034,0,1.428l8.193,8.275H1c-0.552,0-1,0.452-1,1.01  s0.448,1.01,1,1.01h27.586l-8.192,8.275c-0.391,0.394-0.39,1.034,0,1.428c0.391,0.394,1.024,0.394,1.414,0l9.899-9.999  C31.894,16.534,31.997,16.274,32,16.009z`;
+const endPath = `M27.704,8.397c-0.394-0.391-1.034-0.391-1.428,0  L11.988,22.59l-6.282-6.193c-0.394-0.391-1.034-0.391-1.428,0c-0.394,0.391-0.394,1.024,0,1.414l6.999,6.899  c0.39,0.386,1.039,0.386,1.429,0L27.704,9.811C28.099,9.421,28.099,8.787,27.704,8.397C27.31,8.006,28.099,8.787,27.704,8.397z`;
+
+export default class animations extends Component {
+  state = {
+    animation: new Animated.Value(0),
+  };
+
+  handlePress = () =&gt; {
+    Animated.sequence([
+      Animated.timing(this.state.animation, {
+        toValue: 1,
+        duration: 500,
+      }),
+      Animated.delay(1500),
+      Animated.timing(this.state.animation, {
+        toValue: 0,
+        duration: 500,
+      }),
+    ]).start();
+  };
+  render() {
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;TouchableWithoutFeedback onPress={this.handlePress}&gt;
+          &lt;Svg width={150} height={150}&gt;
+            &lt;Path
+              d={startPath}
+              stroke="black"
+              ref={path =&gt; (this._path = path)}
+            /&gt;
+          &lt;/Svg&gt;
+        &lt;/TouchableWithoutFeedback&gt;
+      &lt;/View&gt;
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Here we create a Tween with our 2 paths we've defined. Also we create an instance of an <code>SVGPath</code>. We will use this to tween our path with <code>pathInterpolate.tween(value)</code> passing in our value that is a number between <code>0</code> and <code>1</code>. Then we apply it to our path instance <code>pathInterpolate.applyToPath(p);</code> which will mutate the internal path.</p>
+
+
+
+
+
+<p>Finally we call <code>toSVG()</code> on our path and pass that to <code>setNativeProps</code>.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  componentWillMount() {
+    const pathInterpolate = Tween(startPath, endPath);
+    const p = new SVGPath();
+
+    this.state.animation.addListener(({ value }) =&gt; {
+      pathInterpolate.tween(value);
+      pathInterpolate.applyToPath(p);
+
+      this._path.setNativeProps({
+        d: p.toSVG()
+      })
+    });
+  }
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p><img alt="" src="https://images.codedaily.io/animations/artTransform.gif"></p>
+
+
+
+
+
+<p><a href="https://gitlab.com/codedaily/reactnativeanimations/tree/svgPathsWithArt" rel="nofollow">Code</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

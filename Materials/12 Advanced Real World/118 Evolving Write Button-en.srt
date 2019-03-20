@@ -1,0 +1,1056 @@
+1
+00:00:00,420 --> 00:00:05,550
+Sometimes it makes sense to start with the ending of an animation and then work our way back to the
+
+2
+00:00:05,550 --> 00:00:07,410
+beginning view of the animation.
+
+3
+00:00:07,560 --> 00:00:10,430
+And that's what we're going to do for this evolving right button.
+
+4
+00:00:11,590 --> 00:00:16,060
+We're going to start by setting up some state and this will be a reversible animation so we'll just
+
+5
+00:00:16,060 --> 00:00:21,470
+have a single animated value that defaults to zero.
+
+6
+00:00:21,620 --> 00:00:27,200
+Now because this will be some sort of user input we're going to want to use a keyboard avoiding view
+
+7
+00:00:27,320 --> 00:00:28,740
+at least on iOS.
+
+8
+00:00:28,790 --> 00:00:34,260
+So I want to use keyboard avoiding view and we can use the behavior padding
+
+9
+00:00:38,010 --> 00:00:40,890
+and the keyboard avoiding view actually acts like any other view.
+
+10
+00:00:40,890 --> 00:00:47,290
+It's just a view that takes styling so we're going to give it some style and the styles of center and
+
+11
+00:00:47,290 --> 00:00:52,150
+this will be centered in the middle of our screen because our container is centered and then we want
+
+12
+00:00:52,150 --> 00:00:57,880
+to center the content that is inside of our keyboard avoiding view and this will allow us when we do
+
+13
+00:00:57,880 --> 00:01:02,760
+our animation to expand out from the center and I'll point that out again later.
+
+14
+00:01:02,770 --> 00:01:09,050
+So going to the center and just paste in a line item center and justify content center.
+
+15
+00:01:09,130 --> 00:01:14,910
+So the first thing we're going to do is set up an animated view that's going to wrap all of our content.
+
+16
+00:01:14,980 --> 00:01:21,540
+And this is just going to be our editor wraps or is an animated view style equals a array.
+
+17
+00:01:21,540 --> 00:01:24,060
+Because we're going to add some animation to this later.
+
+18
+00:01:24,290 --> 00:01:25,530
+Styles editor
+
+19
+00:01:29,040 --> 00:01:30,180
+and then close that off.
+
+20
+00:01:31,290 --> 00:01:35,300
+Now for our editors styling it's just going to be a simple border.
+
+21
+00:01:35,300 --> 00:01:37,100
+So we're going to create our editor
+
+22
+00:01:40,120 --> 00:01:47,580
+and then give it a border with one and then really give it to color and we're going to go R-GA 0 0 0
+
+23
+00:01:47,590 --> 00:01:50,510
+0 point 1.
+
+24
+00:01:50,520 --> 00:01:54,820
+Now that we have our editors set up we can start working on the two pieces at the end.
+
+25
+00:01:54,960 --> 00:02:01,770
+And those are the the bar that contains our buttons and then also our text input.
+
+26
+00:02:01,770 --> 00:02:09,990
+So we're going to go focus on the bar first and let's if we think about this the right button has a
+
+27
+00:02:09,990 --> 00:02:12,500
+blue background as well as the bar.
+
+28
+00:02:12,600 --> 00:02:21,400
+And if we're going to animate one away and one in so whether it'd mean the bar that the bar icons in
+
+29
+00:02:21,790 --> 00:02:26,000
+or the right button that means you can have the same blue background.
+
+30
+00:02:26,290 --> 00:02:31,600
+And because this is going to be opacity there that means you want to have a rapping view that has the
+
+31
+00:02:31,600 --> 00:02:32,860
+bar on it.
+
+32
+00:02:32,860 --> 00:02:37,760
+The bar blue bar color and then add additional content inside of it.
+
+33
+00:02:37,990 --> 00:02:47,120
+So we're going to set up a view that has styles up bar and this will be our rapping bar and then we
+
+34
+00:02:47,120 --> 00:02:55,400
+can start putting our other content in here including our toolbar of buttons and then our right button
+
+35
+00:02:55,400 --> 00:02:56,110
+as well.
+
+36
+00:02:57,010 --> 00:03:06,710
+So for our bar we need to just give it a height and a color and then will do height of 50.
+
+37
+00:03:06,810 --> 00:03:16,130
+So that will be the button height as well as the height of the bar background color of 2 9 7 9 f.f.
+
+38
+00:03:16,300 --> 00:03:22,410
+And then we'll do justify content Center and we'll fix our missing quote there.
+
+39
+00:03:22,700 --> 00:03:29,200
+So now if we refreshed this we can see that there is only the border that we have defined on our editor.
+
+40
+00:03:30,070 --> 00:03:33,490
+So now we should go and add our toolbar.
+
+41
+00:03:33,490 --> 00:03:40,390
+So inside of here because it's going to be animated because we need to adjust the opacity and faded
+
+42
+00:03:40,450 --> 00:03:43,230
+away it's going to be an animated view.
+
+43
+00:03:47,860 --> 00:03:55,650
+And we'll give it a style and because we animate it will do in a race who can pass in some additional
+
+44
+00:03:55,650 --> 00:03:58,540
+animated stuff later and give it styles that toolbar
+
+45
+00:04:01,290 --> 00:04:03,600
+and then we can start adding icons.
+
+46
+00:04:03,600 --> 00:04:08,310
+Now I'm just going to paste in our icons that we're working with for the left side.
+
+47
+00:04:08,640 --> 00:04:14,430
+And if we go ahead and refresh this we can see that we are in a column direction and we don't want to
+
+48
+00:04:14,430 --> 00:04:16,210
+be in a calm direction for our toolbar.
+
+49
+00:04:16,230 --> 00:04:19,040
+So let's go style our toolbar to make it correct.
+
+50
+00:04:19,840 --> 00:04:27,680
+So down here we can add our toolbar style and because you want to in a row we'll give it flex direction.
+
+51
+00:04:27,940 --> 00:04:32,990
+Rowe and to have some spacing on both sides of our toolbar.
+
+52
+00:04:33,000 --> 00:04:39,710
+We're going to give it a padding horizontal of 10 and because we want our items aligned in the middle
+
+53
+00:04:39,710 --> 00:04:43,910
+of the bar we'll give it a line items center
+
+54
+00:04:47,050 --> 00:04:56,690
+free special line items correctly and then we want to justify content flex start and that will have
+
+55
+00:04:56,750 --> 00:05:02,890
+our buttons that are the child of our tool were forced to start on the left side.
+
+56
+00:05:03,750 --> 00:05:08,790
+So we can see that we have some padding horizontal and our buttons are here and we'll see how we add
+
+57
+00:05:08,790 --> 00:05:11,470
+in our right to our next.
+
+58
+00:05:11,580 --> 00:05:19,350
+So our design constraints are that we have a set of buttons here that are forced to the left and then
+
+59
+00:05:19,440 --> 00:05:29,320
+another set of icons that are all the way to the right depending on the size of our bar here.
+
+60
+00:05:29,370 --> 00:05:34,440
+And so there'll be a gap here once our toolbar is fully expanded out.
+
+61
+00:05:34,470 --> 00:05:38,120
+So in order to do that we're going to need to create another view
+
+62
+00:05:41,370 --> 00:05:46,080
+and then add our icons in here and we're going to need to apply some styles to this which we'll call
+
+63
+00:05:46,080 --> 00:05:52,820
+styles that right in inner bar now will add our icons.
+
+64
+00:05:55,040 --> 00:05:57,940
+And then go style our right inner bar.
+
+65
+00:05:59,820 --> 00:06:03,620
+Refresh this without actually styling we can see that this is not what we want.
+
+66
+00:06:03,630 --> 00:06:06,990
+We have a row and now we are right in our bar which is a new view.
+
+67
+00:06:06,990 --> 00:06:12,450
+It is not a dot that Fox direction it's going to switch back to being a flex direction column.
+
+68
+00:06:12,450 --> 00:06:17,270
+So we need to then switch it to a flex direction row so it stays in a row.
+
+69
+00:06:17,730 --> 00:06:23,790
+We'll then give it a line items center so that it's centered and then most crucial will give flex and
+
+70
+00:06:24,030 --> 00:06:30,900
+tell everything to move towards the end and render there and move back towards the beginning of this
+
+71
+00:06:30,900 --> 00:06:32,280
+particular view.
+
+72
+00:06:32,280 --> 00:06:39,960
+So now if we refresh we can see that our buttons are rendering or this just not take up the appropriate
+
+73
+00:06:39,960 --> 00:06:44,960
+amount of space because this outside bar view is just arriving.
+
+74
+00:06:44,970 --> 00:06:47,710
+It's with from the inner content.
+
+75
+00:06:47,820 --> 00:06:51,900
+So now we need to go fix this so that it actually is the appropriate with that we want.
+
+76
+00:06:52,020 --> 00:06:54,770
+So we can actually adjust the bar correctly.
+
+77
+00:06:55,620 --> 00:07:01,160
+So the width of this is actually going to be based upon the width of the window.
+
+78
+00:07:01,170 --> 00:07:02,160
+So an essay contests
+
+79
+00:07:04,830 --> 00:07:09,210
+equals dimension's does get window.
+
+80
+00:07:09,440 --> 00:07:19,670
+And we're going to define that on our editor and we're going to say with is equal to with minus 40 and
+
+81
+00:07:19,670 --> 00:07:21,680
+we will need to interpolate on this later.
+
+82
+00:07:21,680 --> 00:07:24,110
+So this is going to be a temporary value.
+
+83
+00:07:24,410 --> 00:07:28,440
+So we refresh we can see that we have expanded our bar.
+
+84
+00:07:28,460 --> 00:07:38,200
+However this still is not correct because the view itself that we that we created the right inner the
+
+85
+00:07:38,290 --> 00:07:46,820
+right interview if we can get it the right inner bar view is only taking up this much space.
+
+86
+00:07:46,910 --> 00:07:53,800
+So now that we have a with Applied being comes on here and tell this right in to take up all the space.
+
+87
+00:07:53,940 --> 00:07:55,090
+Flex one.
+
+88
+00:07:55,640 --> 00:08:02,190
+And now that it's taking up all this space we can actually select that now because it's taking up all
+
+89
+00:08:02,190 --> 00:08:03,730
+of this space.
+
+90
+00:08:03,740 --> 00:08:08,620
+We now have a flex one or the flex and tells it to start down here.
+
+91
+00:08:11,520 --> 00:08:17,520
+Now that we have our bar all set up we just set up the bottom porch portion which is the insert text
+
+92
+00:08:17,520 --> 00:08:18,490
+input.
+
+93
+00:08:18,540 --> 00:08:25,910
+So we come back here we can set up a new animated view because this is this animated up view will be
+
+94
+00:08:26,060 --> 00:08:30,440
+will be what kind of slides up and creates that tuck in motion.
+
+95
+00:08:32,070 --> 00:08:33,640
+And then we need to set up a text input
+
+96
+00:08:38,190 --> 00:08:40,270
+and we'll give it a placeholder.
+
+97
+00:08:40,410 --> 00:08:44,650
+Start writing as we saw in the break down.
+
+98
+00:08:45,060 --> 00:08:48,050
+Well then give it a multi line support.
+
+99
+00:08:48,060 --> 00:08:50,210
+That way we can write on multiple lines.
+
+100
+00:08:50,520 --> 00:08:54,720
+Well need to get a ref to it that way we can focus on it and blur it.
+
+101
+00:08:54,750 --> 00:09:04,730
+Whenever we open or close the the editor will say this underscore input was input and then finally
+
+102
+00:09:07,460 --> 00:09:16,670
+we need to give it some styling and we're going to give it the style sheet absolute fill that way whenever
+
+103
+00:09:16,670 --> 00:09:19,510
+we apply a height to this.
+
+104
+00:09:19,520 --> 00:09:25,820
+This will cover it entirely and we can then animate this and this will continue to also adjust to the
+
+105
+00:09:25,820 --> 00:09:29,250
+height that this is.
+
+106
+00:09:29,470 --> 00:09:33,260
+So we can just give our animated view a height.
+
+107
+00:09:33,340 --> 00:09:41,890
+So with this style equals an array and say styles got lower view and then here come give our lower views
+
+108
+00:09:41,890 --> 00:09:49,740
+some styling and we'll just give it a height of 150 so now and refresh this.
+
+109
+00:09:49,780 --> 00:09:52,980
+See that we have our input rendering.
+
+110
+00:09:53,000 --> 00:10:00,890
+And this whole bottom section is 150 and then our editor border with border that we gave it is now showing
+
+111
+00:10:00,890 --> 00:10:02,170
+up.
+
+112
+00:10:02,260 --> 00:10:06,840
+Now this is touching the sides and we don't want our input to be touching the sides like that.
+
+113
+00:10:06,840 --> 00:10:13,240
+So we'll give our inputs some styling will say padding of 10 so it's padded all around and then a font
+
+114
+00:10:13,240 --> 00:10:19,680
+size of 20 just to bump up the writing because if we wrote on it now would be pretty small.
+
+115
+00:10:19,900 --> 00:10:28,930
+So if we come back here we can apply our styles the input refreshed this and now this has bumped up.
+
+116
+00:10:28,990 --> 00:10:33,890
+Type of a decent size and it's has some padding on the outside.
+
+117
+00:10:34,800 --> 00:10:37,880
+Now we have our whole thing set up.
+
+118
+00:10:37,880 --> 00:10:40,490
+This is what the ending state looks like.
+
+119
+00:10:40,500 --> 00:10:44,960
+So now we're going to go and render what the beginning state should look like.
+
+120
+00:10:44,970 --> 00:10:49,220
+And that's just going to be a right button that is on top of this bar.
+
+121
+00:10:49,530 --> 00:11:00,240
+So because we're rendering this bar here this toolbar here we need to render our right button inside
+
+122
+00:11:00,270 --> 00:11:04,100
+of our bar so that it will get this blue background.
+
+123
+00:11:04,320 --> 00:11:10,260
+And because we want to render it on top of this and we want these to still be intractable we're going
+
+124
+00:11:10,260 --> 00:11:16,230
+to need to use our pointer events technique which means we're going to do an animated view and style
+
+125
+00:11:16,230 --> 00:11:25,910
+it with a style sheet that absolute fill to cover and then we will close that off.
+
+126
+00:11:27,610 --> 00:11:34,200
+And then we will start setting up our button will do a touchable without feedback
+
+127
+00:11:38,440 --> 00:11:50,530
+and then simply just render some view a view and some text that says right and we will need to apply
+
+128
+00:11:50,530 --> 00:11:57,340
+some styling to this so we'll give it style equals style stop button text and style that in a second.
+
+129
+00:11:57,990 --> 00:12:04,860
+And then free refresh means that we are rendering our right button in the top left corner and we don't
+
+130
+00:12:04,860 --> 00:12:06,810
+want that we want it to be centered.
+
+131
+00:12:07,050 --> 00:12:12,750
+So were to come here and use the same center styling that we used before for this keyboard avoiding
+
+132
+00:12:12,750 --> 00:12:17,300
+view and just give it styles that center.
+
+133
+00:12:17,550 --> 00:12:21,000
+And now when we refresh we can see that this Riperton button is centered.
+
+134
+00:12:21,000 --> 00:12:25,170
+So now we can kind of grasp that there's going to be a transition happening.
+
+135
+00:12:25,170 --> 00:12:31,500
+This is going to be shrinking to a particular size and this Riperton will stay right in the middle of
+
+136
+00:12:31,500 --> 00:12:34,500
+all these disappear and then the reverse can happen.
+
+137
+00:12:34,500 --> 00:12:35,340
+This will disappear.
+
+138
+00:12:35,340 --> 00:12:47,660
+And these will expand out so quick styling on our button text will just give it a color of white refresh.
+
+139
+00:12:47,760 --> 00:12:54,780
+And now we're ready to go so for the first bit we need to kind of break down what this animation is
+
+140
+00:12:54,780 --> 00:12:55,530
+doing.
+
+141
+00:12:55,650 --> 00:12:59,850
+This is sliding up and then this will slide in.
+
+142
+00:12:59,850 --> 00:13:02,400
+So it is a two part animation.
+
+143
+00:13:02,400 --> 00:13:06,500
+However we will also be operating the other direction.
+
+144
+00:13:06,510 --> 00:13:08,250
+So we're going to start at the right button.
+
+145
+00:13:08,370 --> 00:13:11,200
+So we kind of need to do this slightly backwards.
+
+146
+00:13:11,370 --> 00:13:16,920
+So I'm going to remove this with here because the first thing that happens when we actually open this
+
+147
+00:13:16,920 --> 00:13:22,900
+button when we press on this button is that this width of our editor is going to expand.
+
+148
+00:13:23,010 --> 00:13:30,840
+So we're going to set up an interpolation for our editors who say conc with interpret state animation
+
+149
+00:13:31,100 --> 00:13:37,290
+interpolate we'll set up an input range of zero because we will start at zero and this right button
+
+150
+00:13:37,290 --> 00:13:44,780
+will be a particular distance or particular with and for half of the animation we want to expand.
+
+151
+00:13:44,780 --> 00:13:50,970
+So output range will be 100 and this will just be the width of that bar when nothing when the button
+
+152
+00:13:50,970 --> 00:13:53,300
+is closed or when the editors closed.
+
+153
+00:13:53,500 --> 00:13:55,750
+And then we'll do with minus 40.
+
+154
+00:13:55,770 --> 00:13:59,170
+Now these could be percentages or or whatever measurements that you have.
+
+155
+00:13:59,190 --> 00:14:05,160
+But this is styling for the whole screen right now and then because we are in a many to one and only
+
+156
+00:14:05,160 --> 00:14:12,610
+defining a half of the animation in our input range you want to do and extrapolate clamp.
+
+157
+00:14:12,790 --> 00:14:21,610
+And now we can go ahead and pass this value into our editor like we had before and if we refreshed this
+
+158
+00:14:21,910 --> 00:14:26,930
+we see that now we are starting to take shape of having that right button.
+
+159
+00:14:26,950 --> 00:14:28,500
+Now we have the right button.
+
+160
+00:14:28,580 --> 00:14:35,430
+The other content isn't hidden yet and the input is now smaller as well because we're affecting the
+
+161
+00:14:35,430 --> 00:14:36,610
+whole layout.
+
+162
+00:14:36,720 --> 00:14:38,910
+So still focused on this toolbar.
+
+163
+00:14:39,000 --> 00:14:43,970
+The thing that is happening is that these buttons are appearing and we don't want them to appear.
+
+164
+00:14:44,010 --> 00:14:49,240
+So let's set up some opacity for that so we'll say it's opacity toolbar.
+
+165
+00:14:49,360 --> 00:14:56,250
+Interpret this as state animation interpret and we'll do the same thing for the input range which was
+
+166
+00:14:56,270 --> 00:14:59,730
+zero point five an output range.
+
+167
+00:14:59,730 --> 00:15:06,120
+And when the button is close we don't want those icons to show up but after half of the animation we
+
+168
+00:15:06,120 --> 00:15:09,800
+do and we'll do an extrapolate clamp here as well.
+
+169
+00:15:11,310 --> 00:15:21,000
+And now we can craft our toolbar styles and passenger opacity with opacity toolbar inter-relate bring
+
+170
+00:15:21,000 --> 00:15:25,520
+these down here and pass them into our toolbar animated view.
+
+171
+00:15:25,710 --> 00:15:31,770
+And when we're refreshed we now have the first portion that we care about we have a right button and
+
+172
+00:15:31,770 --> 00:15:36,780
+now that we're working backwards we can see that the second piece that we need to take care of is is
+
+173
+00:15:37,530 --> 00:15:39,900
+making this collapse to zero.
+
+174
+00:15:41,380 --> 00:15:45,930
+So up here we can set up two interpretations.
+
+175
+00:15:45,940 --> 00:15:49,380
+One will be for the editor height so say Ed..
+
+176
+00:15:49,450 --> 00:15:58,790
+Interpret this to state animation and interpolate and we'll put the input range and we won't.
+
+177
+00:15:58,990 --> 00:16:04,050
+We need to do this second because remember the actual animation is click on the right button.
+
+178
+00:16:04,300 --> 00:16:10,260
+The bar will expand and then this will drop down and then the exact opposite will happen when we close
+
+179
+00:16:10,270 --> 00:16:13,450
+this is this will slide up and this bar will slide in.
+
+180
+00:16:13,480 --> 00:16:19,600
+So that means we need to do something in the later stages of the animation which is to say point seven
+
+181
+00:16:19,600 --> 00:16:29,730
+to one and then our output range will be 0 and 150 and then we'll also do an extrapolate clamp here.
+
+182
+00:16:29,780 --> 00:16:31,600
+So let's a justice to say Ed..
+
+183
+00:16:31,880 --> 00:16:42,630
+And now we can craft our editor styling so say editor style to opacity is that state animation will
+
+184
+00:16:42,640 --> 00:16:47,750
+just have it hidden and then we'll do height and pass an editor right.
+
+185
+00:16:48,010 --> 00:16:49,230
+Fix this say.
+
+186
+00:16:49,630 --> 00:16:51,440
+Spell it correctly.
+
+187
+00:16:51,460 --> 00:16:56,980
+And now we can take our editors style and add it to our lower view.
+
+188
+00:16:57,880 --> 00:17:04,840
+And now when we refresh we're back to where we want we have a right button that is just standalone and
+
+189
+00:17:05,170 --> 00:17:09,710
+the interpretations are set up to expand out and drop down.
+
+190
+00:17:09,730 --> 00:17:12,790
+However we don't have an interpolation yet to hide a right.
+
+191
+00:17:12,820 --> 00:17:16,200
+That's always going to be visible right now so let's go fix that.
+
+192
+00:17:16,210 --> 00:17:24,490
+So for our button to be hidden We need that to happen in the first half of the animation because as
+
+193
+00:17:24,490 --> 00:17:32,150
+we go moved towards zero to point 5 where our button icons are expanding we need that to hide now in
+
+194
+00:17:32,170 --> 00:17:33,130
+the actual animation.
+
+195
+00:17:33,130 --> 00:17:34,450
+It happened really quickly.
+
+196
+00:17:34,450 --> 00:17:37,960
+It was a very it was a single frame that that right would disappear.
+
+197
+00:17:37,990 --> 00:17:43,750
+But we're going to have it slowly disappear so we're into a conc opacity button interpolate.
+
+198
+00:17:44,080 --> 00:17:51,160
+So you go to this that state animation interpret passenger input range which be zero and point five
+
+199
+00:17:52,190 --> 00:17:57,970
+and because at zero because our starting animation we want the opacity would be one so you can see it.
+
+200
+00:17:58,130 --> 00:18:02,830
+And as it advances to opening EDR it'll editor disappear.
+
+201
+00:18:02,900 --> 00:18:06,540
+And then also extrapolate clamp here.
+
+202
+00:18:06,660 --> 00:18:15,840
+Now we can create our Konst button styles pass in our opacity and our pastie button interpolate and
+
+203
+00:18:15,840 --> 00:18:20,330
+then we can go and apply this to our button wrap here.
+
+204
+00:18:21,720 --> 00:18:27,480
+And now we have our interpellation is all set up and we can kind of see that if we go and adjust this
+
+205
+00:18:27,480 --> 00:18:33,370
+value here if we flip this to one and refresh we can see that we are the do the right buttons gone and
+
+206
+00:18:33,390 --> 00:18:35,670
+we are in our full editor position.
+
+207
+00:18:35,780 --> 00:18:39,120
+Unjustice to point five and see what the half mark looks like.
+
+208
+00:18:39,180 --> 00:18:47,760
+We can see that the bar is visible are right button is 0 is gone and we can kind of just step through
+
+209
+00:18:47,760 --> 00:18:55,340
+manually and see what position our transitions are happening at and that gives us a good feeling and
+
+210
+00:18:55,340 --> 00:19:01,100
+we can now go and actually execute a transition from one to 0 for our our right.
+
+211
+00:19:01,100 --> 00:19:08,870
+So let's refresh this back to 0 and on our right button with our touchable without feedback odd add
+
+212
+00:19:08,920 --> 00:19:17,180
+and on press and say this toggle transform and now we will go create a
+
+213
+00:19:19,770 --> 00:19:27,610
+toggle transform and the other portion that we will need to take care of is the pointer event.
+
+214
+00:19:27,610 --> 00:19:32,460
+So once this expands that right view is still going to be absolutely a position.
+
+215
+00:19:32,500 --> 00:19:37,420
+Now we could control it not rendering and rendering but we'll just use the pointer events technique
+
+216
+00:19:37,420 --> 00:19:38,200
+for now.
+
+217
+00:19:38,200 --> 00:19:43,440
+So for our two values they can't say to value is equal to this dot on the square.
+
+218
+00:19:43,440 --> 00:19:54,580
+Open and then do zero and one animated timing and or this state animation to value and then we'll just
+
+219
+00:19:54,590 --> 00:20:01,820
+do a duration of five hundred and fifty and then we'll call start.
+
+220
+00:20:02,040 --> 00:20:13,590
+And at this point we'll then toggle this open doesn't equal equals not just open.
+
+221
+00:20:13,750 --> 00:20:17,280
+And then we will also toggle a state value.
+
+222
+00:20:17,290 --> 00:20:29,610
+So we're going to add an open false to our state and then do this Dot said state and open this open.
+
+223
+00:20:29,690 --> 00:20:33,140
+Well just because we talk a here we can just keep doing it at state.
+
+224
+00:20:33,210 --> 00:20:38,990
+Once this animation is interrupted then this will get called if that's if that's possible.
+
+225
+00:20:39,210 --> 00:20:44,910
+So now if we refresh and we trigger our animation free press on right see that we expand out our right
+
+226
+00:20:44,910 --> 00:20:49,850
+fades away and then this bottom part expands but we don't have a way to close it just yet.
+
+227
+00:20:52,770 --> 00:20:57,240
+We don't have a way to close it but because we aren't toggling pointer events on a right button if we
+
+228
+00:20:57,240 --> 00:21:01,410
+press on this again we can see that our animation reverses
+
+229
+00:21:04,690 --> 00:21:11,940
+and we can fix that by coming down here to our covering view and just giving our pointer events.
+
+230
+00:21:11,950 --> 00:21:14,810
+And if it's open then there's none.
+
+231
+00:21:15,010 --> 00:21:16,770
+And then if it's not then it's odd.
+
+232
+00:21:16,780 --> 00:21:21,550
+So in this case it's not open so it's going to be auto Pressel once it's open and we won't be able to
+
+233
+00:21:21,550 --> 00:21:22,730
+click it.
+
+234
+00:21:22,750 --> 00:21:30,630
+Now the final important piece is the accessibility of focusing on the input or blurring the input.
+
+235
+00:21:30,640 --> 00:21:36,070
+When this right button closes because if you keep focus on the input we're not unmounting it.
+
+236
+00:21:36,190 --> 00:21:40,080
+And that means the keyboard will still show up even though this right button is closed.
+
+237
+00:21:40,360 --> 00:21:47,200
+So we're going to go here and say this that open and do it ternary because we haven't talked with it
+
+238
+00:21:47,200 --> 00:21:47,640
+yet.
+
+239
+00:21:47,780 --> 00:21:54,380
+This Open is going to be the state of the opposite state of what we're kind of talking about so if it's
+
+240
+00:21:54,470 --> 00:21:58,610
+open and this is called that means we're heading towards not open.
+
+241
+00:21:58,620 --> 00:22:05,950
+So this input Blair however if it was previously open we haven't really yet.
+
+242
+00:22:05,960 --> 00:22:17,360
+That means that for opening and say this stot input focus and now if refresh and open nothing happens
+
+243
+00:22:17,360 --> 00:22:20,210
+because we don't have a keyboard or press command OK.
+
+244
+00:22:20,420 --> 00:22:25,550
+And then we don't have a way to close it yet but if we keep our keyboard and we can see that once the
+
+245
+00:22:25,550 --> 00:22:32,780
+animation is done then we have our keyboard pop in and now we need a way to close this view and we can
+
+246
+00:22:32,780 --> 00:22:36,050
+do that with a close button or whatever you feel like doing.
+
+247
+00:22:36,050 --> 00:22:40,590
+I added this after the fact and we're going to paste this in.
+
+248
+00:22:40,600 --> 00:22:46,430
+It's called toggle transform because we're actually using the same toolbar styles which if we go look
+
+249
+00:22:46,460 --> 00:22:54,530
+at our toolbar styles is just an opacity this will fade in when the toolbar is visible and then fade
+
+250
+00:22:54,530 --> 00:22:56,160
+out when it isn't visible.
+
+251
+00:22:56,240 --> 00:23:02,650
+And now we need to just style or close button so that it will be a little more visible even though we
+
+252
+00:23:02,650 --> 00:23:05,560
+have our input here or our keyboard here.
+
+253
+00:23:05,560 --> 00:23:12,050
+We need to make this little more visible so you come down here and do close.
+
+254
+00:23:12,270 --> 00:23:13,390
+So we'll do two things.
+
+255
+00:23:13,390 --> 00:23:17,430
+We'll move it away from our editor and the keyboard and then give it some color.
+
+256
+00:23:17,430 --> 00:23:22,310
+So say color is this same thing that we have for our bar
+
+257
+00:23:25,760 --> 00:23:29,900
+and then Marjan top of 10 and margin
+
+258
+00:23:33,250 --> 00:23:35,920
+bought 20.
+
+259
+00:23:35,930 --> 00:23:42,880
+So now when we refresh can press on our right button expand our clothes will be visible and we can close
+
+260
+00:23:42,880 --> 00:23:43,490
+it.
+
+261
+00:23:43,870 --> 00:23:48,200
+And once that's closed in that blur is called and our keyboard will disappear.
+
+262
+00:23:49,040 --> 00:23:50,510
+So some kind of ending takeaways.
+
+263
+00:23:50,510 --> 00:23:59,350
+Sometimes it is easier to focus on the ending state first at the starting state and then slowly transition
+
+264
+00:23:59,470 --> 00:24:03,860
+each particular piece until you have the exact animation that you want.
+

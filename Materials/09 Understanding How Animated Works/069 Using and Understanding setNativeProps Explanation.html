@@ -1,0 +1,208 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>069 Using and Understanding setNativeProps Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>To understand how animated works you must first understand <code>setNativeProps</code>. This is what Animated uses to bypass <code>setState</code>. It sends new properties over the bridge directly to the native world. </p>
+
+<p>DO NOTE: if you use <code>setNativeProps</code> to set a prop on the native side, and then a <code>setState</code> happens and the <code>prop</code> you've set natively is set on the particular element it will be overridden, or unless you pass back the value you set on the native side.</p>
+
+
+
+
+
+<p>We'll be looking at trivial cases, however this is how Animated works. In the render it always derives the current prop values which are the same values it's already sent to the native world using <code>setNativeProps</code>.</p>
+
+
+
+
+
+<p>Lets take a look at some code first. We setup a ScrollView with an animated background on scroll. In order to call <code>setNativeProps</code> we need to get access to the view instance and we do that by getting a ref.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;import React, { Component } from "react";
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  Animated,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
+
+export default class animations extends Component {
+  state = {
+    animation: new Animated.Value(0),
+  };
+  _enabled = true;
+
+  render() {
+    const bgInterpolate = this.state.animation.interpolate({
+      inputRange: [0, 3000],
+      outputRange: ["rgb(255,99,71)", "rgb(99,71,255)"],
+    });
+    const scrollStyle = {
+      backgroundColor: bgInterpolate,
+    };
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;TouchableOpacity onPress={this.handleToggle}&gt;
+          &lt;Text&gt;Toggle&lt;/Text&gt;
+        &lt;/TouchableOpacity&gt;
+
+        &lt;ScrollView
+          style={styles.scroll}
+          ref={scroll =&gt; (this._scroll = scroll)}
+          scrollEventThrottle={16}
+          onScroll={Animated.event([
+            {
+              nativeEvent: {
+                contentOffset: {
+                  y: this.state.animation,
+                },
+              },
+            },
+          ])}
+        &gt;
+          &lt;Animated.View style={[styles.fakeContent, scrollStyle]} /&gt;
+        &lt;/ScrollView&gt;
+      &lt;/View&gt;
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 50,
+  },
+  scroll: {
+    flex: 1,
+    opacity: 1,
+  },
+  hide: {
+    opacity: 0,
+  },
+  show: {
+    opacity: 1,
+  },
+  fakeContent: {
+    height: 3000,
+    backgroundColor: "tomato",
+  },
+});
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Here is where the magic happens.</p>
+
+
+
+
+
+<p>Lets start first with just one <code>setNativeProp</code> call.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  handleToggle = () =&gt; {
+    this._enabled = !this._enabled;
+    this._scroll.setNativeProps({
+      scrollEnabled: this._enabled,
+    });
+  };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>We have <code>this._enabled</code> default to true on our component instance. We then toggle it and call <code>setNativeProps</code> and pass in an object of props we want to set. In our case we are just setting a single one and that's <code>scrollEnabled</code>. This will allow us to lock scrolling capabilities.</p>
+
+
+
+
+
+<p>We can see it in action here, we lock the scroll without passing in a prop to our <code>ScrollView</code>, and without causing a <code>setState</code> to happen.</p>
+
+
+
+
+
+<p><img alt="" src="https://images.codedaily.io/animations/setNativeScrollLock.gif"></p>
+
+
+
+
+
+<p>We can additionally override more than one prop at once, including the style prop. Understand though that you are REPLACING the prop in the native side. So if you have specific styling you need to preserve you will need to manage and send the entire new style, including the values you aren't overriding.</p>
+
+
+
+
+
+<p>You can see that here, we create a <code>style</code> tag and pass in our <code>styles.scroll</code>, then whether or not we are disabled we pass in a <code>hide</code> or <code>show</code> styling which will toggle the opacity. We'll also still disable the scroll. This whole concept is foundational to how the JavaScript version of Animated works and how we can craft our own animations.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  handleToggle = () =&gt; {
+    this._enabled = !this._enabled;
+    let style = [styles.scroll];
+
+    if (!this._enabled) {
+      style.push(styles.hide);
+    } else {
+      style.push(styles.show)
+    }
+
+    this._scroll.setNativeProps({
+      scrollEnabled: this._enabled,
+      style,
+    });
+  };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p><img alt="" src="https://images.codedaily.io/animations/setNativeScrollLockOpacity.gif"></p>
+
+
+
+
+
+<p><a href="https://snack.expo.io/Skuu54nSb" rel="nofollow">Live Demo</a>
+<a href="https://gitlab.com/codedaily/reactnativeanimations/tree/setNativeProps" rel="nofollow">Code</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

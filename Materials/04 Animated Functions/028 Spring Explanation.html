@@ -1,0 +1,90 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>028 Spring Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p><code>Animated.spring</code> defines a way to transition an <code>Animated.Value</code> based on <code>tension</code> and <code>friction</code> of a spring. The <code>tension</code> defines how much energy the spring has, and the <code>friction</code> defines how quickly that energy will dissipate. Based upon the spring formula the <code>Animated.Value</code> will bounce around like a spring until it stops. </p>
+
+<p>Because this is a spring it means that the <code>Animated.Value</code> will overshoot the <code>toValue</code> that you have specified until settling to the <code>toValue</code>. This is unlike <code>Animated.timing</code> which will not exceed the <code>toValue</code> you specified unless you provided an <code>easing</code> that caused the value to overshoot.</p>
+
+
+
+
+
+<p><img alt="" src="https://upload.wikimedia.org/wikipedia/commons/2/2b/Damped_spring.gif"></p>
+
+
+
+
+
+<p>Spring is the best way to simulate real physical motion in an animation. It allows for you to build out more realistic animations without having to define a duration, or guess the appropriate duration for a particular animation.</p>
+
+
+
+
+
+<p>Some examples </p>
+
+
+
+
+
+<p>Loose bouncy spring</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;Animated.spring(this._animation, {
+  toValue: 100,
+  friction: 2,
+  tension: 140,
+}).start()
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>High Friction not bouncy spring</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;Animated.spring(this._animation, {
+  toValue: 100,
+  friction: 15,
+  tension: 140,
+}).start()
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>You can apply the same amount of <code>tension</code> energy but a higher <code>friction</code> will cause the spring to stop faster.</p>
+
+
+
+
+
+<p><a href="https://snack.expo.io/HJA_1WoVb" rel="nofollow">Live Demo</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

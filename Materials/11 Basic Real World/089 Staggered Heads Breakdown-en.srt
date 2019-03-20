@@ -1,0 +1,184 @@
+1
+00:00:00,480 --> 00:00:05,120
+You're going to take a look at how we can rebuild something similar to the Facebook messengers dragon
+
+2
+00:00:05,130 --> 00:00:06,160
+bullheads.
+
+3
+00:00:06,180 --> 00:00:13,740
+So here we have a bunch of different heads and we can pick up the first one and we can drag it across
+
+4
+00:00:13,740 --> 00:00:16,900
+the screen and then the others will trail behind it.
+
+5
+00:00:16,950 --> 00:00:22,320
+Each one of them will be staggered just slightly behind the previous one and the all ends up at the
+
+6
+00:00:22,320 --> 00:00:24,090
+same location.
+
+7
+00:00:24,120 --> 00:00:29,790
+So if we break down what is exactly happening here the first piece we want to look at is that yes there
+
+8
+00:00:29,790 --> 00:00:31,790
+is a drag that is happening.
+
+9
+00:00:32,010 --> 00:00:39,600
+And the other elements besides this first one do not appear to be touchable and there is a translate
+
+10
+00:00:39,660 --> 00:00:41,670
+X and translate Y that is happening.
+
+11
+00:00:41,670 --> 00:00:48,420
+So that means that we all need to do an estimated value x y for this top head as well as the others
+
+12
+00:00:48,420 --> 00:00:49,720
+as well.
+
+13
+00:00:49,770 --> 00:00:50,960
+There is a stagger.
+
+14
+00:00:50,980 --> 00:00:58,170
+However when we talk about using staggerer with drags we will see that it is not necessarily the most
+
+15
+00:00:58,230 --> 00:01:03,700
+ideal for draggle animations because of how animator works internally.
+
+16
+00:01:03,960 --> 00:01:11,070
+So what that means is we'll have to recreate some of the staggerer for those other animated heads behind
+
+17
+00:01:11,070 --> 00:01:11,970
+it.
+
+18
+00:01:12,030 --> 00:01:13,420
+We don't see any opacity.
+
+19
+00:01:13,440 --> 00:01:14,300
+We don't see anything.
+
+20
+00:01:14,300 --> 00:01:23,160
+We just see a translate X Y as well as a staggered head movement to the exact values that this animation
+
+21
+00:01:23,160 --> 00:01:25,610
+is moving towards.
+
+22
+00:01:25,670 --> 00:01:30,130
+Finally when we're talking about drags there's a few things to note.
+
+23
+00:01:30,190 --> 00:01:36,590
+When you're when you're breaking down a drag animation the first one is does the thing that you have
+
+24
+00:01:37,130 --> 00:01:40,000
+that you have you're dragging does it stay where it's at.
+
+25
+00:01:40,040 --> 00:01:44,870
+If it does stay words then we're likely going to be using an extract offset.
+
+26
+00:01:45,110 --> 00:01:50,690
+And that's going to be in the with the pan response that's going to be in the on Panne responder grant
+
+27
+00:01:51,380 --> 00:01:56,510
+then for the on panel responder move when you break it down to its drag.
+
+28
+00:01:56,510 --> 00:01:59,050
+Do you see anything else happening.
+
+29
+00:01:59,060 --> 00:02:01,930
+If you were just dragging a singular head.
+
+30
+00:02:02,120 --> 00:02:07,910
+Then we would likely be able to use animated event however because we are seeing multiple animations
+
+31
+00:02:07,910 --> 00:02:14,740
+happening we're likely going to have to craft our own animated set value for this top head and on the
+
+32
+00:02:14,750 --> 00:02:16,940
+other animation that's happening behind it.
+
+33
+00:02:17,270 --> 00:02:25,540
+And then finally when we when we let go what happens so we can see that that nothing particularly happens.
+
+34
+00:02:25,560 --> 00:02:32,190
+The animations that are set on the heads will continue to move towards the position that we left it.
+
+35
+00:02:32,190 --> 00:02:36,480
+However that's one thing in the on Penn. responder release that you want to think about is when you
+
+36
+00:02:36,480 --> 00:02:38,930
+drop your animation.
+
+37
+00:02:38,980 --> 00:02:40,540
+Look at what happens does this.
+
+38
+00:02:40,540 --> 00:02:45,590
+When I drop it does it potentially spring to either side like some of the Facebook messenger stuff.
+
+39
+00:02:45,700 --> 00:02:51,080
+If that doesn't happen then we likely don't have anything in our on Penn. responder.
+
+40
+00:02:51,400 --> 00:02:57,100
+Now something we could potentially do is change the opacity in the on pain response to grant and then
+
+41
+00:02:57,100 --> 00:03:03,430
+on the release you know shifted over back to an opacity of one just to provide some user feedback.
+
+42
+00:03:03,490 --> 00:03:08,440
+However we won't do that but just know that when you're breaking down your animations look for what
+
+43
+00:03:08,440 --> 00:03:11,030
+happens right when you pick it up.
+
+44
+00:03:11,730 --> 00:03:12,900
+While you're moving.
+
+45
+00:03:12,960 --> 00:03:18,120
+And then on release you can kind of break down each particular animation that needs to happen at what
+
+46
+00:03:18,120 --> 00:03:18,650
+step.
+

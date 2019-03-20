@@ -1,0 +1,140 @@
+1
+00:00:00,670 --> 00:00:07,660
+The enemy that parallel function allows you to animate multiple animations at the same time we're going
+
+2
+00:00:07,660 --> 00:00:11,180
+to demo this by setting up two separate animations.
+
+3
+00:00:11,230 --> 00:00:18,250
+One is the color animation which we will default to 0 and the second is a scale animation for the color
+
+4
+00:00:18,250 --> 00:00:20,350
+animation we will use inter-relate.
+
+5
+00:00:20,350 --> 00:00:25,600
+So we really animating from 0 to 1 which means our color will start at this tomato and transition to
+
+6
+00:00:25,600 --> 00:00:32,950
+a purple as it gets closer to 1 and then additionally we will just pass in the scale animation to the
+
+7
+00:00:32,950 --> 00:00:35,520
+scale and apply it to our box.
+
+8
+00:00:37,550 --> 00:00:44,720
+In order to do this we would potentially have to say animated timing and then say this state that color
+
+9
+00:00:45,050 --> 00:00:53,160
+animation Hassen are configuration objects so to value of one and then a duration of 500 milliseconds
+
+10
+00:00:53,570 --> 00:00:55,760
+and then we would call start here.
+
+11
+00:00:55,790 --> 00:01:02,300
+Additionally they would say animated that timing at state scale animation or configuration object will
+
+12
+00:01:02,300 --> 00:01:09,590
+say to value of two and then a duration of 300 milliseconds and then call start.
+
+13
+00:01:09,590 --> 00:01:15,980
+Now this would theoretically work and we can show that off we press it and its scaled to two times the
+
+14
+00:01:15,980 --> 00:01:17,980
+size and also change purple.
+
+15
+00:01:17,990 --> 00:01:24,500
+But these are running at different times and we may want to only know when both of them are completed
+
+16
+00:01:24,740 --> 00:01:28,200
+and thats where the enemy the parallel helps helps us out.
+
+17
+00:01:29,170 --> 00:01:34,870
+So rather than calling start on both of these we will remove the start calls.
+
+18
+00:01:35,030 --> 00:01:44,300
+We will say animated parallel the enemy is up there will receive an array of animations that we should
+
+19
+00:01:44,360 --> 00:01:45,420
+execute.
+
+20
+00:01:45,620 --> 00:01:47,920
+So we will put these inside of an array.
+
+21
+00:01:49,130 --> 00:01:51,740
+And then we'll need to put a comma here.
+
+22
+00:01:51,740 --> 00:02:01,200
+So we have an enemy the timing here animated that timing here and it's inside of an array that we're
+
+23
+00:02:01,200 --> 00:02:08,160
+passing to intermediate parallel and rather than calling start on both of these animated timings we
+
+24
+00:02:08,160 --> 00:02:10,950
+will call start on the animated parallel.
+
+25
+00:02:11,370 --> 00:02:15,460
+Now what that's going to do is it's going to kick these both off at the same time.
+
+26
+00:02:15,900 --> 00:02:20,630
+And then this start callback will not be called until both are completed.
+
+27
+00:02:20,820 --> 00:02:26,460
+So even though this animated timing is going to be completed first because it is being executed quicker
+
+28
+00:02:27,180 --> 00:02:31,400
+it will not fire until this one is completed.
+
+29
+00:02:31,440 --> 00:02:33,540
+So let's just check this out.
+
+30
+00:02:33,540 --> 00:02:35,370
+Refresh press on it.
+
+31
+00:02:35,370 --> 00:02:41,100
+I mean see that the exact same effect happened with our enemy that parallel uncoiling start and then
+
+32
+00:02:41,100 --> 00:02:46,940
+to prove that this is not being called until our 500 second animation is completed we'll put a call
+
+33
+00:02:46,940 --> 00:02:51,030
+back here and just use the alert animation complete
+
+34
+00:02:53,660 --> 00:02:58,710
+we will refresh this and we can see that everything was completed.
+
+35
+00:02:58,870 --> 00:03:05,010
+The scale had been completed and it was transitioned to blue completely before our alert happened.
+

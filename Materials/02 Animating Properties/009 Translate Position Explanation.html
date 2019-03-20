@@ -1,0 +1,103 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>009 Translate Position Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>To moves items around the screen you typically want to use <code>translateX</code> and <code>translateY</code>. These will not cause layout changes and will be the most performant want to execute an animation. There are trade offs to using translate. Since it doesn't effect layout, the surrounding layouts won't be effected. </p>
+
+<p>For example if you wanted to move an item left or right and have another item fill in to it's spot, this won't happen. You would need to manually adjust the other elements in conjunction with the transform. In order to get this style of animation to work you'd have to animate layouts.</p>
+
+
+
+
+
+<p>I'm pointing this out as we will cover animations that use translate and layout (width/height/absolute position). There are times where doing animations with layout values won't be performant enough to reach 60FPS, and you will need to find different ways to accomplish your animations using translates and other transforms.</p>
+
+
+
+
+
+<p>Translations operate like a grid, where <code>0,0</code> is the top left of the element. The <code>Y</code> piece will operate on the Y axis, go up and down/move top to bottom. The <code>X</code> will operate on <code>X</code> axis, go left to right.</p>
+
+
+
+
+
+<p>In order to move up and or left (depending on the axis) we need to move negatively. If we want to move down or right we need to move positively.</p>
+
+
+
+
+
+<p>This animation here because we are moving in a positive direction, and passing it into <code>translateY</code> and <code>translateX</code> we will be moving towards the bottom right hand corner (diagonally).</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;componentWillMount() {
+  this._animation = new Animated.Value(0);
+}
+
+componentDidMount() {
+  Animated.timing(this._animation, {
+    toValue: 300,
+    duration: 500,
+  }).start()
+}
+render() {
+  const animatedStyle = {
+    transform: [
+      { 
+        translateY: this._animation
+      },
+      {
+        translateX: this._animation
+      }
+    ]
+  }
+  return &lt;Animated.View style={[styles.box, animatedStyle]} /&gt;
+}
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Now if we were to switch it up and animate towards <code>-300</code> we would be moving towards the top/left.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;componentDidMount() {
+  Animated.timing(this._animation, {
+    toValue: -300,
+    duration: 500,
+  }).start()
+}
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p><a href="https://snack.expo.io/HJQg2vF4-" rel="nofollow">Live Demo</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

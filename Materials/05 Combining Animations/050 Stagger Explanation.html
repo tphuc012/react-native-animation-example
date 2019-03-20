@@ -1,0 +1,44 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>050 Stagger Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Staggering animations is a great way to have consistent animations with a small space in between them. Typically the animations are going to be the same but they don't have to be.</p>
+
+<p>One of the best examples of staggered animations is draggable chat heads. Every time the lead head is dragged to a position the others follow suit using the exact same animation path and velocity. Another example is staggering the visibility/rendering of form items, or other elements upon rendering.  </p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;Animated.stagger(200,[
+  Animated.timing(this._opacityAnimation, {
+    toValue: 1,
+    duration: 500,
+  }),
+  Animated.timing(this._positionAnimation, {
+    toValue: 0,
+    duration: 150,
+  })
+]).start();
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p><a href="https://snack.expo.io/SkvWS-oE-" rel="nofollow">Live Demo</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

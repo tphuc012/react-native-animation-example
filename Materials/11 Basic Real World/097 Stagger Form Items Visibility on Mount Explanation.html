@@ -1,0 +1,498 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>097 Stagger Form Items Visibility on Mount Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Intro</p>
+
+<p>There may be times where you want to have an effect on mount. In some cases a subtle hidden =&gt; visible effect. This can be applied to many different elements for example google does a slight translate/fade for it's now cards. We'll apply it to inputs of a login form.</p>
+
+
+
+<p>Setup</p>
+
+
+
+<p>We'll start by importing the various components we'll need. The first key piece is the <code>Animated.createAnimatedComponent</code> call. <code>Animated</code> doesn't export a pre-wrapped <code>TextInput</code> for us so we need to create a <code>TextInput</code> that can handle animated values.</p>
+
+
+
+
+
+<p>Then because we will have 3 pieces to this form, an email, password, and a button we need to setup an animated value for each.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;import React, { Component } from "react";
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Image,
+  Animated,
+  KeyboardAvoidingView
+} from "react-native";
+
+import Background from "./background.jpg";
+
+const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
+
+export default class animations extends Component {
+  state = {
+    email: new Animated.Value(0),
+    password: new Animated.Value(0),
+    button: new Animated.Value(0),
+  };
+
+  render() {
+
+    return (
+      &lt;View style={styles.container}&gt;
+
+      &lt;/View&gt;
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
+
+AppRegistry.registerComponent("animations", () =&gt; animations);
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Add Background</p>
+
+
+
+<p>To set a background we will use <code>Image</code>, and use the <code>StyleSheet.absoluteFill</code> helper to make it cover the entire screen. We also need to set the <code>width</code> and <code>height</code> to <code>null</code> so that our child elements are laid out correctly.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  render() {
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;Image
+          source={Background}
+          resizeMode="cover"
+          style={[StyleSheet.absoluteFill, { width: null, height: null }]}
+        &gt;
+
+        &lt;/Image&gt;
+      &lt;/View&gt;
+    );
+  }
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Center Some Content</p>
+
+
+
+<p>In order for our view to appear in the middle we will add 2 <code>View</code>s on either side that are both <code>flex: 1</code>. This will create even sized height on either side of our center view. We then use <code>KeyboardAvoidingView</code> so that on small screens our view will be moved upward and still be visible for users to type in content.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  render() {
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;Image
+          source={Background}
+          resizeMode="cover"
+          style={[StyleSheet.absoluteFill, { width: null, height: null }]}
+        &gt;
+          &lt;View style={styles.container} /&gt;
+          &lt;KeyboardAvoidingView behavior="padding"&gt;
+
+          &lt;/KeyboardAvoidingView&gt;
+          &lt;View style={styles.container} /&gt;
+        &lt;/Image&gt;
+      &lt;/View&gt;
+    );
+  }
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Add Form Title and Styling</p>
+
+
+
+<p>We'll setup some form styling. The <code>KeyboardAvoidingView</code> is a <code>View</code> itself so we will apply our styling to it. We'll add a container, and a title.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;&lt;KeyboardAvoidingView style={styles.form} behavior="padding"&gt;
+  &lt;View style={styles.container}&gt;
+    &lt;Text style={styles.title}&gt;Login&lt;/Text&gt;
+  &lt;/View&gt;
+&lt;/KeyboardAvoidingView&gt;
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Our styling for our form will be a light dark see through background with some padding on either side. We will also be sure and add <code>backgroundColor: "transparent"</code> to our title otherwise it will have a white background.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  title: {
+    fontSize: 30,
+    color: "#FFF",
+    backgroundColor: "transparent",
+    textAlign: "center",
+    marginBottom: 10,
+  },
+  form: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(0,0,0,.25)",
+    paddingVertical: 10,
+  },
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Add Fields</p>
+
+
+
+<p>Next we'll add in our <code>TextInput</code>s, but we'll use the <code>AnimatedTextInput</code> that we created earlier. The other thing we need to do is get a <code>ref</code> to the element. This will allow us to focus on the input later when our animation is complete.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;&lt;KeyboardAvoidingView style={styles.form} behavior="padding"&gt;
+  &lt;View style={styles.container}&gt;
+    &lt;Text style={styles.title}&gt;Login&lt;/Text&gt;
+    &lt;AnimatedTextInput
+      ref={email =&gt; (this._email = email)}
+      style={[styles.input]}
+      placeholder="Email"
+      keyboardType="email-address"
+    /&gt;
+    &lt;AnimatedTextInput
+      placeholder="Password"
+      style={[styles.input]}
+      secureTextEntry
+    /&gt;
+  &lt;/View&gt;
+&lt;/KeyboardAvoidingView&gt;
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>This is just some standard input styling, most importantly we need to define a <code>width</code> and <code>height</code>.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;input: {
+    width: 250,
+    height: 35,
+    paddingHorizontal: 10,
+    marginVertical: 5,
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: "#FFF",
+    color: "#333",
+    backgroundColor: "#FFF",
+  },
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Add a Button</p>
+
+
+
+<p>We'll add our button bellow our inputs, and just use a <code>TouchableOpacity</code>. We'll need to use an <code>Animated.View</code> for our button to be able to transition.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;&lt;KeyboardAvoidingView style={styles.form} behavior="padding"&gt;
+  &lt;View style={styles.container}&gt;
+    &lt;Text style={styles.title}&gt;Login&lt;/Text&gt;
+    &lt;AnimatedTextInput
+      ref={email =&gt; (this._email = email)}
+      style={[styles.input]}
+      placeholder="Email"
+      keyboardType="email-address"
+    /&gt;
+    &lt;AnimatedTextInput
+      placeholder="Password"
+      style={[styles.input]}
+      secureTextEntry
+    /&gt;
+    &lt;TouchableOpacity&gt;
+      &lt;Animated.View style={[styles.button]}&gt;
+        &lt;Text style={styles.buttonText}&gt;Login&lt;/Text&gt;
+      &lt;/Animated.View&gt;
+    &lt;/TouchableOpacity&gt;
+  &lt;/View&gt;
+&lt;/KeyboardAvoidingView&gt;
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;button: {
+    marginTop: 10,
+    backgroundColor: "tomato",
+    paddingVertical: 10,
+    paddingHorizontal: 5,
+    borderRadius: 5,
+  },
+  buttonText: {
+    textAlign: "center",
+    color: "#FFF",
+    fontSize: 16,
+  },
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Add Animated Styles</p>
+
+
+
+<p>Our animations will be exactly the same for each of our animated values so we'll create a function that will take each animated value and return styling.</p>
+
+
+
+
+
+<p>In our case we will use <code>interpolate</code> to offset our view <code>-5</code>. This way it will start offset upwards 5 and then slowly descend to a <code>0</code> offset.</p>
+
+
+
+
+
+<p>We'll just pass in our <code>animation</code> as the opacity as it will be animating from <code>0</code> to <code>1</code> which is the animation we want.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;const createAnimationStyle = animation =&gt; {
+  const translateY = animation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [-5, 0],
+  });
+
+  return {
+    opacity: animation,
+    transform: [
+      {
+        translateY,
+      },
+    ],
+  };
+};
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Finally to use it we just call our function and pass in our animated values, then pass them into each of the corresponding views.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;render() {
+    const emailStyle = createAnimationStyle(this.state.email);
+    const passwordStyle = createAnimationStyle(this.state.password);
+    const buttonStyle = createAnimationStyle(this.state.button);
+
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;Image
+          source={Background}
+          resizeMode="cover"
+          style={[StyleSheet.absoluteFill, { width: null, height: null }]}
+        &gt;
+          &lt;View style={styles.container} /&gt;
+          &lt;KeyboardAvoidingView style={styles.form} behavior="padding"&gt;
+            &lt;View style={styles.container}&gt;
+              &lt;Text style={styles.title}&gt;Login&lt;/Text&gt;
+              &lt;AnimatedTextInput
+                ref={email =&gt; (this._email = email)}
+                style={[styles.input, emailStyle]}
+                placeholder="Email"
+                keyboardType="email-address"
+              /&gt;
+              &lt;AnimatedTextInput
+                placeholder="Password"
+                style={[styles.input, passwordStyle]}
+                secureTextEntry
+              /&gt;
+              &lt;TouchableOpacity&gt;
+                &lt;Animated.View style={[styles.button, buttonStyle]}&gt;
+                  &lt;Text style={styles.buttonText}&gt;Login&lt;/Text&gt;
+                &lt;/Animated.View&gt;
+              &lt;/TouchableOpacity&gt;
+            &lt;/View&gt;
+          &lt;/KeyboardAvoidingView&gt;
+          &lt;View style={styles.container} /&gt;
+        &lt;/Image&gt;
+      &lt;/View&gt;
+    );
+  }
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Stagger Animation</p>
+
+
+
+<p>Our animation for each will be exactly the same, but if you desire a different animation you can customize each specifically.
+We'll use <code>stagger</code> and provide a <code>100ms</code> offset before each animation is executed.</p>
+
+
+
+
+
+<p>The most important piece here is passing a callback to <code>start</code> so we can call <code>focus</code> on our email input so the user will be able to start typing into the field. Because we are referencing an animated value we need to call <code>getNode()</code> to get access to the internal ref of the actual <code>TextInput</code> instance so we can call <code>focus</code>.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  componentDidMount() {
+    Animated.stagger(100, [
+      Animated.timing(this.state.email, {
+        toValue: 1,
+        duration: 200,
+      }),
+      Animated.timing(this.state.password, {
+        toValue: 1,
+        duration: 200,
+      }),
+      Animated.timing(this.state.button, {
+        toValue: 1,
+        duration: 200,
+      }),
+    ]).start(() =&gt; {
+      this._email.getNode().focus();
+    });
+  }
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Ending</p>
+
+
+
+<p>Staggering fade of certain elements can help direct the users focus towards specific elements while also giving you extra time you may need to load it's content. Also when dealing with forms, focus the form field for the users so they do not have to tap on the form field.</p>
+
+
+
+
+
+<p><a href="https://snack.expo.io/HkkiORIHW" rel="nofollow">Live Demo</a>
+<a href="https://gitlab.com/codedaily/reactnativeanimations/tree/staggerFormFields" rel="nofollow">Code</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

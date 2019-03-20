@@ -1,0 +1,212 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>085 Pointer Events Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>In many cases rendering and unrendering elements is troublesome as it usually requires storing values in state and toggling visible and hidden with <code>setState</code>. Then because you need to delay the animations until the elements are rendered you have to pass in a <code>componentDidUpdate</code> callback.</p>
+
+<p>When rendering more views won't cause performance it may make more sense to render items hidden, and use the <code>pointerEvents</code> View prop to have touches pass ignored.</p>
+
+
+
+
+
+<p>In animations of this sort we would provide an <code>opacity</code> animated style and set it to <code>0</code>. Then using a variable on state we would be toggling between <code>none</code> and <code>all</code>. When the view is hidden we pass in <code>&lt;View pointerEvents="none"&gt;</code>. 
+When we trigger our animation to show the view we can do our animation, and once it's complete using our <code>start</code> callback we can toggle to <code>&lt;View pointerEvents="auto"&gt;</code>. Our view can now receive touch events.</p>
+
+
+
+
+
+<p>Lets take a look at an example.</p>
+
+
+
+
+
+<p>We'll start with a box. That box can be pressed to trigger an animation. The background color of the box will change every time the box is pressed.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;import React, { Component } from "react";
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  Animated,
+  TouchableWithoutFeedback,
+  TouchableOpacity,
+} from "react-native";
+
+export default class animations extends Component {
+  state = {
+    animation: new Animated.Value(0),
+    toggle: true,
+  };
+  _pressed = false;
+  handlePress = () =&gt; {
+    const toValue = this._pressed ? 0 : 1;
+    Animated.timing(this.state.animation, {
+      toValue
+    }).start();
+    this._pressed = !this._pressed;
+  };
+  render() {
+
+    const boxStyle = {
+      backgroundColor: this.state.animation.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["rgb(255,99,71)", "rgb(99,71,255)"]
+      })
+    }
+
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;View&gt;
+          &lt;TouchableWithoutFeedback onPress={this.handlePress}&gt;
+            &lt;Animated.View style={[styles.box, boxStyle]} /&gt;
+          &lt;/TouchableWithoutFeedback&gt;
+        &lt;/View&gt;
+      &lt;/View&gt;
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  box: {
+    width: 100,
+    height: 100,
+  },
+  cover: {
+    backgroundColor: "transparent",
+  },
+});
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Now lets add in a little more. Lets add a toggle to toggle a variable.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  handleToggle = () =&gt; {
+    this.setState(state =&gt; ({
+      toggle: !state.toggle,
+    }));
+  };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Now our view looks like this. A button will toggle our <code>toggle</code> on state between true and false.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;    return (
+      &lt;View style={styles.container}&gt;
+        &lt;View&gt;
+          &lt;TouchableWithoutFeedback onPress={this.handlePress}&gt;
+            &lt;Animated.View style={[styles.box, boxStyle]} /&gt;
+          &lt;/TouchableWithoutFeedback&gt;
+        &lt;/View&gt;
+
+        &lt;TouchableOpacity onPress={this.handleToggle}&gt;
+          &lt;View&gt;
+            &lt;Text&gt;Toggle Pointer Events&lt;/Text&gt;
+          &lt;/View&gt;
+        &lt;/TouchableOpacity&gt;
+      &lt;/View&gt;
+    );
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Now we add in a covering view and toggle our <code>pointerEvents</code>. When <code>this.state.toggle</code> is <code>true</code> as it is in the start. There are no <code>pointerEvents</code> on our covering view. This means you can press through it and trigger the animation.</p>
+
+
+
+
+
+<p>However as soon as we toggle to <code>false</code> the <code>auto</code> <code>pointerEvents</code> is applied. This means our covering view will accept touch events, blocking all touch events from getting to anything underneath it. You will no longer be able to change the color until you toggle back to <code>true</code>.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;    return (
+      &lt;View style={styles.container}&gt;
+        &lt;View&gt;
+          &lt;TouchableWithoutFeedback onPress={this.handlePress}&gt;
+            &lt;Animated.View style={[styles.box, boxStyle]} /&gt;
+          &lt;/TouchableWithoutFeedback&gt;
+          &lt;View
+            style={[StyleSheet.absoluteFill, styles.cover]}
+            pointerEvents={this.state.toggle ? "none" : "auto"}
+          /&gt;
+        &lt;/View&gt;
+
+        &lt;TouchableOpacity onPress={this.handleToggle}&gt;
+          &lt;View&gt;
+            &lt;Text&gt;Toggle Pointer Events&lt;/Text&gt;
+          &lt;/View&gt;
+        &lt;/TouchableOpacity&gt;
+      &lt;/View&gt;
+    );
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>This can allow you to hide elements in plain site, animate them as necessary and then enable touch events on whichever elements need to receive touches.</p>
+
+
+
+
+
+<p><a href="https://snack.expo.io/ryHk5_6BZ" rel="nofollow">Live Demo</a>
+<a href="https://gitlab.com/codedaily/reactnativeanimations/tree/pointerEvents" rel="nofollow">Code</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

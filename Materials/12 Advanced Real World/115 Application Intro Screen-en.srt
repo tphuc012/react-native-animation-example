@@ -1,0 +1,936 @@
+1
+00:00:00,480 --> 00:00:07,200
+Many applications have animated intros usually images or some sort of effect that is happening while
+
+2
+00:00:07,200 --> 00:00:13,860
+the user is scrolling in between each of the pages will be building out the same exact page using the
+
+3
+00:00:13,860 --> 00:00:15,360
+same exact images.
+
+4
+00:00:15,480 --> 00:00:17,530
+We'll just be changing the animation.
+
+5
+00:00:17,610 --> 00:00:24,030
+The point of this will be to understand how to develop animations based upon scroll views while they're
+
+6
+00:00:24,030 --> 00:00:25,110
+scrolling.
+
+7
+00:00:25,680 --> 00:00:26,550
+We'll close this.
+
+8
+00:00:26,560 --> 00:00:31,900
+It will come down to our render function and first thing we need to do is set up a scroll view.
+
+9
+00:00:32,010 --> 00:00:33,360
+So we'll use scroll of you
+
+10
+00:00:37,070 --> 00:00:41,000
+and will then add a few different properties on it to make it work for us.
+
+11
+00:00:41,030 --> 00:00:47,450
+The first will give it a style style container and this will just apply our flex 1 to it so it takes
+
+12
+00:00:47,450 --> 00:00:49,020
+up the entire screen.
+
+13
+00:00:49,270 --> 00:00:56,090
+Well then also at paging enabled paging enabled will make pages based upon either the width and height
+
+14
+00:00:56,510 --> 00:00:57,500
+of the Scroll of view.
+
+15
+00:00:57,500 --> 00:01:00,180
+So in our case we will flip it to horizontal.
+
+16
+00:01:00,410 --> 00:01:08,530
+So because it's taking up the entire screen our pages will be the width of the screen.
+
+17
+00:01:08,530 --> 00:01:12,730
+So each page that we put below us will be the full width of the page.
+
+18
+00:01:12,760 --> 00:01:13,960
+The screen here.
+
+19
+00:01:14,050 --> 00:01:21,730
+So we then will add scroll of throttle and give it 16 milliseconds and then we'll need to pipe our on
+
+20
+00:01:21,730 --> 00:01:24,730
+scroll into an animated value.
+
+21
+00:01:24,880 --> 00:01:26,860
+We don't have one yet so let's go create one.
+
+22
+00:01:26,860 --> 00:01:30,390
+So we'll just say state to animation.
+
+23
+00:01:30,880 --> 00:01:31,780
+New animated value.
+
+24
+00:01:31,810 --> 00:01:34,460
+And we'll just defaulted to zero.
+
+25
+00:01:34,520 --> 00:01:43,290
+Then we will do our own scroll and it will pass and are animated that event which takes an array of
+
+26
+00:01:43,410 --> 00:01:50,710
+values and we want to use the first one which is the native events will need to pass in an object though
+
+27
+00:01:50,790 --> 00:01:59,350
+so it will traverse the object for our content so native event then the content offset.
+
+28
+00:01:59,750 --> 00:02:07,040
+And then because we're scrolling horizontal We want the X to be piped into this outstate animation.
+
+29
+00:02:07,170 --> 00:02:11,530
+So now that we have our scroll view set up we don't have any content to scroll through.
+
+30
+00:02:11,550 --> 00:02:15,820
+So now we need to go set up our screens for our screens.
+
+31
+00:02:15,830 --> 00:02:19,190
+We'll need to use width and height of the window.
+
+32
+00:02:19,280 --> 00:02:23,680
+So we'll use our dimensions column will say cartes width and height.
+
+33
+00:02:23,770 --> 00:02:30,210
+The structure that calls dimensions does get window.
+
+34
+00:02:30,390 --> 00:02:38,160
+Now for our first screen we'll set up a view in a style and we'll just pass in our with our height and
+
+35
+00:02:38,160 --> 00:02:46,620
+then a background color which we'll say is F-8 9 20 which is the orange color that we saw earlier and
+
+36
+00:02:46,620 --> 00:02:48,080
+will close off our view.
+
+37
+00:02:48,090 --> 00:02:54,900
+So now we have a single page ready to receive content that is the entire width and the entire height
+
+38
+00:02:55,200 --> 00:03:02,060
+which is also equivalent to the paging enabled width and height that it has determined.
+
+39
+00:03:02,060 --> 00:03:06,680
+So now all of our pages will lock correctly to each particular screen.
+
+40
+00:03:08,220 --> 00:03:14,550
+The screen usually consists of a header and some text so the top part might be a bunch of images and
+
+41
+00:03:14,550 --> 00:03:18,060
+the bottom might be some instructional text or some other actions.
+
+42
+00:03:18,120 --> 00:03:26,610
+So set up our view in two different pieces we have a view here and a view here we'll just put some text
+
+43
+00:03:26,610 --> 00:03:27,120
+here.
+
+44
+00:03:27,180 --> 00:03:34,970
+Colts green one and will in our images up here but we'll need to give these some styling so we're going
+
+45
+00:03:34,970 --> 00:03:45,410
+to say style equals style Start screen Hetter and style Eco's styles screen text but that will just
+
+46
+00:03:45,410 --> 00:03:52,970
+be a flex one so we use our container again actually to be explicit just which is to screen text and
+
+47
+00:03:52,970 --> 00:04:07,920
+we'll add in screen Hetter which we flex one line items sensor and justify content center and are screen
+
+48
+00:04:07,920 --> 00:04:12,310
+texts we'll say is flexible and to take up even amounts of space.
+
+49
+00:04:13,350 --> 00:04:19,530
+So now if we refresh this we have a orange background and our screen one is appearing here and now we
+
+50
+00:04:19,530 --> 00:04:25,860
+have a content container appear to add images to now that we have our containers we're going to add
+
+51
+00:04:25,890 --> 00:04:27,090
+an anchor image.
+
+52
+00:04:27,090 --> 00:04:33,180
+This will just be an image without any absolute positioning that is just to the line items and justify
+
+53
+00:04:33,180 --> 00:04:35,050
+content and sit right in the middle.
+
+54
+00:04:35,250 --> 00:04:37,090
+So we're going to give it an animated image.
+
+55
+00:04:41,230 --> 00:04:43,570
+And to say the source is equal to images.
+
+56
+00:04:43,660 --> 00:04:45,780
+Image one.
+
+57
+00:04:46,020 --> 00:04:51,470
+And then some styling to define the width and height and then resize mode.
+
+58
+00:04:51,550 --> 00:04:53,860
+We're going to say is contain
+
+59
+00:04:57,140 --> 00:05:05,400
+within this image may have a particular size that we want and to maintain that across densities of the
+
+60
+00:05:05,400 --> 00:05:15,170
+screen we need to use the pixel ratio get pixel size for layout size and then pass in our desired size
+
+61
+00:05:15,180 --> 00:05:21,020
+good for multiply by the pixel density depending on the type of phone that you have.
+
+62
+00:05:21,030 --> 00:05:27,490
+So this 75 might become something a lot larger than 75 on a two and a half pixel density phone.
+
+63
+00:05:27,570 --> 00:05:35,160
+Now we'll pass in here as well and say pixel ratio get pixel out for size and pasand 63.
+
+64
+00:05:35,160 --> 00:05:40,110
+So now we have a singular image rendering and we can go to refresh and then we have our anchor image
+
+65
+00:05:40,110 --> 00:05:47,880
+that we can now decorate other potential animated images on top of it to save some time and in our images
+
+66
+00:05:47,880 --> 00:05:49,340
+and just go over them real quick.
+
+67
+00:05:49,380 --> 00:05:50,830
+We have our images too.
+
+68
+00:05:50,850 --> 00:05:56,550
+This is the one that we will be animating which is why we have an array here so we can pass in an estimated
+
+69
+00:05:57,120 --> 00:06:03,550
+value styling and then we have our third one here so to refresh nothing happens because it didn't save
+
+70
+00:06:03,550 --> 00:06:03,640
+it.
+
+71
+00:06:03,640 --> 00:06:04,770
+Now I want to refresh.
+
+72
+00:06:04,960 --> 00:06:13,100
+See that they're appearing in relatively appropriate locations up here in our render Barry would typically
+
+73
+00:06:13,100 --> 00:06:16,260
+start defining our content.
+
+74
+00:06:16,400 --> 00:06:21,770
+This could be kind of overwhelming so we're going to create separate functions and then pass it the
+
+75
+00:06:21,770 --> 00:06:25,060
+animation and the width and have it return our styling for us.
+
+76
+00:06:25,220 --> 00:06:32,740
+So where does that screen one Stiles is equal to get screen 1 Stiles.
+
+77
+00:06:32,810 --> 00:06:39,430
+We're going to pass it what we need so the state animation and then because we are the paging is of
+
+78
+00:06:39,510 --> 00:06:41,930
+the width and that's what you're operating off of.
+
+79
+00:06:42,050 --> 00:06:48,530
+And we're going to need to define our input ranges using the width of our scroll view which is the width
+
+80
+00:06:48,530 --> 00:06:51,940
+of our windows to Will the past in our with.
+
+81
+00:06:52,130 --> 00:06:57,280
+And now we get to go make our function our Get screen 1 stylus function which will do up here.
+
+82
+00:06:57,380 --> 00:07:00,890
+So they can't get screen size equals animation.
+
+83
+00:07:00,890 --> 00:07:05,960
+And with and we'll do our aero function.
+
+84
+00:07:06,110 --> 00:07:14,270
+Now it is very important to define our input ranges correctly typically because we have an array of
+
+85
+00:07:14,270 --> 00:07:16,280
+screens or multiple screens.
+
+86
+00:07:16,610 --> 00:07:23,140
+The input ranges would likely be automatically calculated based upon the index that we were rendering
+
+87
+00:07:23,140 --> 00:07:23,820
+things in.
+
+88
+00:07:23,980 --> 00:07:31,210
+We're going to do it explicitly so that we all understand exactly where the values are coming from for
+
+89
+00:07:31,210 --> 00:07:32,840
+the input range.
+
+90
+00:07:32,920 --> 00:07:40,090
+In our case we're just going to animate this image to hear sort of say Cotts image to translate X we'll
+
+91
+00:07:40,090 --> 00:07:48,650
+just move it side to side and turn off our animation and then we'll define our input range our input
+
+92
+00:07:48,650 --> 00:07:58,970
+range will be we'll take three values generally one value for when you're moving towards a stable position
+
+93
+00:07:59,840 --> 00:08:02,820
+the value for when you're at a stable position.
+
+94
+00:08:02,990 --> 00:08:06,800
+And then what to do when you're moving away from a stable position.
+
+95
+00:08:06,860 --> 00:08:12,650
+And when I say stable position I just mean that there is a position where the pages have stopped which
+
+96
+00:08:12,650 --> 00:08:19,270
+in our case on the first screen it stops on zero so a stable position of not moving is zero.
+
+97
+00:08:19,400 --> 00:08:24,700
+However our movement away is as the scroll view moves this way.
+
+98
+00:08:24,890 --> 00:08:28,200
+The x will increase towards the width.
+
+99
+00:08:28,370 --> 00:08:32,780
+And this with is actually the next screens stable position.
+
+100
+00:08:32,780 --> 00:08:36,030
+This will become more apparent on our second screen.
+
+101
+00:08:36,230 --> 00:08:42,400
+So now the passen output range I will say when we're stable we want zero translate.
+
+102
+00:08:42,590 --> 00:08:44,040
+But as we move away.
+
+103
+00:08:44,060 --> 00:08:48,580
+So as we move to the next screen we want to translate negative 100 which is just to the left.
+
+104
+00:08:48,950 --> 00:08:52,290
+And then we'll extrapolate clamp here.
+
+105
+00:08:52,780 --> 00:08:58,460
+If we don't extrapolate clamp we don't really have control over the width of our scroll view.
+
+106
+00:08:58,460 --> 00:09:05,060
+So we want to lock it to exactly the input range that we've defined otherwise this will can continue
+
+107
+00:09:05,060 --> 00:09:09,020
+on to much higher than negative 100.
+
+108
+00:09:09,160 --> 00:09:19,270
+And then we'll just pass back some styling so we'll say return image to and we'll add a transform array
+
+109
+00:09:19,270 --> 00:09:27,230
+of objects and or translate X will be image to translate x.
+
+110
+00:09:27,360 --> 00:09:41,660
+So now down here in our screen one styles we can pass this in to our image to here so image.
+
+111
+00:09:41,770 --> 00:09:47,230
+So even though we don't have any other content there's still a bounce that will happen and allow us
+
+112
+00:09:47,230 --> 00:09:50,150
+to overextend our scroll of view content.
+
+113
+00:09:50,170 --> 00:09:51,160
+So let's refresh this.
+
+114
+00:09:51,160 --> 00:09:58,470
+And we can see if her animation is working as we grab our screen and drag it we can see if you watch
+
+115
+00:09:58,470 --> 00:10:02,010
+that image to begin can see that it's actually doing it's translate X away.
+
+116
+00:10:02,010 --> 00:10:08,880
+So it's not actually staying in the same position and then as I release and it moves back towards the
+
+117
+00:10:08,970 --> 00:10:12,270
+zero the scroll content offset moves back towards zero.
+
+118
+00:10:12,270 --> 00:10:15,390
+You can see that this will move to its stable position at zero.
+
+119
+00:10:15,390 --> 00:10:24,890
+Translate so because we want to focus on our animations we're just in a copy and paste this first screen
+
+120
+00:10:26,540 --> 00:10:29,590
+and paste it three different times the screen three
+
+121
+00:10:32,530 --> 00:10:40,190
+will be screened too and we'll go replace the screen one style and this one as well defined separate
+
+122
+00:10:40,190 --> 00:10:42,250
+styles for each of the screens.
+
+123
+00:10:44,940 --> 00:10:49,100
+So now we need to go define two other screen styles.
+
+124
+00:10:49,200 --> 00:10:57,620
+So we're going to say cartes screen two styles ECOs get screen two styles and will once again pass in
+
+125
+00:10:57,630 --> 00:11:07,430
+this state the animation and with and then conc screen three styles because get screen three styles
+
+126
+00:11:07,840 --> 00:11:14,190
+pass in our animation and are with.
+
+127
+00:11:14,260 --> 00:11:18,760
+And now we need to go make these sort of make these functions so that if we refresh we won't get any
+
+128
+00:11:18,760 --> 00:11:19,410
+errors.
+
+129
+00:11:19,440 --> 00:11:32,040
+So can't say that cause animation with and then can't skip screen three styles.
+
+130
+00:11:33,110 --> 00:11:40,770
+Animation and with so let's focus on our second screen now.
+
+131
+00:11:41,120 --> 00:11:44,420
+So we're going to do two different animations.
+
+132
+00:11:44,420 --> 00:11:50,680
+One will be an entrance animation and the second will be an exit animation.
+
+133
+00:11:50,900 --> 00:11:54,160
+So that means we need to craft our input range correctly.
+
+134
+00:11:54,400 --> 00:11:59,820
+So they just define our input range here as an array and we'll walk through it.
+
+135
+00:11:59,870 --> 00:12:07,880
+So because we'll be on our second screen so it's refreshed as a move towards our second screen as we
+
+136
+00:12:07,880 --> 00:12:09,100
+move towards it.
+
+137
+00:12:09,410 --> 00:12:15,530
+That's going to be when it's coming from the previous page which is over here to its stable position
+
+138
+00:12:15,620 --> 00:12:21,770
+which is the left side of the screen here which is an offset of a single with so one with has passed
+
+139
+00:12:22,040 --> 00:12:25,010
+this first screen one screen has passed.
+
+140
+00:12:25,010 --> 00:12:34,260
+So that means in order to do an animation we need to define our our input range from the previous stable
+
+141
+00:12:34,260 --> 00:12:40,730
+position which was zero for the first screen to the stable position that we have here which is this
+
+142
+00:12:40,770 --> 00:12:42,970
+a singular width of the screen.
+
+143
+00:12:43,080 --> 00:12:46,730
+So we're going to say zero for the previous stable.
+
+144
+00:12:46,770 --> 00:12:55,880
+And then with for what our current stable is then to define our exit animation we can do something different.
+
+145
+00:12:55,890 --> 00:13:00,210
+So what we're going to do is animate this one in an animated up and out.
+
+146
+00:13:00,210 --> 00:13:03,570
+However this is going to go from the stable position.
+
+147
+00:13:03,600 --> 00:13:09,780
+So that's what our current middle and put range value is to the stable position of our next screen and
+
+148
+00:13:09,780 --> 00:13:16,920
+it's screen 3 but with a zero base index it's going to be the with times 2 because we've gone by two
+
+149
+00:13:16,950 --> 00:13:18,500
+separate screens.
+
+150
+00:13:18,630 --> 00:13:26,280
+So here we're going to say with times 2 and now we can define an entrance animation via the output range.
+
+151
+00:13:26,460 --> 00:13:31,050
+What this stable value is in the output range so likely zero.
+
+152
+00:13:31,080 --> 00:13:37,500
+And then here will define how the animation should exit as it moves on to screen 3.
+
+153
+00:13:37,530 --> 00:13:39,840
+So now we can define our animations.
+
+154
+00:13:39,960 --> 00:13:43,470
+So say Konst image to translate.
+
+155
+00:13:43,470 --> 00:13:44,600
+Why.
+
+156
+00:13:44,610 --> 00:13:50,780
+Because the animation interpolates in our input range.
+
+157
+00:13:51,090 --> 00:13:58,760
+Well the finer output range as we'll start a 100 down when we're stable we're going to be at zero translate
+
+158
+00:13:58,770 --> 00:14:01,000
+so it'll be in its normal position.
+
+159
+00:14:01,120 --> 00:14:06,480
+And then as we move away to the next screen we'll continue the animation upwards.
+
+160
+00:14:06,580 --> 00:14:11,560
+So negative 100 so slide so this screen here will slide from here to here.
+
+161
+00:14:11,590 --> 00:14:18,250
+And then as we go to the third screen from here to here we'll also do an extrapolate clamp that's going
+
+162
+00:14:18,250 --> 00:14:21,340
+to be very important to keep doing extrapolate clamp.
+
+163
+00:14:21,340 --> 00:14:25,240
+Otherwise this will just continue to flow all the way up here.
+
+164
+00:14:25,360 --> 00:14:35,160
+We'll also define some opacity so say contest image to opacity animation in Triple-A put her input range
+
+165
+00:14:35,160 --> 00:14:35,520
+in.
+
+166
+00:14:35,520 --> 00:14:40,890
+So these are the same input ranges they're just driving different animations for output range will say
+
+167
+00:14:40,890 --> 00:14:48,930
+we're we're zero we're hidden as we slowly move more stable we fully we'll have a full opacity at the
+
+168
+00:14:48,930 --> 00:14:49,710
+Staple Mark.
+
+169
+00:14:49,740 --> 00:14:55,140
+And then as the inmate away it'll move towards not stable and will add extrapolate clamp even though
+
+170
+00:14:55,830 --> 00:14:57,860
+this one is kind of unnecessary.
+
+171
+00:14:58,110 --> 00:15:11,920
+And then we will return our styling so return image to opacity image to opacity transform and translate
+
+172
+00:15:12,220 --> 00:15:15,270
+why hoby image to translate.
+
+173
+00:15:15,290 --> 00:15:16,560
+Why.
+
+174
+00:15:16,680 --> 00:15:25,900
+So now that we're loading that up we can come down here and we'll go to our second screen and then we
+
+175
+00:15:25,900 --> 00:15:36,270
+will pass in our image to our screen to styles to image to and will refresh this.
+
+176
+00:15:36,450 --> 00:15:37,490
+And we'll see.
+
+177
+00:15:37,580 --> 00:15:43,070
+So have our first animation because it's running on the same animation but a different interplay on
+
+178
+00:15:43,070 --> 00:15:44,710
+different input ranges.
+
+179
+00:15:44,900 --> 00:15:52,410
+As we slowly slide over here we can see that our second image is about 100 down as we're slowly sliding.
+
+180
+00:15:52,460 --> 00:15:57,510
+And it's has a somewhat animation or opacity between 0 and 1.
+
+181
+00:15:57,890 --> 00:16:04,970
+And then once we fully reach our stable position it's now at zero for a translate y and one for its
+
+182
+00:16:05,000 --> 00:16:05,840
+opacity.
+
+183
+00:16:06,140 --> 00:16:12,010
+And then as we move towards our third screen now it's moving up and fading out.
+
+184
+00:16:14,090 --> 00:16:21,260
+And then when we move backwards that's going to start from the top and move down because that's how
+
+185
+00:16:21,260 --> 00:16:23,660
+we defined our input ranges.
+
+186
+00:16:23,660 --> 00:16:26,010
+And then same back to square one.
+
+187
+00:16:26,300 --> 00:16:29,900
+Get back to that original position.
+
+188
+00:16:29,930 --> 00:16:34,580
+Now let's define our third screen which will do two different animations.
+
+189
+00:16:34,580 --> 00:16:42,290
+The first one we need to do is define our input range so our input range once again is going to be previous
+
+190
+00:16:42,290 --> 00:16:45,890
+stable current stable and next stable.
+
+191
+00:16:45,980 --> 00:16:53,690
+So the previous stable was screen 1 or screen 2 which meant the stabilization was with then our current
+
+192
+00:16:53,690 --> 00:16:57,420
+stable is that screen 3 is with times 2.
+
+193
+00:16:57,500 --> 00:16:59,020
+That's the current offset.
+
+194
+00:16:59,040 --> 00:17:06,860
+So we have one screen here and one screen here and this is the left hand position and then with times
+
+195
+00:17:06,860 --> 00:17:09,890
+three would be the stable position of the fourth screen.
+
+196
+00:17:09,890 --> 00:17:16,330
+If we had a fourth screen now we'll just set up scale and rotate.
+
+197
+00:17:16,590 --> 00:17:19,070
+So would you Kautz image scale.
+
+198
+00:17:19,100 --> 00:17:30,000
+So the animation done interpolate input range output range will be 0 1 and then 0 and we'll do and extrapolate
+
+199
+00:17:30,000 --> 00:17:30,970
+clamp here.
+
+200
+00:17:33,050 --> 00:17:42,810
+That will set up a rotating image to rotate with the animation and interpolate input range output range
+
+201
+00:17:42,810 --> 00:17:48,290
+will say is negative 180 degrees 0 degrees at our rest.
+
+202
+00:17:48,340 --> 00:17:56,720
+And then as we move away rotate continue to rotate towards 180 degrees and once again extrapolate clamp.
+
+203
+00:17:56,750 --> 00:18:01,510
+So it doesn't just keep doing a full 360 degree rotations.
+
+204
+00:18:01,730 --> 00:18:04,600
+And now we can build up our styles that we return.
+
+205
+00:18:04,690 --> 00:18:10,390
+We're to return to image 1 and image to styling.
+
+206
+00:18:10,600 --> 00:18:18,350
+The first one for image one will just be a transform will pass and scale and we'll do image scale and
+
+207
+00:18:18,350 --> 00:18:23,940
+then image to where does your transform and two different transforms scale.
+
+208
+00:18:24,050 --> 00:18:33,600
+We have an image scale already which would be the exact same and then rotate image to rotate.
+
+209
+00:18:33,690 --> 00:18:39,830
+And so we're good to go for our screen styles now that we have that we can go apply them so we're going
+
+210
+00:18:39,830 --> 00:18:48,590
+to do a screen three styles will go down to our third screen which is right here and we'll pass in to
+
+211
+00:18:48,590 --> 00:18:56,850
+our first image which is our stationary one screen three Stiles image one for image to screen to style
+
+212
+00:18:56,870 --> 00:18:58,920
+the image too.
+
+213
+00:18:58,970 --> 00:19:02,120
+So will refresh this and take a look at our animations.
+
+214
+00:19:02,120 --> 00:19:05,390
+The first one we can see is translate X moving away.
+
+215
+00:19:06,090 --> 00:19:13,600
+And at the same time the screen to image to you is moving up and fading in and then we'll hit that input
+
+216
+00:19:13,600 --> 00:19:18,140
+range as we move away which will fade it out and up.
+
+217
+00:19:18,340 --> 00:19:24,600
+And as we move in we can see our scales happening that rotates happening and now we're completely scaled
+
+218
+00:19:24,600 --> 00:19:25,610
+in.
+
+219
+00:19:25,780 --> 00:19:32,290
+And then when we move over to potentially the fourth screen we can see that we have to find our fourth
+
+220
+00:19:32,290 --> 00:19:34,580
+screen and interpolate input range.
+
+221
+00:19:34,600 --> 00:19:35,890
+But we're not doing anything.
+
+222
+00:19:35,980 --> 00:19:38,340
+And that balance is just taking effect.
+
+223
+00:19:39,290 --> 00:19:45,950
+One thing I want to point out with the endings so screen 1 and screen 3 because we're using extrapolate
+
+224
+00:19:45,950 --> 00:19:53,820
+clamp and defining additional ranges then these won't continue using the default which extrapolates
+
+225
+00:19:53,940 --> 00:19:55,890
+which is for extrapolate is extend.
+
+226
+00:19:56,000 --> 00:20:04,550
+But if we remove this and this and then remove our our third parameter here and remove this because
+
+227
+00:20:04,730 --> 00:20:12,630
+the input ranges in output ranges need to be exactly the same now that we've defined this with the default
+
+228
+00:20:12,660 --> 00:20:21,850
+of extend we can scroll over to screen 2 and instead of defining the third operation book has continued
+
+229
+00:20:21,850 --> 00:20:23,620
+to scale larger here.
+
+230
+00:20:23,830 --> 00:20:25,820
+And then this will continue to rotate.
+
+231
+00:20:25,830 --> 00:20:29,410
+We can prove that here as you can see it scales up and rotates.
+
+232
+00:20:29,410 --> 00:20:37,890
+So unless you want the default to happen you'll need to find that last parameter in our input range.
+
+233
+00:20:38,740 --> 00:20:41,170
+Otherwise you'll get this.
+
+234
+00:20:41,200 --> 00:20:43,180
+And that may not be ideal for you.
+

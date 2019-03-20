@@ -1,0 +1,85 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>031 Event Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>The <code>Animated.event</code> is a utility method to automatically set a value on an <code>Animated.Value</code> given an array/keys to traverse.
+Typically this would be used with the <code>onScroll</code> or <code>onPanResponderMove</code>. It receives an array of instructions. <code>Animated.event</code> returns a function, when the function is called the arguments it is called with are applied to the instructions in the array you provided. Once those instructions are traversed when ever the function is called it just does a <code>setValue</code> with the provided value on to the <code>Animated.Value</code>.</p>
+
+<p>The typical callback signature of React is <code>event</code> first, then additional properties like <code>gestureState</code> for <code>PanResponder</code>s. On the event <code>nativeEvent</code> contains all the content you need.</p>
+
+
+
+
+
+<p>Because a function would be called with <code>(event, gestureState) =&gt; {}</code>, the instructions to get data from <code>event</code> would need to be placed into the first array spot in <code>Animated.event</code></p>
+
+
+
+
+
+<p>In the case of an <code>onScroll</code> from a <code>ScrollView</code> you need to provide a few levels of instructions.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;Animated.event([
+{
+  nativeEvent: {
+    contentOffset: {
+      y: this._animation
+    }
+  }
+}
+])
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>If you don't need to reference anything off an event simply pass in <code>null</code> so that the argument call signature matches the array of instructions.</p>
+
+
+
+
+
+<p>In the case of a <code>PanResponder</code> you would skip the <code>event</code> piece with <code>null</code> and only provide instructions to automatically set animated values from <code>gestureState</code></p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;Animated.event([
+  null,
+  {
+    dx: this._animation.x,
+    dy: this._animation.y
+  }
+])
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p><a href="https://snack.expo.io/Hk6XtbjVW" rel="nofollow">Live Demo</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

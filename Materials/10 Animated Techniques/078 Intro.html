@@ -1,0 +1,38 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>078 Intro</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>start Callback</p>
+
+<p>There is not necessarily a technique here, just a general pointer. When calling <code>start</code> to start an animation it takes a callback. That callback will receive an object with either <code>{ finished: true }</code> or <code>{ finished: false }</code> depending on whether or not the animation was completed, or interrupted. This is essential for developing solid animations.</p>
+
+
+
+<p>Position with Layout, Offset Animation Start</p>
+
+
+
+<p>Most animations should use transforms so that animations stay performant. That means we can use our normal layout properties and position our items where we want them to end up. This means that we can use <code>interpolate</code> or set our default animated values to an offset to start. Then just animate to <code>0</code> and the element will animate to the correct location.</p>
+
+
+
+
+
+<p>This is how many animations are done, and especially when applying to animation styles like shared elements.</p>
+
+
+
+
+
+<p>This can be observed in our staggered form fields tutorial, or shared elements tutorial.</p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

@@ -1,0 +1,84 @@
+1
+00:00:00,420 --> 00:00:06,660
+It common pattern on mobile is a shared element and what is shared elmet means is we have one particular
+
+2
+00:00:06,660 --> 00:00:14,100
+view with an image and when we do some sort of action that element will transition and appear as if
+
+3
+00:00:14,100 --> 00:00:16,680
+it's in the other view as well.
+
+4
+00:00:16,680 --> 00:00:20,030
+Reac native doesn't support reparenting or anything like that.
+
+5
+00:00:20,160 --> 00:00:25,740
+So we have to simulate exactly what's happening.
+
+6
+00:00:25,940 --> 00:00:29,210
+I'll go into the actual technical details in Tauriel.
+
+7
+00:00:29,240 --> 00:00:34,950
+However let's analyze this animation from a non re-act standpoint.
+
+8
+00:00:35,030 --> 00:00:43,750
+First we have a photo grid and when we select a photo let's focus on the photo to start you can see
+
+9
+00:00:43,750 --> 00:00:50,580
+that this actual photo seemingly grows to meet some sort of dimensions appear so free press on it.
+
+10
+00:00:51,890 --> 00:00:59,300
+You can see that it will expand and grow and that there is a white background like like it has basically
+
+11
+00:00:59,300 --> 00:01:04,670
+pulled right up from inside this scroll scrollable container to the top of the screen.
+
+12
+00:01:06,530 --> 00:01:08,480
+Then let's focus on the text.
+
+13
+00:01:08,480 --> 00:01:14,780
+So when we open this there is the bottom text and it seems like it fades in and slides up and back.
+
+14
+00:01:14,900 --> 00:01:22,810
+So if we select this and if we close this we can watch it so it fades and slides down and then fades
+
+15
+00:01:22,870 --> 00:01:26,930
+in and slides up and there seems to be a slight spring up here as well.
+
+16
+00:01:28,630 --> 00:01:34,020
+You see little bounce when analyzing these kind of animations.
+
+17
+00:01:34,020 --> 00:01:40,620
+There may be some significant steps to kind of translate that to a re-act native or re-act slash animated
+
+18
+00:01:40,620 --> 00:01:41,690
+concept.
+
+19
+00:01:41,910 --> 00:01:51,270
+So we do have to pull apart exactly what's happening and then recreate that interaction using what sort
+
+20
+00:01:51,270 --> 00:01:55,120
+of mechanisms that we have and that's animated that set state.
+
+21
+00:01:55,230 --> 00:02:01,620
+And that's series of other sort of tech techniques that we've talked about to kind of pull this off.
+

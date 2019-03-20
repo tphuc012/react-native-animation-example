@@ -1,0 +1,211 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>071 Using d3-interpolate with Animated Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Lets recreate an animation that we can typically use Animated for but do the interpolating ourselves using <code>d3-interpolate</code>.</p>
+
+<p>We need to <code>npm install d3-interpolate</code> first. Or just execute an <code>npm install</code> as it should already be in our <code>package.json</code>. We'll pull in 2 different interpolators. We'll bring in <code>interpolateNumber</code> and <code>interpolateRgb</code>.</p>
+
+
+
+
+
+<p>When we press our button we will animation our <code>this.state.animation</code> to <code>1</code>. However we haven't hooked it up to anything, or any styling.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;import React, { Component } from "react";
+import { AppRegistry, StyleSheet, Text, View, Animated, TouchableWithoutFeedback } from "react-native";
+
+import { interpolateNumber, interpolateRgb } from "d3-interpolate";
+
+export default class animations extends Component {
+  state = {
+    animation: new Animated.Value(0)
+  };
+  handlePress = () =&gt; {
+    Animated.timing(this.state.animation, {
+      toValue: 1,
+      duration: 500,
+    }).start();
+  }
+  render() {
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;TouchableWithoutFeedback onPress={this.handlePress}&gt;
+          &lt;View style={styles.box} ref={view =&gt; this._view = view} /&gt;
+        &lt;/TouchableWithoutFeedback&gt;
+      &lt;/View&gt;
+    );
+
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  box: {
+    width: 50,
+    height: 50,
+    backgroundColor: "tomato",
+  }
+});
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Rather than hooking up our normal styling and using an <code>Animated.View</code> we setup a listener on our animated value.</p>
+
+
+
+
+
+<p>We first need to craft our interpolations which we do very similar to <code>interpolate</code> in animated. The only difference here is that <code>inputRange</code> is always assumed to be <code>[0, 1]</code>.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;    const positionInterpolate = interpolateNumber(0, 200);
+    const colorInterpolate = interpolateRgb("rgb(255,99,71)", "rgb(99,71,255)");
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Then we attach our listener.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt; this.state.animation.addListener(({value}) =&gt; {
+      const position = positionInterpolate(value);
+      const color = colorInterpolate(value);
+ });
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>And when our animation is triggered our callback gets called with an object with a key called <code>value</code> that has the value. Then we can call our interpolators to get the values.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt; this.state.animation.addListener(({value}) =&gt; {
+      const position = positionInterpolate(value);
+      const color = colorInterpolate(value);
+ });
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Then finally it's a matter of calling <code>setNativeProps</code> and updating our style accordingly.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;      const style = [
+        styles.box,
+        {
+          backgroundColor: color,
+          transform: [
+            {translateY: position}
+          ]
+        }
+      ];
+      this._view.setNativeProps({ style });
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Here is what the complete code would look like all put together.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;componentWillMount() {
+    const positionInterpolate = interpolateNumber(0, 200);
+    const colorInterpolate = interpolateRgb("rgb(255,99,71)", "rgb(99,71,255)");
+
+    this.state.animation.addListener(({value}) =&gt; {
+      const position = positionInterpolate(value);
+      const color = colorInterpolate(value);
+
+      const style = [
+        styles.box,
+        {
+          backgroundColor: color,
+          transform: [
+            {translateY: position}
+          ]
+        }
+      ];
+      this._view.setNativeProps({ style });
+    });
+  }
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p><img alt="" src="https://images.codedaily.io/animations/d3Interpolate.gif"></p>
+
+
+
+
+
+<p><a href="https://gitlab.com/codedaily/reactnativeanimations/tree/d3Interpolate" rel="nofollow">Code</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

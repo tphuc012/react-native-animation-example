@@ -1,0 +1,94 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>048 Sequence Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>This is used to run a set of animations one after the other. Once an animation is finished the next one is run. So as we see here we run first a color animation, then we scale. Our <code>start</code> callback won't be run until they both finish, so in <code>800</code> milliseconds.</p>
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;    Animated.sequence([
+      Animated.timing(this.state.colorAnimation, {
+        toValue: 1,
+        duration: 500
+      }),
+      Animated.timing(this.state.scaleAnimation, {
+        toValue: 2,
+        duration: 300
+      })
+    ]).start();
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p><img alt="" src="https://codedaily.now.sh/animations/sequence.gif"></p>
+
+
+
+
+
+
+
+<p>You can additionally animate the same animated values inside of sequences.</p>
+
+
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;Animated.sequence([
+  Animated.timing(this.state.colorAnimation, {
+    toValue: 1,
+    duration: 500
+  }),
+  Animated.timing(this.state.colorAnimation, {
+    toValue: 0,
+    duration: 500
+  }),
+  Animated.timing(this.state.scaleAnimation, {
+    toValue: 2,
+    duration: 300
+  })
+]).start();
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p><img alt="" src="https://codedaily.now.sh/animations/sequenceSameValue.gif"></p>
+
+
+
+
+
+
+
+<p><a href="https://snack.expo.io/BkDwm-j4b" rel="nofollow">Live Demo</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

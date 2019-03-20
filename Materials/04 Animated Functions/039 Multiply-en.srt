@@ -1,0 +1,56 @@
+1
+00:00:01,180 --> 00:00:07,000
+Animated timing is a nother math function that allows us to nest as much as we want and create formulas
+
+2
+00:00:07,060 --> 00:00:08,200
+if we desired.
+
+3
+00:00:08,210 --> 00:00:14,530
+However we're just going to show how to use it rather quickly and we'll say conc random value equals
+
+4
+00:00:14,590 --> 00:00:26,430
+six and then we will create our new animation and use our animated multiply pass and this state animation
+
+5
+00:00:27,190 --> 00:00:30,870
+and then our random value.
+
+6
+00:00:30,940 --> 00:00:38,170
+Now we'll go replace or this animation with our new animation and we save this we see that nothing happened
+
+7
+00:00:38,170 --> 00:00:41,720
+because 6 is multiplying by default which is zero.
+
+8
+00:00:41,950 --> 00:00:48,700
+However whenever we animate this when we press on it it'll multiply by this value that we've given it
+
+9
+00:00:49,030 --> 00:00:49,480
+times.
+
+10
+00:00:49,480 --> 00:00:52,990
+Each of these steps as it's animating from 0 to 50.
+
+11
+00:00:52,990 --> 00:00:57,270
+So that means that we'll go to 300 rather than just the 50.
+
+12
+00:00:57,490 --> 00:01:02,920
+So we can say we will press on this and watch it go to 300 and then it will snap back.
+
+13
+00:01:03,030 --> 00:01:07,690
+And then once again we can replace this with new animated value.
+
+14
+00:01:09,160 --> 00:01:11,390
+Save that and the same effect will happen.
+

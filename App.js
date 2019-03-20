@@ -28,11 +28,6 @@ import RotationNewScreen from './src/23-rotation/RotationNewScreen';
 import ExtrapolateScreen from './src/24-extrapolate/ExtrapolateScreen';
 import VideoScreen from './src/25-video/VideoScreen';
 import CreateAnimatedComponentsScreen from './src/27- create animated component/CreateAnimatedComponentsScreen';
-import SetNativePropsScreen from './src/28 - set native props/SetNativePropsScreen';
-import InterpolateD3 from './src/29-d3-interpolate/InterpolateD3';
-import InterpolatePathSvg from './src/30 - d3-interpolate path simple svg/InterpolatePathSvg';
-import ArtMorphTweenComplexSvg from './src/31-art,morph,tween complex svg paths/ArtMorphTweenComplexSvg';
-import FubberAndAnimatedForBetterSvg from './src/32-fubber and animated for better svg/FubberAndAnimatedForBetterSvg';
 import Cliff99 from './src/33- 99 cliff/Cliff99';
 import PointerEventsScreen from './src/35- pointer events/PointerEventsScreen';
 import FourConnerScreen from './src/37 - 4 conner/FourConnerScreen';
@@ -152,26 +147,6 @@ const AppNavigator = createAppContainer(
       CreateAnimatedComponentsScreen: {
         screen: CreateAnimatedComponentsScreen,
         navigationOptions: { title: 'CreateAnimatedComponentsScreen' }
-      },
-      SetNativePropsScreen: {
-        screen: SetNativePropsScreen,
-        navigationOptions: { title: 'SetNativePropsScreen' }
-      },
-      InterpolateD3: {
-        screen: InterpolateD3,
-        navigationOptions: { title: 'InterpolateD3' }
-      },
-      InterpolatePathSvg: {
-        screen: InterpolatePathSvg,
-        navigationOptions: { title: 'InterpolatePathSvg' }
-      },
-      ArtMorphTweenComplexSvg: {
-        screen: ArtMorphTweenComplexSvg,
-        navigationOptions: { title: 'ArtMorphTweenComplexSvg' }
-      },
-      FubberAndAnimatedForBetterSvg: {
-        screen: FubberAndAnimatedForBetterSvg,
-        navigationOptions: { title: 'FubberAndAnimatedForBetterSvg' }
       },
       Cliff99: {
         screen: Cliff99,

@@ -1,0 +1,308 @@
+1
+00:00:00,690 --> 00:00:04,860
+Sometimes when using animated We want an animation to take immediate effect.
+
+2
+00:00:04,890 --> 00:00:10,830
+However it's inside of an interpolation and not necessarily capable of using set value in order to do
+
+3
+00:00:10,830 --> 00:00:11,040
+this.
+
+4
+00:00:11,040 --> 00:00:17,360
+We use a point ninety nine cliff but we have set up here is a box that will drag when it stays on this
+
+5
+00:00:17,360 --> 00:00:17,750
+site.
+
+6
+00:00:17,780 --> 00:00:24,380
+It will stay a particular color and when it goes to this side it will turn red and flip over first thing
+
+7
+00:00:24,380 --> 00:00:24,970
+we need to do.
+
+8
+00:00:25,000 --> 00:00:29,350
+Set up an animated value x y that we can store our drag position in.
+
+9
+00:00:29,360 --> 00:00:37,970
+So we set up some animation onstage an animated value X-Y And now we need to set up our pan responder
+
+10
+00:00:38,150 --> 00:00:40,710
+and we can do that in component will mount.
+
+11
+00:00:40,800 --> 00:00:50,930
+So just sign this dot underscore Panne responder and I have a helper Sculpin create this will initialize
+
+12
+00:00:51,020 --> 00:00:52,090
+a responder.
+
+13
+00:00:52,250 --> 00:00:59,660
+And here because we want to preserve our drag location we'll say this state animation but extract offset
+
+14
+00:01:00,320 --> 00:01:06,270
+that way to move our delta on our animated value into our offset so that next time it will repair or
+
+15
+00:01:06,270 --> 00:01:13,140
+move to store the new Delta we will need to do anything under these so we can move that and then we'll
+
+16
+00:01:13,150 --> 00:01:19,600
+use animated events and we will pass and no because we don't need anything off the event.
+
+17
+00:01:19,730 --> 00:01:27,520
+We just need stuff off of our state which is a second pass DX into this state animation X and our D-y
+
+18
+00:01:27,530 --> 00:01:29,880
+into this state animation.
+
+19
+00:01:30,050 --> 00:01:39,230
+Why now that we have our panel responder already for movement we can go ahead and first spread our panhandlers
+
+20
+00:01:39,270 --> 00:01:40,830
+on to our enemy to view.
+
+21
+00:01:40,850 --> 00:01:46,750
+So we'll see what the spread this Duckpin responder and pan handlers.
+
+22
+00:01:46,940 --> 00:01:50,360
+Not just because you spread the sand does not mean that we're ready to actually drag it.
+
+23
+00:01:50,360 --> 00:01:58,100
+We need to do it translate translate translate translate wise with say Konst animated styles or transform
+
+24
+00:02:00,570 --> 00:02:09,180
+and the animated x value x y has a helper function so we'll say dot dot state animation done get translate
+
+25
+00:02:09,520 --> 00:02:10,490
+transform.
+
+26
+00:02:10,680 --> 00:02:14,560
+This would turn a two objects inside of an array.
+
+27
+00:02:14,580 --> 00:02:19,500
+So we spread them into a new array because we'll apply some other transform player and I just have to
+
+28
+00:02:19,490 --> 00:02:21,690
+translate X and translate y for us.
+
+29
+00:02:21,690 --> 00:02:27,190
+And now that we have our animated styles already we can apply them to our animated view.
+
+30
+00:02:27,360 --> 00:02:32,620
+And if we refresh we can drag our box around.
+
+31
+00:02:32,700 --> 00:02:38,240
+Now as we drag this box around we have half of the height here in half the height here.
+
+32
+00:02:38,280 --> 00:02:44,370
+So we're going to get the height of the window with our dimensions get
+
+33
+00:02:47,940 --> 00:02:52,770
+and that way we can craft an input range that will be able to calculate the exact spot that we need
+
+34
+00:02:52,770 --> 00:02:58,840
+to do our point ninety nine cliff and because our input range will be used for both the background and
+
+35
+00:02:58,840 --> 00:03:04,350
+the scale interpellation we can just say Konst input range and get array here.
+
+36
+00:03:04,810 --> 00:03:13,180
+And the idea behind the point anyway cliff is that you define a value which is our start and then define
+
+37
+00:03:13,270 --> 00:03:18,130
+a second value right before the other value needs to take effect.
+
+38
+00:03:18,130 --> 00:03:28,290
+So in our case that's going to be the height divided by two minus 50 point zero one and the fifty point
+
+39
+00:03:28,290 --> 00:03:36,690
+zero one comes from this box being 50 by 50 and then we'll finish this off a high divided by two minus
+
+40
+00:03:36,990 --> 00:03:38,100
+50.
+
+41
+00:03:38,250 --> 00:03:45,570
+That way this sits at a point nine nine and then immediately toggles over to the next level.
+
+42
+00:03:45,570 --> 00:03:55,510
+So if this was say two hundred and fifty this would sit at one ninety nine point nine nine and then
+
+43
+00:03:55,510 --> 00:04:00,080
+this would then say we need to kick off a new input range at 200.
+
+44
+00:04:00,510 --> 00:04:03,670
+Well then finishes off with height.
+
+45
+00:04:03,750 --> 00:04:09,360
+So now that we have our input range set up we can actually craft our interpretations so essay contest
+
+46
+00:04:09,900 --> 00:04:16,830
+background color inter-relate and we'll trigger that off of that state animation.
+
+47
+00:04:16,960 --> 00:04:22,310
+Why inter-relate will pass in our input range here.
+
+48
+00:04:22,630 --> 00:04:29,320
+And then the other key part of the point ninety nine cliff is having an output range that is either
+
+49
+00:04:29,650 --> 00:04:36,800
+is the same here if you want the animation is to be the same or just defining something that will immediately
+
+50
+00:04:36,800 --> 00:04:37,910
+take effect on the other side.
+
+51
+00:04:37,910 --> 00:04:47,130
+In our case we want to have the same color when it's from 0 which is up here to half the height which
+
+52
+00:04:47,130 --> 00:04:48,060
+is right here.
+
+53
+00:04:48,390 --> 00:04:54,470
+And then as soon as it hits this cliff it will flip over to a pure red color.
+
+54
+00:04:54,500 --> 00:05:00,600
+So now we can take this background color and interpolate and pass it into our animated styles.
+
+55
+00:05:01,670 --> 00:05:08,570
+So if we refresh back here we now have a blue purple box that you can drag and as we drag as soon as
+
+56
+00:05:08,570 --> 00:05:13,410
+we hit our point any cliff we can see that it turns red immediately.
+
+57
+00:05:13,420 --> 00:05:16,020
+There is no animation that takes effect.
+
+58
+00:05:16,260 --> 00:05:18,320
+It flips to red.
+
+59
+00:05:18,320 --> 00:05:24,640
+Now we'll add one more interpellation will do a flip interplay so say conc flip and interpolate.
+
+60
+00:05:24,650 --> 00:05:27,100
+So you could do this state animation.
+
+61
+00:05:27,110 --> 00:05:36,000
+Why and interpolate passenger input range and then our output range will be one and one because this
+
+62
+00:05:36,000 --> 00:05:41,520
+will go into scale and we want it to flip and then negative one negative one which will flip it over
+
+63
+00:05:41,610 --> 00:05:42,780
+a reflection point.
+
+64
+00:05:42,990 --> 00:05:45,210
+So pass that in here to our transform.
+
+65
+00:05:45,340 --> 00:05:54,750
+A scale here with our Phlip interpret and if we refresh grab our box and drag as soon as we hit this
+
+66
+00:05:54,750 --> 00:06:00,500
+line you'll see that our box turns red and flips over.
+
+67
+00:06:00,510 --> 00:06:04,050
+Now if we don't have an immediate point nine nine cliff.
+
+68
+00:06:04,230 --> 00:06:14,490
+So for example if we were to rather than have in minus 50 here and just have a point 199 roughly point
+
+69
+00:06:14,500 --> 00:06:21,330
+ninety nine to two hundred and fifty if those were the actual numbers then a gradual animation will
+
+70
+00:06:21,330 --> 00:06:21,690
+happen.
+
+71
+00:06:21,690 --> 00:06:23,060
+And that's not what we want.
+
+72
+00:06:23,070 --> 00:06:27,920
+So if we refresh this this will now be fifty point zero or 1.
+
+73
+00:06:27,930 --> 00:06:33,350
+So there's a point there and unclear but there's not an immediate point zero one more.
+
+74
+00:06:33,350 --> 00:06:37,920
+On the other side and this will then actually cause an interpellation to happen.
+
+75
+00:06:37,920 --> 00:06:45,450
+So as we get closer and closer you can see that as soon as you get within 50 years the box touches it
+
+76
+00:06:45,450 --> 00:06:48,580
+will shrink down and then grow on the other side.
+
+77
+00:06:50,370 --> 00:06:55,700
+But once we add back our cliff our animations will take immediate effects.
+

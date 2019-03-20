@@ -1,0 +1,280 @@
+1
+00:00:00,780 --> 00:00:05,940
+Let's take a look at the current state of rap you have a constructor where we set up this state of hearts
+
+2
+00:00:05,940 --> 00:00:07,820
+with just an array.
+
+3
+00:00:07,970 --> 00:00:10,940
+We have a handle at heart function.
+
+4
+00:00:11,020 --> 00:00:16,900
+We have a touchable without feedback that call that function and we have a view where we can use the
+
+5
+00:00:16,950 --> 00:00:19,130
+stylesheet absolute fill which will do a.
+
+6
+00:00:19,180 --> 00:00:23,000
+Absolute position of left top right and bottom of zero.
+
+7
+00:00:23,020 --> 00:00:27,670
+So it covers the entire screen and then we have a heart.
+
+8
+00:00:27,700 --> 00:00:34,690
+This heart consists of a rapping view with two heart shapes and the heart is going to be 50 by 50 and
+
+9
+00:00:34,690 --> 00:00:42,130
+the heart shape will be 30 by 45 and the left heart is just a piece that has rotated negative 45.
+
+10
+00:00:42,130 --> 00:00:45,960
+And another piece that is rotated 45 degrees.
+
+11
+00:00:46,120 --> 00:00:48,030
+We're going to need the current dimensions of the screen.
+
+12
+00:00:48,100 --> 00:00:58,970
+We can get that same concert with height which will destructuring from the dimensions get window call.
+
+13
+00:00:59,040 --> 00:01:05,470
+Now down in our handle at heart said Konst animation is equal to a new animated Valin which was set
+
+14
+00:01:05,470 --> 00:01:06,760
+to zero.
+
+15
+00:01:06,760 --> 00:01:13,000
+This will create a new animation every time we want to and add a new heart next will call this that
+
+16
+00:01:13,030 --> 00:01:18,820
+sets date and because we'll be referencing state and we want to make sure that all of the states have
+
+17
+00:01:18,820 --> 00:01:24,250
+flushed through we'll pass a function into our state which will receive the state at the time that we
+
+18
+00:01:24,250 --> 00:01:35,820
+need it will then return a new object of hearts with our state hearts in it as well as an animation
+
+19
+00:01:35,820 --> 00:01:42,600
+that we just created and the start which will be a starting position along the bottom and we'll just
+
+20
+00:01:42,600 --> 00:01:49,840
+say get random inte 100 with minus 100.
+
+21
+00:01:49,860 --> 00:01:56,780
+Finally we need to start our animation so we'll pass in a second function here which will act as a component.
+
+22
+00:01:56,810 --> 00:02:05,130
+Did update we'll then get our animated timing and say animation which is the animation for this particular
+
+23
+00:02:05,400 --> 00:02:16,030
+heart that we just created so to value our height and then we'll say duration of 3000 and then we'll
+
+24
+00:02:16,030 --> 00:02:18,740
+call start on our animation.
+
+25
+00:02:18,760 --> 00:02:24,190
+What this will do is take our animation which starts at zero which is an asset and then animate it to
+
+26
+00:02:24,190 --> 00:02:26,750
+a value of the height of the screen.
+
+27
+00:02:26,750 --> 00:02:33,310
+So from the bottom to the very top now that we have our animations being added to an array when we press
+
+28
+00:02:33,310 --> 00:02:40,120
+stuff and started we don't need to render them on the screen so we'll create this state map the hart's
+
+29
+00:02:40,780 --> 00:02:48,550
+map which will take a function and we will structure animation and our starting position.
+
+30
+00:02:48,580 --> 00:02:51,460
+And we'll also get the index from here.
+
+31
+00:02:51,660 --> 00:02:55,860
+We return a heart just at the key of our index
+
+32
+00:02:59,750 --> 00:03:03,120
+the heart floating will consist of a series of animations.
+
+33
+00:03:03,140 --> 00:03:11,190
+The first one is a position animation so say conc position interpolate is equal to the animation and
+
+34
+00:03:11,240 --> 00:03:14,540
+one chirpily on it.
+
+35
+00:03:14,660 --> 00:03:24,780
+And so the input range is starting at zero and going to the height and we'll flip that around and say
+
+36
+00:03:24,810 --> 00:03:26,860
+height minus 50.
+
+37
+00:03:27,180 --> 00:03:34,800
+So it will start 50 pixels because from the bottom up because our heart is 50 pixels high and it will
+
+38
+00:03:34,800 --> 00:03:35,710
+go to zero.
+
+39
+00:03:36,880 --> 00:03:39,380
+We'll then go set up our style.
+
+40
+00:03:39,380 --> 00:03:50,870
+So we'll get conc heart style equal to transform and here will say translate Y and put in our position
+
+41
+00:03:51,370 --> 00:03:55,850
+and interpolate our second animation will be opacity.
+
+42
+00:03:55,880 --> 00:04:06,860
+So say conc opacity and chirpily is equal to animation and chirpily input range will be 0 to our height
+
+43
+00:04:07,010 --> 00:04:13,400
+minus 200 and our output range will be 1 to zero.
+
+44
+00:04:13,550 --> 00:04:19,530
+This will allow our opacity to start at 1 and as it goes up it will fade out to zero.
+
+45
+00:04:19,700 --> 00:04:27,640
+So we'll go ahead and add that to our style opacity and we'll set our opacity inter-relate the third
+
+46
+00:04:27,640 --> 00:04:34,320
+will be the scale the scale because our bubble to bubble up very quickly and start from zero and look
+
+47
+00:04:34,320 --> 00:04:36,000
+like it emerged on the scene.
+
+48
+00:04:36,010 --> 00:04:39,240
+So we'll do concert scale interplay.
+
+49
+00:04:39,850 --> 00:04:48,020
+So you can see our animation done Tripoli in the input range will be very quick will be 0 15 and 30
+
+50
+00:04:49,040 --> 00:04:55,400
+output range will be 0 1 point 2 and 1 and we need to set extrapolate
+
+51
+00:04:59,080 --> 00:05:08,180
+what this will do is within 30 movements we'll go from zero the heart grow to 1.2 times its size.
+
+52
+00:05:08,330 --> 00:05:14,270
+And then back to one if we did not have this extrapolate clamp it would just continue on scaling the
+
+53
+00:05:14,270 --> 00:05:21,530
+heart so well then add that to our transforms was a scale scale interplay.
+
+54
+00:05:22,870 --> 00:05:24,920
+The fourth and final will be a little wobble.
+
+55
+00:05:25,060 --> 00:05:32,730
+So first full divide we want six wobbles so say conc divided height is equal to our height divided by
+
+56
+00:05:32,730 --> 00:05:46,170
+6 Lynsay Konst wobble interpolate animation interpolate in our input range will start at zero and go
+
+57
+00:05:46,210 --> 00:05:47,050
+toward a valid.
+
+58
+00:05:47,070 --> 00:05:58,680
+Times 1 divided high temps two times three and a half times for height times.
+
+59
+00:06:02,050 --> 00:06:05,860
+Are divided high time six.
+
+60
+00:06:05,890 --> 00:06:13,270
+That means we need an output range so our output range needs to match the same amount as our input range.
+
+61
+00:06:13,270 --> 00:06:22,760
+So I would say zero and will go 15 to negative 15 and I'll just wobble back and forth between 15 and
+
+62
+00:06:22,760 --> 00:06:25,980
+negative 15.
+
+63
+00:06:26,050 --> 00:06:32,430
+So we have seven here including the 0 1 2 3 4 5 6 7.
+
+64
+00:06:32,800 --> 00:06:36,340
+And then here we will also add and extrapolate clamp
+
+65
+00:06:39,210 --> 00:06:47,970
+with this wobble and interpolate will apply that to the translate ex translate x.
+
+66
+00:06:47,980 --> 00:06:53,680
+Finally we want a random start position so say left and add in our start which is the random number
+
+67
+00:06:53,680 --> 00:06:58,060
+that we created in the beginning and now we can apply our style to our heart.
+
+68
+00:07:00,970 --> 00:07:08,110
+Now if we go and refresher emulator and we tap on the screen you can see it explodes from zero and scales
+
+69
+00:07:08,110 --> 00:07:10,870
+up and then floats and wobbles side to side.
+
+70
+00:07:11,080 --> 00:07:13,300
+We create a whole bunch of hearts just tapping on the screen.
+

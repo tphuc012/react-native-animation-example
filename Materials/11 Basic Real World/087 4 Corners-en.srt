@@ -1,0 +1,304 @@
+1
+00:00:00,700 --> 00:00:04,410
+We're going to show how to animate this box to all four corners.
+
+2
+00:00:04,410 --> 00:00:08,930
+Now we're going to do this dynamically we have to find a width and height.
+
+3
+00:00:08,950 --> 00:00:12,680
+However we won't go explicitly use 150.
+
+4
+00:00:12,690 --> 00:00:19,030
+We'll show how to use on layout to stave off the height and the width and then do a dynamic animation
+
+5
+00:00:19,030 --> 00:00:20,870
+based upon that.
+
+6
+00:00:20,870 --> 00:00:24,560
+So the first thing we're going to do is get the lay out of Our Square.
+
+7
+00:00:24,560 --> 00:00:30,780
+So with touchable without feedback it actually does it clone element of the view below and then propagates
+
+8
+00:00:30,790 --> 00:00:34,090
+the layout from this to this down here.
+
+9
+00:00:34,090 --> 00:00:39,160
+So rather than adding on layout to our enemy to view we're going to lay out here and we're going to
+
+10
+00:00:39,160 --> 00:00:44,050
+pass it into a function that functions it'll be called Saved dimensions.
+
+11
+00:00:44,050 --> 00:00:52,030
+So just to save dimensions here and then go create our function say dimensions and that gets called
+
+12
+00:00:52,030 --> 00:00:57,080
+with an event that events going to have various properties on it.
+
+13
+00:00:57,170 --> 00:01:02,300
+The one that we want to look at is the native event layout which is going to provide with height and
+
+14
+00:01:02,300 --> 00:01:03,290
+the x and y.
+
+15
+00:01:03,290 --> 00:01:05,520
+However we only care about the width and the height.
+
+16
+00:01:05,540 --> 00:01:13,730
+So we're going to do is save all this stuff with the native event layout with and then also the height
+
+17
+00:01:15,080 --> 00:01:20,720
+height because goes native event that layout height.
+
+18
+00:01:20,910 --> 00:01:25,290
+Now on layout should have the dimensions by the time we went to use it.
+
+19
+00:01:25,440 --> 00:01:30,510
+However there may be a case where you need to confirm that you have the measurements and in that case
+
+20
+00:01:30,510 --> 00:01:37,020
+we'd have to get a ref and do a measure call which provides an async callback and it goes and grabs
+
+21
+00:01:37,020 --> 00:01:38,400
+the lay out for us.
+
+22
+00:01:39,300 --> 00:01:40,840
+So now we need something to animate.
+
+23
+00:01:40,920 --> 00:01:48,230
+So we're going to create our state and create an animation and do an animated value x y because we'll
+
+24
+00:01:48,230 --> 00:01:53,230
+be animating both the X and the y of this particular box.
+
+25
+00:01:53,320 --> 00:01:55,910
+And so this will actually animate our box.
+
+26
+00:01:55,910 --> 00:02:04,820
+We need to set up some styling civil say Conte's animated styles sequel to transform and then we'll
+
+27
+00:02:04,830 --> 00:02:11,640
+use this state animation get translate transform which is our help from method to return an array with
+
+28
+00:02:11,640 --> 00:02:16,290
+a translate x in A translate y for the x and y of our animation.
+
+29
+00:02:16,440 --> 00:02:20,130
+Now that we have that created we can go ahead and pass it into our box.
+
+30
+00:02:22,910 --> 00:02:24,700
+And now it's time to actually animate.
+
+31
+00:02:24,830 --> 00:02:30,230
+So in here in our star animation which will be triggered when we press on our box we are going to first
+
+32
+00:02:30,230 --> 00:02:36,620
+get the width and the height of our screen so we can do our calculation of the corners contes width
+
+33
+00:02:37,220 --> 00:02:41,350
+and height will destructuring it from dimensions get window
+
+34
+00:02:46,160 --> 00:02:48,520
+and then we will do an animated sequence.
+
+35
+00:02:48,520 --> 00:02:53,910
+This will be able to allow us to define sequence of the corners that we want to go to.
+
+36
+00:02:53,910 --> 00:03:00,400
+So we're going to set up an animated sequence which takes an array of animations to execute one at a
+
+37
+00:03:00,400 --> 00:03:04,040
+time and then we'll call star on it eventually to trigger that.
+
+38
+00:03:04,360 --> 00:03:09,880
+The first one will set up we'll just two springs so that we don't have to define any particular timing.
+
+39
+00:03:09,940 --> 00:03:15,200
+So the first one will be going from the left corner to the bottom left corner.
+
+40
+00:03:15,490 --> 00:03:18,260
+And so that will only involve a translate wise.
+
+41
+00:03:18,250 --> 00:03:23,160
+That means you only need to animate the animated value x y y property.
+
+42
+00:03:23,350 --> 00:03:32,920
+So we'll set up animated that spring pass in this state that animation Y then for our configuration
+
+43
+00:03:33,010 --> 00:03:35,010
+object will say to value.
+
+44
+00:03:35,590 --> 00:03:42,240
+And this will be the height of the screen minus the dimensions of our box.
+
+45
+00:03:42,280 --> 00:03:47,080
+So we don't necessarily care what our box is or a height of the box will do our height that we pulled
+
+46
+00:03:47,080 --> 00:03:53,030
+from our dimensions window minus this dot underscore height.
+
+47
+00:03:53,050 --> 00:04:00,370
+So even though we only have a single animation we can go and start this and refresh and when we trigger
+
+48
+00:04:00,370 --> 00:04:05,110
+our box you can see that it springs to the corner and or refresh it to restart it.
+
+49
+00:04:05,320 --> 00:04:12,610
+So now that we will then animate to the bottom left corner will animate across the screen and that will
+
+50
+00:04:12,610 --> 00:04:18,940
+be to the bottom right corner and that is in a x translate X movement.
+
+51
+00:04:19,000 --> 00:04:22,570
+So we then need to modify the animation of X..
+
+52
+00:04:22,600 --> 00:04:28,510
+Notice that we don't have to continually animate two different values the values are always saved inside
+
+53
+00:04:28,510 --> 00:04:31,120
+of our animated value x y instance.
+
+54
+00:04:31,120 --> 00:04:36,730
+So we can continually manipulate them as as we see fit and don't have to control the entire information
+
+55
+00:04:37,030 --> 00:04:38,730
+every single time.
+
+56
+00:04:38,860 --> 00:04:43,540
+And by that I mean we don't have to continually animate the Y because we've already animated the Y.
+
+57
+00:04:43,720 --> 00:04:48,460
+So we can do an animated spring pass in this state to animation.
+
+58
+00:04:48,540 --> 00:04:57,410
+X and in this case with you to value which will be the width minus the width of our box this stuff with
+
+59
+00:04:58,930 --> 00:05:06,880
+and give this a refresh trigger it and see that it moved and sprung to the bottom left corner and then
+
+60
+00:05:06,880 --> 00:05:08,370
+moved over to the right corner.
+
+61
+00:05:10,200 --> 00:05:17,250
+And finally once we are to this bottom right corner we need to then move ourselves back to the beginning.
+
+62
+00:05:17,310 --> 00:05:24,110
+So the first thing we need to do is move up to the top right corner and then to the top left corner.
+
+63
+00:05:24,360 --> 00:05:25,980
+Those are both 00.
+
+64
+00:05:25,980 --> 00:05:33,840
+So now that our values are saved off in our animation Ammie at x y and then just animate each of those
+
+65
+00:05:33,840 --> 00:05:40,600
+back to the beginning as we see fit to do an animated spring again passing this Up-State animation y
+
+66
+00:05:41,190 --> 00:05:54,180
+to value of 0 and then do another one animated that spring state animation X passen are to value of
+
+67
+00:05:54,180 --> 00:05:54,580
+0.
+
+68
+00:05:54,610 --> 00:05:59,700
+So that will animate from here to the top right corner and then or X will take us back to the beginning.
+
+69
+00:05:59,700 --> 00:06:06,490
+So let's say this refresh and we can't execute our animation and watch it's spring now spring back to
+
+70
+00:06:06,590 --> 00:06:10,380
+0 and then spring back to zero on the x value as well.
+
+71
+00:06:11,820 --> 00:06:18,630
+This animation is slightly contrived however it shows that whatever it doesn't matter what your your
+
+72
+00:06:18,630 --> 00:06:22,950
+box is or whatever you're in a meeting you can always grab something dynamic.
+
+73
+00:06:22,950 --> 00:06:28,770
+You don't necessarily have to define the width and the height of it to have control over how it moves
+
+74
+00:06:28,860 --> 00:06:33,060
+and how you want to move it across the screen because you can always use on layout and you can always
+
+75
+00:06:33,060 --> 00:06:35,970
+use measure to grab it even if it's a flex or whatever.
+
+76
+00:06:35,970 --> 00:06:41,670
+There will always be values that you can grab and determine how you want to control your animation dynamically.
+

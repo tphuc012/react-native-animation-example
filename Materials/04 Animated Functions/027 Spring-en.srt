@@ -1,0 +1,176 @@
+1
+00:00:00,860 --> 00:00:07,270
+The animated spring function allows you to define an animation that operates off of friction and tension.
+
+2
+00:00:07,280 --> 00:00:11,940
+This is the best way to mimic and animate as if it was physical motion.
+
+3
+00:00:13,470 --> 00:00:20,130
+In our demo we have an animated value set up on stage that defaults to one set up an animated style
+
+4
+00:00:20,160 --> 00:00:25,950
+with a scale transform and we have a touchable without feedback that calls this hand-bill press function
+
+5
+00:00:26,250 --> 00:00:28,460
+and animates a view inside of it.
+
+6
+00:00:29,650 --> 00:00:35,510
+In our Hendel press function we're going to say animated got spring the enemy that last spring matches
+
+7
+00:00:35,540 --> 00:00:41,040
+all of the other animated functions so it will take the this the enemy the very first say this state
+
+8
+00:00:41,300 --> 00:00:49,920
+animation will then pass in a configuration object what we'll do is say to value of two and then call
+
+9
+00:00:49,920 --> 00:00:54,420
+start the enemy does bring has various defaults set up.
+
+10
+00:00:54,420 --> 00:00:58,290
+It has a friction of seven and a tension of 40 as its default.
+
+11
+00:00:58,590 --> 00:01:05,040
+So now when we refresh our simulator and we press on it we can see that it has a slight bounce to a
+
+12
+00:01:05,040 --> 00:01:06,620
+slight spring.
+
+13
+00:01:06,630 --> 00:01:13,550
+However if we want to make this more noticeable we'll change our friction and make it less friction
+
+14
+00:01:13,730 --> 00:01:19,430
+than 7 so we'll pass to you and then we'll say tension of a hundred and sixty.
+
+15
+00:01:19,430 --> 00:01:28,250
+This adds basically energy to the spring so the higher this value the more springy the spring will be.
+
+16
+00:01:28,430 --> 00:01:34,460
+And then this will cause it to slow down so the higher this is than the quicker that the spring will
+
+17
+00:01:35,060 --> 00:01:36,050
+slow down.
+
+18
+00:01:36,050 --> 00:01:38,860
+However with a low friction This means that it will bounce.
+
+19
+00:01:38,870 --> 00:01:44,420
+So if we refresh this and we press on our thing we can see that it's much Springer and bouncier than
+
+20
+00:01:44,420 --> 00:01:45,320
+it was before.
+
+21
+00:01:46,670 --> 00:01:53,030
+In our start function we're just going to call an animated timing to reset our scales so we'll see animated
+
+22
+00:01:53,240 --> 00:02:02,260
+timing this state animation to value of one for the duration of 100 milliseconds and then we'll call
+
+23
+00:02:02,270 --> 00:02:03,700
+start.
+
+24
+00:02:03,930 --> 00:02:07,800
+And this will allow us to see kind of when the animation settles down.
+
+25
+00:02:07,830 --> 00:02:11,730
+So when I press this it'll bounce for a while and then shoot back down to 1.
+
+26
+00:02:11,760 --> 00:02:14,340
+And that's when the animation has completed.
+
+27
+00:02:17,860 --> 00:02:22,600
+So you can see that that took a little bit of time and that's because it's mimicking a real spring.
+
+28
+00:02:22,630 --> 00:02:27,280
+And that animation does take a little bit of time to settle before it is completed.
+
+29
+00:02:28,660 --> 00:02:34,800
+Finally one other thing to note is that spring allows the value to overshoot.
+
+30
+00:02:34,870 --> 00:02:42,280
+And what that means is that even though this is saying to value of two that is only a a spot where it
+
+31
+00:02:42,280 --> 00:02:45,820
+will settle it will be complete when it reaches the valley of two.
+
+32
+00:02:45,820 --> 00:02:52,210
+So this actually will bring the past two and the value will go higher than two.
+
+33
+00:02:52,480 --> 00:02:58,180
+And so if we press on this we can see that it actually went higher than the point that it eventually
+
+34
+00:02:58,180 --> 00:03:01,510
+settled at to show this off.
+
+35
+00:03:01,520 --> 00:03:04,590
+We're going to attach a listener to our animation value.
+
+36
+00:03:04,690 --> 00:03:12,980
+So when we say this state animation and Lisner which will receive a callback which perceives a object
+
+37
+00:03:12,980 --> 00:03:22,370
+with a value key on it I will say cancel the log or value inside of here we're going to say press command
+
+38
+00:03:22,380 --> 00:03:23,040
+d or.
+
+39
+00:03:23,070 --> 00:03:27,220
+Or if you are on a different development environment we're going to bring up the development menu and
+
+40
+00:03:27,220 --> 00:03:29,140
+say debug G-S remotely.
+
+41
+00:03:29,650 --> 00:03:39,040
+This will open up a debugger here and press command shift I or however you open up your console and
+
+42
+00:03:39,040 --> 00:03:47,850
+we will switch back to our simulator when we press when we refresh and then press on arsh bring value.
+
+43
+00:03:48,070 --> 00:03:52,720
+We can see that it takes a little while to settle down again and that there are a significant amount
+
+44
+00:03:52,720 --> 00:03:57,730
+of values especially here that shot over the value that we were going towards.
+

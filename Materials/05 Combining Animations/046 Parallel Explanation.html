@@ -1,0 +1,84 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>046 Parallel Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>The <code>parallel</code> call will take an array of animations and start them all at the same time. A good example of this is when you might have a separate animated value for <code>opacity</code> and a separate animated value for a position of an element. The <code>opacity</code> would be on a strict <code>Animated.timing</code>, but you might want the position to <code>Animated.spring</code> out of the way.</p>
+
+<p>Also if you just have multiple timed animations and you need them to animate at the same time you can do that as well. The <code>start</code> callback won't be called until the last animation is finished. Which would be the <code>scaleAnimation</code> that runs for 500 milliseconds.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  handlePress = () =&gt; {
+    Animated.parallel([
+      Animated.timing(this.state.colorAnimation, {
+        toValue: 1,
+        duration: 500
+      }),
+      Animated.timing(this.state.scaleAnimation, {
+        toValue: 2,
+        duration: 300
+      })
+    ]).start();
+  }
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>This can be used in conjunction with any interpolates like so.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;    const backgroundColorInterpolate = this.state.colorAnimation.interpolate({
+      inputRange: [0, 1],
+      outputRange: ["rgb(255,99,71)", "rgb(99,71,255)"]
+    })
+    const boxStyle = {
+      backgroundColor: backgroundColorInterpolate,
+      transform: [
+        { scale: this.state.scaleAnimation}
+      ]
+    }
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>This would result in this animation.</p>
+
+
+
+
+
+<p><img alt="" src="https://images.codedaily.io/animations/parallel.gif"></p>
+
+
+
+
+
+<p><a href="https://snack.expo.io/Hk70W-iNZ" rel="nofollow">Live Demo</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

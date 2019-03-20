@@ -1,0 +1,152 @@
+1
+00:00:00,500 --> 00:00:06,300
+I'm not going to do any programming in this video but I'm going to show off a pointer events technique.
+
+2
+00:00:06,440 --> 00:00:08,900
+So we have an animated value a toggle.
+
+3
+00:00:08,900 --> 00:00:09,750
+True or false.
+
+4
+00:00:09,770 --> 00:00:13,290
+And then a press on the component instance.
+
+5
+00:00:13,340 --> 00:00:18,590
+Let's look at what happens when we execute our toggle.
+
+6
+00:00:18,740 --> 00:00:20,680
+We have a touchable without feedback.
+
+7
+00:00:20,720 --> 00:00:24,800
+With an animated view inside that is an interpellation.
+
+8
+00:00:24,800 --> 00:00:28,770
+And we just go from a tomato color to a purple ish blue color.
+
+9
+00:00:29,900 --> 00:00:38,220
+And we have a view here with style sheets absolute fill and it's covering this entire square here.
+
+10
+00:00:38,990 --> 00:00:46,230
+Now when we are true in the toggle which we have defaulted to true then this covering view sets pointier
+
+11
+00:00:46,240 --> 00:00:46,990
+events to none.
+
+12
+00:00:46,980 --> 00:00:52,920
+Meaning it will not be able to accept any touches when it's false.
+
+13
+00:00:52,920 --> 00:00:58,040
+We set it to auto meaning it should accept touches when pressed.
+
+14
+00:00:58,050 --> 00:01:03,360
+What that means is that even though it's invisible the stiles that covers just a background color of
+
+15
+00:01:03,360 --> 00:01:07,560
+transparent that it will receive touches.
+
+16
+00:01:07,680 --> 00:01:15,870
+Meaning because it's it's rendered after our button here that it will take up all the touches and nothing
+
+17
+00:01:15,870 --> 00:01:16,950
+can be touched.
+
+18
+00:01:16,950 --> 00:01:20,790
+However when this is none it says ignore all the touches on this.
+
+19
+00:01:20,790 --> 00:01:29,730
+So this allows us to render items next to other items that are covering the same exact space but control
+
+20
+00:01:29,730 --> 00:01:31,700
+which one is being touched.
+
+21
+00:01:31,710 --> 00:01:36,990
+This applies to animations because you can use an opacity on a particular view.
+
+22
+00:01:37,290 --> 00:01:40,680
+That is absolutely positioned and covering another view.
+
+23
+00:01:40,680 --> 00:01:46,440
+And then once the animation is complete we can toggle whether or not presses happen on which on the
+
+24
+00:01:46,440 --> 00:01:47,590
+covering view.
+
+25
+00:01:47,820 --> 00:01:50,700
+So let's take a look at what this effect is like.
+
+26
+00:01:50,730 --> 00:01:56,930
+So we have our toggle here when we press this it will animate.
+
+27
+00:01:57,000 --> 00:01:58,990
+You press this we will disable things.
+
+28
+00:01:59,040 --> 00:02:05,280
+So on our handle press we just simply animate to evaluate 0 0 or 1 depending on whether or not we pressed
+
+29
+00:02:05,280 --> 00:02:06,610
+it last.
+
+30
+00:02:06,630 --> 00:02:09,800
+And so let's refresh and press on this.
+
+31
+00:02:09,840 --> 00:02:13,050
+So at the moment toggle is true and pointer events are none.
+
+32
+00:02:13,500 --> 00:02:18,660
+So we can process as much as we want and kind of animate back and forth and then as soon as we toggle
+
+33
+00:02:18,660 --> 00:02:26,050
+our pointer event so toggle is false we can no longer press on anything to trigger our animation.
+
+34
+00:02:26,190 --> 00:02:30,600
+I will say that this is effectively rendering and rendering.
+
+35
+00:02:30,630 --> 00:02:38,340
+And when you have a lot of unnecessary views in your render that re-act native has to handle that performance
+
+36
+00:02:38,340 --> 00:02:39,990
+could potentially be effective.
+
+37
+00:02:40,020 --> 00:02:47,040
+This is just a slightly easier method to maintain views without having to do a lot of toggling of mounting
+
+38
+00:02:47,070 --> 00:02:50,190
+and unmounting of those animated views.
+

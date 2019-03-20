@@ -1,0 +1,100 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>080 .99 Cliff Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>The .99 cliff is a great way to make animations happen instantly. This allows you to keep your animations declarative without having to use a hack to call <code>setValue</code> to make an animated value jump instantly to the value you desire.</p>
+
+<p>This applies to any interpolation including colors, scale, translates, etc.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;this.state.animation.interpolate({
+  inputRange: [0, .99, 1],
+  outputRange: ["rgb(255,255,255)", "rgb(255,255,255)", "rgb(0,0,0)"]
+})
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>This would cause your color to stay white until the very end and then switch to black.</p>
+
+
+
+
+
+<p>Generally it's a .99 cliff but there are also .01 cliffs. This can be used to trigger the cliff at the beginning of an animation.</p>
+
+
+
+
+
+<p>For example if you wanted a view to be hidden and immediately visible before other animations take place. You would setup your interpolation like so.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;this.state.animation.interpolate({
+  inputRange: [0, .01, 1],
+  outputRange: [0, 0, 1]
+})
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Cliffs</p>
+
+
+
+<p>In general cliffs are a great way to generate a multi part animation. You can keep an from moving, or keep an element hidden, etc until you've completed a portion of a separate animation.</p>
+
+
+
+
+
+<p>In the interpolation below we want our animation to trigger half way through the animation. So we specify our input range at <code>[0, .5]</code> and that maps to our output which we specify as <code>[0,0]</code>. When our animation is progressing from <code>0</code> to <code>.5</code> the interpolation will always output <code>0</code>. Once our animation exceeds <code>.5</code> our output value will now start progressing from <code>0</code> to <code>1</code>.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;this.state.animation.interpolate({
+  inputRange: [0, .5, 1]
+  outputRange: [0, 0, 1]
+})
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p><a href="https://snack.expo.io/ryN1cyvHW" rel="nofollow">Live Demo</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

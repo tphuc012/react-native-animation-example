@@ -1,0 +1,104 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>073 Using d3-interpolate-path and Animated to Animate Simple SVG Paths Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>The <code>d3-interpolate</code> SVG path interpolation requires the DOM in order to parse the path. We don't have access to it since we are in React Native. There is however <code>d3-interpolate-path</code> which operates on strings alone. I do not recommend using this module necessarily as it doesn't work well, but we'll use it to show the same technique we used before but for SVGs.</p>
+
+<p>Here we are using <code>react-native-svg</code> to render SVGs. We have 2 paths, one is a small circle, and the second is a larger circle. We can use the same technique as before and use our listener callback to animate from one path to the next.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;import Svg, { Path } from "react-native-svg";
+import { interpolatePath } from "d3-interpolate-path";
+
+
+const startPath = `M45,50a5,5 0 1,0 10,0a5,5 0 1,0 -10,0`
+const endPath = `M20,50a30,30 0 1,0 60,0a30,30 0 1,0 -60,0`
+
+export default class animations extends Component {
+  state = {
+    animation: new Animated.Value(0),
+  };
+
+  handlePress = () =&gt; {
+    Animated.sequence([
+      Animated.timing(this.state.animation, {
+        toValue: 1,
+        duration: 500,
+      }),
+      Animated.delay(1500),
+      Animated.timing(this.state.animation, {
+        toValue: 0,
+        duration: 500
+      })
+    ]).start();
+  };
+
+  render() {
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;TouchableWithoutFeedback onPress={this.handlePress}&gt;
+          &lt;Svg width={150} height={150}&gt;
+            &lt;Path d={startPath} stroke="black" ref={path =&gt; this._path = path} /&gt;
+          &lt;/Svg&gt;
+        &lt;/TouchableWithoutFeedback&gt;
+      &lt;/View&gt;
+    );
+  }
+}
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Just like before we have a listener and we do our path interpolation. The listener will always call us back regardless of which direction the animation is moving. So we have a sequence that will animate forward to <code>1</code>, delay, and then animate backwards. We'll have our path interpolated to a larger circle, and then animate back to it's start.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  componentWillMount() {
+    const pathInterpolate = interpolatePath(startPath, endPath);
+
+    this.state.animation.addListener(({ value }) =&gt; {
+      const path = pathInterpolate(value);
+      this._path.setNativeProps({
+        d: path,
+      });
+    });
+  }
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p><img alt="" src="https://images.codedaily.io/animations/d3InterpolatePath.gif"></p>
+
+
+
+
+
+<p><a href="https://gitlab.com/codedaily/reactnativeanimations/tree/svgPathsAndAnimated" rel="nofollow">Code</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

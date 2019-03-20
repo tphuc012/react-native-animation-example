@@ -1,0 +1,200 @@
+1
+00:00:00,510 --> 00:00:04,680
+This is the expanding right button that I saw on your movement.
+
+2
+00:00:04,690 --> 00:00:10,490
+If you check out the dribble by clicking on it here you just click on the image will pull up the dribble.
+
+3
+00:00:10,500 --> 00:00:19,030
+There's actually a demo so you can see the code and the demo for the web version of it and sometimes
+
+4
+00:00:19,030 --> 00:00:19,830
+people provide that.
+
+5
+00:00:19,840 --> 00:00:24,960
+But are going to recreate it in re-acting of using animated rather than CSSA transitions.
+
+6
+00:00:25,800 --> 00:00:28,710
+So let's take a look at first.
+
+7
+00:00:28,770 --> 00:00:31,420
+We have it already built here in animated.
+
+8
+00:00:31,420 --> 00:00:35,910
+But let's take a look at it actually being frame by frame.
+
+9
+00:00:35,910 --> 00:00:41,340
+So I download the Jif and I pop it open and sometimes you had you have to scroll through a lot of just
+
+10
+00:00:41,340 --> 00:00:46,600
+B.S. that isn't necessary to get to where the actual action happens.
+
+11
+00:00:46,620 --> 00:00:50,040
+But first off we start with the right button.
+
+12
+00:00:50,520 --> 00:00:55,020
+And as soon as we click we can see that it basically instantly disappears.
+
+13
+00:00:55,050 --> 00:01:00,350
+So there will likely be either an unmount there or some sort of opacity change.
+
+14
+00:01:00,630 --> 00:01:08,280
+Now stepping through we can see that the bar slowly starts to expand and you can just barely make out
+
+15
+00:01:08,310 --> 00:01:15,390
+the icon so there are going to be a switch some sort of switch between the right button and the icons
+
+16
+00:01:15,900 --> 00:01:21,630
+and this will slowly expand and it looks like these are covering each other but we can kind of take
+
+17
+00:01:21,630 --> 00:01:31,730
+care of that and eventually we will hit full bar expansion and we can see that now there is a bottom
+
+18
+00:01:31,730 --> 00:01:35,240
+there's a bottom that is already coming out so there wasn't here.
+
+19
+00:01:35,670 --> 00:01:41,790
+And then once this bar is fully expanded and the icons are basically fully transparent this starts sliding
+
+20
+00:01:41,790 --> 00:01:42,810
+down.
+
+21
+00:01:42,810 --> 00:01:47,760
+So in your head categorize and just you could even write these down the steps of animations that are
+
+22
+00:01:47,760 --> 00:01:48,140
+happening.
+
+23
+00:01:48,140 --> 00:01:57,360
+So we've gone from a visible word immediately gone to some sort of expansion and this could be either
+
+24
+00:01:57,750 --> 00:02:08,120
+a with or potentially a scale x then more opacity on new content in the potentially previous container
+
+25
+00:02:09,210 --> 00:02:12,340
+and now we have another animation here.
+
+26
+00:02:12,660 --> 00:02:19,350
+And basically it was a two step animation by the way so you can see that this does not start expanding
+
+27
+00:02:19,350 --> 00:02:21,870
+until we already have this bar expanded.
+
+28
+00:02:21,870 --> 00:02:25,960
+So in your head think about interpellation this is could be a reversal animation.
+
+29
+00:02:25,960 --> 00:02:35,160
+So from 0 to 1 and using a using a cliff we could prevent this from happening until this bar had completely
+
+30
+00:02:35,160 --> 00:02:35,970
+expanded.
+
+31
+00:02:36,700 --> 00:02:41,280
+So now we can scroll through these will scroll through frame by frame.
+
+32
+00:02:41,540 --> 00:02:53,000
+If you just scroll up and down and see that this basically by the second frame there was a start writing
+
+33
+00:02:53,000 --> 00:02:53,790
+so we are here.
+
+34
+00:02:53,870 --> 00:02:55,580
+And then we now have an input.
+
+35
+00:02:55,580 --> 00:03:01,600
+This is start writing keep scrolling and then eventually it's completely out.
+
+36
+00:03:01,690 --> 00:03:04,680
+So we don't necessarily need to go too much more into it.
+
+37
+00:03:04,690 --> 00:03:08,290
+We have our buttons kind of completely there.
+
+38
+00:03:08,350 --> 00:03:10,940
+We saw this expand down and then to do the reverse.
+
+39
+00:03:10,960 --> 00:03:16,900
+We would just run our version of animation backwards from one to zero and then we could slide this up
+
+40
+00:03:17,080 --> 00:03:21,860
+and then this would scale towards the middle.
+
+41
+00:03:21,870 --> 00:03:29,040
+Overall though it's important to see the animation frame by frame or to be able to have someone explain
+
+42
+00:03:29,040 --> 00:03:34,860
+it to you and categorize the types of animations because all animations are going to be a series of
+
+43
+00:03:34,860 --> 00:03:41,490
+either a layout change with width and height or it's going to be a transform or an opacity in those
+
+44
+00:03:41,490 --> 00:03:44,280
+transforms you have translates which are movement.
+
+45
+00:03:44,280 --> 00:03:51,090
+So if you see something that is moving position then it's likely to translate if you see something growing
+
+46
+00:03:51,330 --> 00:03:57,270
+then it's either with height modification or a scale x and y modification.
+
+47
+00:03:57,270 --> 00:04:02,250
+And then if you don't see something and then see something and then it's you know an opacity or if it's
+
+48
+00:04:02,520 --> 00:04:04,740
+rotating then it's a rotate.
+
+49
+00:04:04,740 --> 00:04:11,370
+So being able to kind of break down step by step each particular animation it's very helpful to have
+
+50
+00:04:11,370 --> 00:04:12,240
+it frame by frame.
+

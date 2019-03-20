@@ -1,0 +1,64 @@
+1
+00:00:00,520 --> 00:00:06,730
+When dealing with animations and physics there may be times where you want physics to be applied but
+
+2
+00:00:06,760 --> 00:00:08,880
+over a set period of time.
+
+3
+00:00:08,920 --> 00:00:10,930
+So we have a duration of 500.
+
+4
+00:00:10,930 --> 00:00:16,780
+However with spring for example you don't necessarily know the time that it's going to take but with
+
+5
+00:00:16,780 --> 00:00:23,710
+a timing animation combined with easing we know the exact physics that will happen but also the exact
+
+6
+00:00:23,710 --> 00:00:25,630
+duration that will happen.
+
+7
+00:00:25,750 --> 00:00:29,130
+These will all be very specific to your use case.
+
+8
+00:00:29,170 --> 00:00:35,790
+Take a look at what the default animation would be for just doing a translate Y would just move off
+
+9
+00:00:35,790 --> 00:00:36,880
+of the screen.
+
+10
+00:00:37,200 --> 00:00:47,150
+But if we add easing will use easing that back to start it'll move backwards refresh and move backwards
+
+11
+00:00:47,180 --> 00:00:49,260
+and then zoom forwards.
+
+12
+00:00:50,090 --> 00:01:00,820
+We can use bounce refresh and we can see it bounced some of this to 300 instead can move bounce to elastic
+
+13
+00:01:02,670 --> 00:01:10,910
+and it shot past and then came back and then we can also do arbitrary Bezier curves.
+
+14
+00:01:10,940 --> 00:01:16,910
+So these are all going to be very specific to your use case so read about easing the documentation will
+
+15
+00:01:16,910 --> 00:01:22,820
+point you to easing dot net which allows you to craft different evenings and see how they will apply
+
+16
+00:01:22,820 --> 00:01:24,720
+to your timed animation.
+

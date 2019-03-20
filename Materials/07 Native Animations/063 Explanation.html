@@ -1,0 +1,136 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>063 Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p><code>Animated</code> operates on the JavaScript side of React Native and sends new style and updates across the bridge with <code>setNativeProps</code>. This works for most animations but sometimes your animations may not be performing smoothly. This is where the <code>useNativeDriver</code> option comes in.</p>
+
+<p>The main downside is that it is not support on all animations yet. At this time it's support for <code>timing</code> and <code>spring</code> and <code>Animated.event</code> when it is combined with <code>Animated.ScrollView</code>. </p>
+
+
+
+
+
+<p>The reason that it's only supported on a handful of methods is that the entire logic behind Animated needs to be re-implemented on the native side. The values you pass in (duration, tension, friction, etc) get serialized and passed over to the native side. If your <code>Animated.View</code> is given a native driven animation then the native world will use an AnimatedNode.</p>
+
+
+
+
+
+<p>When you call start the animation will tell the native world to start executing the animation. Since the animation is executing on the native side the JavaScript won't be blocked by the animation calculations and also won't have to continually send calculations over the bridge.</p>
+
+
+
+
+
+<p>NOTE: At this time <code>opacity</code> and the various <code>transform</code> properties are supported. More values will be supported as the native portion of Animated is improved.</p>
+
+
+
+
+
+<p>timing</p>
+
+
+
+<p>In order to execute a native animation with timing you would add the <code>useNativeDriver: true</code> to your configuration like so.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;Animated.timing(this._animation, {
+  duration: 500,
+  toValue: 1,
+  useNativeDriver: true
+}).start();
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p><a href="https://gitlab.com/codedaily/reactnativeanimations/tree/timingNative" rel="nofollow">Code</a>
+<a href="https://snack.expo.io/HkJzKV3Sb" rel="nofollow">Live Demo</a></p>
+
+
+
+
+
+<p>spring</p>
+
+
+
+<p>Just like <code>timing</code>, pass in <code>useNativeDriver: true</code>.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;Animated.spring(this._animation, {
+  toValue: 1,
+  useNativeDriver: true
+}).start();
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p><a href="https://gitlab.com/codedaily/reactnativeanimations/tree/springNative" rel="nofollow">Spring</a>
+<a href="https://snack.expo.io/S19BKNnSZ" rel="nofollow">Live Demo</a></p>
+
+
+
+
+
+<p>event</p>
+
+
+
+<p>One thing to note is that we should use a <code>scrollEventThrottle</code> of <code>1</code> here instead of <code>16</code>. Throttling events to 16 ensures that we are running at 60 FPS. However when running natively we shouldn't be dropping frames and want to get notified as frequently as possible so our <code>Animated.Value</code> updates.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;&lt;Animated.ScrollView
+  scrollEventThrottle={1}
+  onScroll={Animated.event([{
+    nativeEvent: {
+      contentOffset: {
+        y: this._animation
+      }
+    }
+  }], { useNativeDriver: true})}
+/&gt;
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p><a href="https://gitlab.com/codedaily/reactnativeanimations/tree/scrollNative" rel="nofollow">Code</a>
+<a href="https://snack.expo.io/ry-oKNnH-" rel="nofollow">Live Demo</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

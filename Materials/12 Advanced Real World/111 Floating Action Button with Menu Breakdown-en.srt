@@ -1,0 +1,48 @@
+1
+00:00:00,120 --> 00:00:05,810
+A popular animation is a floating action button with a menu kind of behind it.
+
+2
+00:00:05,820 --> 00:00:11,640
+In our case we have the Starbucks application and when you press on the button the PE text will pop
+
+3
+00:00:11,640 --> 00:00:16,610
+out as those two buttons will pop out with order and reload text.
+
+4
+00:00:16,620 --> 00:00:21,420
+Take a look at this animation and break it down and you can see that when we press our pay button let's
+
+5
+00:00:21,420 --> 00:00:23,780
+focus on the two icons.
+
+6
+00:00:23,850 --> 00:00:31,470
+First the two other menu items the order and the reload are basically already off set and they scale
+
+7
+00:00:31,500 --> 00:00:34,570
+up from 0 to 1 at a particular point.
+
+8
+00:00:34,890 --> 00:00:42,030
+And then the order reload and pay about halfway through the animation will explode out from kind of
+
+9
+00:00:42,030 --> 00:00:47,910
+inside of the button out towards position left.
+
+10
+00:00:47,970 --> 00:00:50,570
+Finally there is the background.
+
+11
+00:00:50,760 --> 00:00:58,740
+The background is a circle and it expands outwards and covers the entire screen and it's black with
+
+12
+00:00:58,740 --> 00:01:01,650
+some opacity so you can still see the background.
+

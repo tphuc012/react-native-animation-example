@@ -1,0 +1,594 @@
+<html>
+                <head>
+                <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+                <title>110 Animated Color Picker Explanation</title>
+                </head>
+                <body>
+                <div class="container">
+                <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <p class="lead"><p>Intro</p>
+
+<p>This tutorial will focus on constructing an animation piece by piece. When dealing with one view transitioning to another view in the same space it's easier to construct one view without animation. Construct the second view across the top of it. Then figure out the animation to transition one to the other. Focusing on building the views and the animation at the same time just makes things more difficult.</p>
+
+
+
+<p>Setup</p>
+
+
+
+<p>We setup a few things will use. First off we create an <code>AnimatedTextInput</code> and an <code>AnimatedIcon</code> so that we can run animations on both as they aren't provided by default.</p>
+
+
+
+
+
+<p>We'll setup 2 animations. The first will be for the general opening and closing when the user hits the toggle button. The second will be for toggling the input and button visible to adjust the color.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;import React, { Component } from "react";
+import {
+  AppRegistry,
+  StyleSheet,
+  Text,
+  View,
+  Animated,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native";
+
+import Icon from "react-native-vector-icons/Foundation";
+
+const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
+const AnimatedIcon = Animated.createAnimatedComponent(Icon);
+
+export default class animations extends Component {
+  state = {
+    animation: new Animated.Value(0),
+    buttonAnimation: new Animated.Value(0),
+    color: "#000",
+    inputOpen: false,
+  };
+
+  handleToggle = () =&gt; {
+
+  }
+
+  render() {
+
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;TouchableOpacity onPress={this.handleToggle} style={styles.button}&gt;
+          &lt;Text&gt;Toggle Open/Closed&lt;/Text&gt;
+        &lt;/TouchableOpacity&gt;
+      &lt;/View&gt;
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
+
+AppRegistry.registerComponent("animations", () =&gt; animations);
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Add The Color Icon and Wrapping Container</p>
+
+
+
+<p>Now we'll add our wrapping view that's our <code>rowWrap</code> and then our <code>colorBall</code> as well. We'll craft a background color that will just be directly controlled by our state. </p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  const colorStyle = {
+    backgroundColor: this.state.color,
+  };
+
+  render() {
+    return (
+      &lt;View style={styles.container}&gt;
+        &lt;Animated.View style={[styles.rowWrap]}&gt;
+          &lt;TouchableWithoutFeedback onPress={this.toggleInput}&gt;
+            &lt;Animated.View style={[styles.colorBall, colorStyle]} /&gt;
+          &lt;/TouchableWithoutFeedback&gt;
+        &lt;/Animated.View&gt;
+
+        &lt;TouchableOpacity onPress={this.handleToggle} style={styles.button}&gt;
+          &lt;Text&gt;Toggle Open/Closed&lt;/Text&gt;
+        &lt;/TouchableOpacity&gt;
+      &lt;/View&gt;
+    );
+  }
+}
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Our <code>rowWrap</code> just aligns and centers our. We want our items to be laid out in a row and centered in the vertical center and then we do some general styling on the shadow, and some padding. If you want to have a shadow on Android be sure and add an <code>elevation</code> here. </p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;rowWrap: {
+  flexDirection: "row",
+  alignItems: "center",
+  minWidth: "50%",
+  backgroundColor: "#FFF",
+  borderRadius: 20,
+  shadowColor: "#333",
+  shadowOpacity: 0.2,
+  shadowOffset: { x: 2, y: 2 },
+  shadowRadius: 3,
+  paddingVertical: 5,
+  paddingHorizontal: 10,
+},
+colorBall: {
+  width: 15,
+  height: 15,
+  borderRadius: 8,
+},
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Animate it In and Out</p>
+
+
+
+<p>The first animation we need to take care of is to animate the view in and out whenever we press our button. This is a purely animation driven toggle, aka the view is always rendered. You may not want this and in that case you'd want to use <code>setState</code> but we'll focus on it always being rendered.</p>
+
+
+
+
+
+<p>We track whether it's open with <code>this._open</code> and decide whether we need to animate to <code>0</code> or <code>1</code>. This means we'll have heavy interpolation. When you are dealing with animations that are <code>0 &lt;=&gt; 1</code> and are interpolation based makes it very easy for creating reversible animations.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  handleToggle = () =&gt; {
+    const toValue = this._open ? 0 : 1;
+
+    Animated.spring(this.state.animation, {
+      toValue,
+    }).start();
+
+    this._open = !this._open;
+  };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>We setup our interpolation with a few stages. 
+Our <code>scaleY</code> will continue at it's normal pace just going from <code>0</code> to <code>1</code>. However we don't want our <code>scaleX</code> to start happening until half way through the animation. We want it to have some movement and size on the <code>scaleY</code> before it starts it's scale outwards. This means that it will grow faster since it only has half the animation to get from <code>0</code> to <code>1</code>. </p>
+
+
+
+
+
+<p>Only scaling the X will cause an expanding animation from the center.</p>
+
+
+
+
+
+<p>This delayed animation is another technique similar to the .99 cliff technique. If you want an animation to only happen after half the animation is completed then kick in, you can specify 2 outputRanges to be exactly the same next to each other. Then define your inputRange of when you want it to start. Once it hits the last value is when the interpolation will start.</p>
+
+
+
+
+
+<p>Our <code>translateY</code> will be animating the entire time but we just specify that it'll start with an offset of <code>150</code>. Finally we'll pipe our animation directly into <code>opacity</code> and <code>scaleY</code> as we both want our end values to be 1.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;    const scaleXInterpolate = this.state.animation.interpolate({
+      inputRange: [0, 0.5, 1],
+      outputRange: [0, 0, 1],
+    });
+
+    const translateYInterpolate = this.state.animation.interpolate({
+      inputRange: [0, 1],
+      outputRange: [150, 0],
+    });
+
+    const rowStyle = {
+      opacity: this.state.animation,
+      transform: [
+        {
+          translateY: translateYInterpolate,
+        },
+        {
+          scaleX: scaleXInterpolates,
+        },
+        {
+          scaleY: this.state.animation,
+        },
+      ],
+    };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Then we need to apply to our row.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  &lt;Animated.View style={[rowStyle, styles.rowWrap]}&gt;
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Add The Other Buttons</p>
+
+
+
+<p>Because the color picker button is a shared component we will need to create another row view to house the buttons and eventually our input toggle/button. The <code>TouchableOpacity</code> is just so that we have a notification to ourselves that the buttons are indeed touchable. We'll also use the <code>AnimatedIcon</code> we crafted earlier.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;&lt;Animated.View style={[styles.rowWrap]}&gt;
+  &lt;TouchableWithoutFeedback onPress={this.toggleInput}&gt;
+    &lt;Animated.View style={[styles.colorBall, colorStyle]} /&gt;
+  &lt;/TouchableWithoutFeedback&gt;
+
+  &lt;View style={styles.row}&gt;
+    &lt;TouchableOpacity&gt;
+      &lt;AnimatedIcon name="bold" size={30} color="#555" /&gt;
+    &lt;/TouchableOpacity&gt;
+    &lt;TouchableOpacity&gt;
+      &lt;AnimatedIcon name="italic" size={30} color="#555" /&gt;
+    &lt;/TouchableOpacity&gt;
+    &lt;TouchableOpacity&gt;
+      &lt;AnimatedIcon name="align-center" size={30} color="#555" /&gt;
+    &lt;/TouchableOpacity&gt;
+    &lt;TouchableOpacity&gt;
+      &lt;AnimatedIcon name="link" size={30} color="#555" /&gt;
+    &lt;/TouchableOpacity&gt;
+  &lt;/View&gt;
+&lt;/Animated.View&gt;
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>We'll have our row take up the entire row, as well as the entire height with our <code>flex: 1</code>. Then we'll center them, and spread them evenly using our <code>justifyContent: "space-around"</code>.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;row: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "space-around",
+    flexDirection: "row",
+    overflow: "hidden",
+  },
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Add the Input and Button</p>
+
+
+
+<p>Now without worrying about animations we are going to build our input and button over the top of the other buttons. We create an <code>Animated.View</code> and use <code>StyleSheet.absoluteFill</code> to cover the entire row we just created.</p>
+
+
+
+
+
+<p>We'll then use our <code>pointerEvents</code> technique. We'll toggle a piece of state when the animation is completed that will enable our view to be interacted with. Otherwise it won't be able to be interacted with. We Do that on the wrapping view <code>pointerEvents={this.state.inputOpen ? "auto" : "none"}</code></p>
+
+
+
+
+
+<p>We also need to get a ref to our input so we can focus and blur it whenever it's open or closed.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;&lt;Animated.View style={[rowStyle, styles.rowWrap]}&gt;
+  &lt;TouchableWithoutFeedback onPress={this.toggleInput}&gt;
+    &lt;Animated.View style={[styles.colorBall, colorStyle]} /&gt;
+  &lt;/TouchableWithoutFeedback&gt;
+
+  &lt;View style={styles.row}&gt;
+    &lt;TouchableOpacity&gt;
+      &lt;AnimatedIcon name="bold" size={30} color="#555" style={iconStyle} /&gt;
+    &lt;/TouchableOpacity&gt;
+    &lt;TouchableOpacity&gt;
+      &lt;AnimatedIcon name="italic" size={30} color="#555" style={iconStyle} /&gt;
+    &lt;/TouchableOpacity&gt;
+    &lt;TouchableOpacity&gt;
+      &lt;AnimatedIcon name="align-center" size={30} color="#555" style={iconStyle} /&gt;
+    &lt;/TouchableOpacity&gt;
+    &lt;TouchableOpacity&gt;
+      &lt;AnimatedIcon name="link" size={30} color="#555" style={iconStyle} /&gt;
+    &lt;/TouchableOpacity&gt;
+
+    &lt;Animated.View
+      style={[StyleSheet.absoluteFill, styles.colorRowWrap]}
+      pointerEvents={this.state.inputOpen ? "auto" : "none"}
+    &gt;
+      &lt;AnimatedTextInput
+        value={this.state.color}
+        style={[styles.input]}
+        onChangeText={color =&gt; this.setState({ color })}
+        ref={input =&gt; (this._input = input)}
+      /&gt;
+      &lt;TouchableWithoutFeedback onPress={this.toggleInput}&gt;
+        &lt;Animated.View style={[styles.okayButton]}&gt;
+          &lt;Text style={styles.okayText}&gt;OK&lt;/Text&gt;
+        &lt;/Animated.View&gt;
+      &lt;/TouchableWithoutFeedback&gt;
+    &lt;/Animated.View&gt;
+  &lt;/View&gt;
+&lt;/Animated.View&gt;
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Our <code>colorRowWrap</code> follows many of the same stylings as the <code>row</code> but with no positioning. We'll use <code>flex</code> on our input to tell it to take up the rest of the space, then define a set width on our button. We'll center the text of it in the middle of our button.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;colorRowWrap: {
+    flexDirection: "row",
+    flex: 1,
+    paddingLeft: 5,
+  },
+  input: {
+    flex: 1,
+  },
+  okayButton: {
+    borderRadius: 20,
+    height: "100%",
+    width: 40,
+    backgroundColor: "#309EEB",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  okayText: {
+    color: "#FFF",
+  },
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Animate our input</p>
+
+
+
+<p>Again we'll use a <code>0</code> to <code>1</code> animation so it's a reversible animation. We'll need to toggle our <code>inputOpen</code> and link it to whether or not our animation is being open or closed.</p>
+
+
+
+
+
+<p>The login in our <code>setState</code> is a little odd but the value we are setting on the <code>inputOpen</code> is the result of the <code>!</code> on the <code>_inputOpen</code>.</p>
+
+
+
+
+
+<p>So when the <code>inputOpen</code> on state is no longer <code>true</code>, that means it's closed and we want to blur. Otherwise we want to focus on the input so the user can just start typing.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;  toggleInput = () =&gt; {
+    const toValue = this._inputOpen ? 0 : 1;
+    Animated.timing(this.state.buttonAnimation, {
+      toValue,
+      duration: 350,
+    }).start();
+
+    this._inputOpen = !this._inputOpen;
+    this.setState({ inputOpen: this._inputOpen }, () =&gt; {
+      !this.state.inputOpen ? this._input.getNode().blur() : this._input.getNode().focus();
+    });
+  };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Our first is the <code>moveInterpolate</code> on our button. We offset it <code>-150</code> to the left and translate it across the input. We also want it scaling from <code>0</code> to <code>1</code> so we'll just pass our <code>buttonAnimation</code> right into the scale.</p>
+
+
+
+
+
+<p>A key piece to notice is that we want our row to appear immediately or else we won't see our scaling button. So we interpolate on the buttonAnimation and make the <code>inputRange</code> <code>[0, .01]</code>. This means it will appear almost immediately, but when at <code>0</code> still be able to be hidden.</p>
+
+
+
+
+
+<p>Our <code>input</code> animation will take advantage of a similar cliff to our <code>scaleX</code> on the container view. We will wait until the animation is <code>80%</code> complete before we'll fade it in. This will allow the button to animate almost entirely to it's position before the hex values appear.</p>
+
+
+
+
+
+<p>Finally we have our button animations. You may not have expected us to animate them because they're being covered and won't be visible anyway. However giving something a slight opacity and shift makes it look like it's a part of the animation and disappearing underneath the view. We want to craft an effect that the button is wiping away each of the views.</p>
+
+
+
+
+
+<p>We do that with an opacity from in the first <code>20%</code> of the animation. And the other piece is animating the <code>translateX</code> of the icons <code>-20</code>. This means that it'll be moving towards and underneath the button as it explodes towards it. 
+This also means that with a <code>-20</code> output when the input is closed they'll be moving and fading back into position.</p>
+
+
+
+
+
+<pre class="prettyprint linenums">&lt;code class="js language-js"&gt;    const moveInterpolate = this.state.buttonAnimation.interpolate({
+      inputRange: [0, 1],
+      outputRange: [-150, 0],
+    });
+
+    const buttonStyle = {
+      transform: [
+        {
+          translateX: moveInterpolate,
+        },
+        {
+          scale: this.state.buttonAnimation,
+        },
+      ],
+    };
+
+    const colorRowInterpolate = this.state.buttonAnimation.interpolate({
+      inputRange: [0, 0.01],
+      outputRange: [0, 1],
+      extrapolate: "clamp",
+    });
+
+    const colorRowStyles = {
+      opacity: colorRowInterpolate,
+    };
+
+    const inputOpacityInterpolate = this.state.buttonAnimation.interpolate({
+      inputRange: [0, 0.8, 1],
+      outputRange: [0, 0, 1],
+    });
+
+    const inputStyle = {
+      opacity: inputOpacityInterpolate,
+    };
+
+    const iconTranslate = this.state.buttonAnimation.interpolate({
+      inputRange: [0, 1],
+      outputRange: [0, -20],
+    });
+
+    const opacityIconInterpolate = this.state.buttonAnimation.interpolate({
+      inputRange: [0, 0.2],
+      outputRange: [1, 0],
+      extrapolate: "clamp",
+    });
+
+    const iconStyle = {
+      opacity: opacityIconInterpolate,
+      transform: [
+        {
+          translateX: iconTranslate,
+        },
+      ],
+    };
+&lt;/code&gt;</pre>
+
+
+
+
+
+
+
+
+
+<p>Ending</p>
+
+
+
+<p><a href="https://snack.expo.io/ByAU8a9SZ" rel="nofollow">Live Demo</a>
+<a href="https://gitlab.com/codedaily/reactnativeanimations/tree/colorPicker" rel="nofollow">Code</a></p></p>
+                </div>
+                </div>
+                </div>
+                <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+                </body>
+                </html>

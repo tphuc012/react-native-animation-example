@@ -1,0 +1,812 @@
+1
+00:00:00,450 --> 00:00:04,420
+We're going to build our fab animation in a reversible fashion.
+
+2
+00:00:04,540 --> 00:00:10,140
+That just means we have a single animated value that we animate from 0 to 1 and everything interpolates
+
+3
+00:00:10,140 --> 00:00:12,170
+correctly.
+
+4
+00:00:12,250 --> 00:00:20,460
+So to get started we'll set up our state but the single animation value I would just set at 0 also to
+
+5
+00:00:20,460 --> 00:00:27,710
+get access to some icons we're going to pull and reacting to vector icons with material community icons.
+
+6
+00:00:27,810 --> 00:00:32,800
+Feel free to look at the documentation for reacting to vector icons to set that up.
+
+7
+00:00:32,820 --> 00:00:36,440
+It's just 22:00 install and then a reactive link and you're good to go.
+
+8
+00:00:38,030 --> 00:00:43,310
+The first thing we need to do is set up our pay button and that's going to be in the bottom right corner
+
+9
+00:00:43,760 --> 00:00:48,630
+and we're going to use touchable without feedback for this.
+
+10
+00:00:48,640 --> 00:00:55,150
+That way our button is not affected by the wrapping animated view or anything in that way we can style
+
+11
+00:00:55,150 --> 00:00:58,180
+our button and absolute position at the bottom right corner.
+
+12
+00:00:58,270 --> 00:01:03,330
+So I give in on press and just call this toggle open.
+
+13
+00:01:03,400 --> 00:01:05,230
+We haven't created that yet.
+
+14
+00:01:05,860 --> 00:01:07,090
+And then we'll set up a view
+
+15
+00:01:10,470 --> 00:01:12,830
+and we'll need to style that view.
+
+16
+00:01:12,840 --> 00:01:19,150
+Now for that view we're going to need to create a button style and we want this to be reusable so that
+
+17
+00:01:19,150 --> 00:01:21,800
+the other two buttons can also apply it.
+
+18
+00:01:21,940 --> 00:01:26,440
+And then because there is the difference with that green button will also have to apply some sort of
+
+19
+00:01:26,560 --> 00:01:34,930
+pay styling so that we can add that color and so is his style is equal to styles dot button and then
+
+20
+00:01:34,930 --> 00:01:37,190
+styles that pay.
+
+21
+00:01:37,200 --> 00:01:43,530
+So now let's build our styling for our buttons so that we can set up ourselves for our other buttons.
+
+22
+00:01:43,530 --> 00:01:52,220
+So with this button we'll give it a width of 60 a height of 60 we will align our items to the center
+
+23
+00:01:52,570 --> 00:01:58,780
+and justify our content that way any icon in the middle of it all will appear in the middle of it.
+
+24
+00:01:58,870 --> 00:02:11,430
+Add shadow color should be this dark black gray shadow opacity will be point 1 shadow offset will do
+
+25
+00:02:11,520 --> 00:02:18,340
+x to y 0 than a shadow radius of 2.
+
+26
+00:02:18,870 --> 00:02:26,250
+And then so we have a rounded button will give it a border radius of 30 which is half of our width and
+
+27
+00:02:26,250 --> 00:02:27,580
+our height.
+
+28
+00:02:27,780 --> 00:02:36,190
+And then we'll position it absolutely and bottom 20 right 20.
+
+29
+00:02:36,470 --> 00:02:43,460
+So that'll take our button and move it to about right here so that it's 20 and 20 away and has a shadow.
+
+30
+00:02:43,470 --> 00:02:49,370
+Now if you were to use this on Android you'd have to add an elevation to accomplish that style that
+
+31
+00:02:49,390 --> 00:02:51,250
+shadow styling.
+
+32
+00:02:51,370 --> 00:02:58,630
+So let's fix a mistake and add a comma here so that our share of offset will work and then our page
+
+33
+00:02:58,630 --> 00:02:59,320
+styling.
+
+34
+00:02:59,320 --> 00:03:04,810
+And so our pay is just going to be adjusting the background color because we already have all of the
+
+35
+00:03:04,880 --> 00:03:09,490
+layout and all of the structure of the button here.
+
+36
+00:03:09,580 --> 00:03:17,350
+So our pace styling at our background color and it's going to be 0 0 1 5.
+
+37
+00:03:17,420 --> 00:03:24,960
+So now when we refresh and see that we have a green button appearing in the bottom right corner looking
+
+38
+00:03:24,990 --> 00:03:33,330
+at the break down video we saw that the center of our content is text and the others were icons.
+
+39
+00:03:33,330 --> 00:03:39,540
+So here we'll just go add text and say $5
+
+40
+00:03:42,860 --> 00:03:49,800
+and then we need to give this a styling so we'll say styles paid text go add that styling in
+
+41
+00:03:53,550 --> 00:04:02,900
+and all we need to do is change the color to white and I want to refresh button with $5 in the middle
+
+42
+00:04:02,900 --> 00:04:03,460
+of it.
+
+43
+00:04:04,810 --> 00:04:07,700
+So now we need to work on the other buttons.
+
+44
+00:04:07,750 --> 00:04:11,740
+We won't worry about the tax for now we'll just get the buttons rendering and then we can add in the
+
+45
+00:04:11,740 --> 00:04:22,640
+text later so we can come up here and we'll just add in some touchable without feedback's and this will
+
+46
+00:04:22,640 --> 00:04:25,500
+be the reload button.
+
+47
+00:04:25,550 --> 00:04:27,680
+So we'll say animated
+
+48
+00:04:30,820 --> 00:04:36,360
+view because we'll be adjusting this and translating it up and scaling it as well.
+
+49
+00:04:36,520 --> 00:04:42,450
+And of course we'll give it a style style button because you've already built out that styling.
+
+50
+00:04:43,030 --> 00:04:48,550
+And then because we'll need to adjust the background we'll give it a style other so we can then go redefine
+
+51
+00:04:48,640 --> 00:05:00,130
+our background and then for it's icon an icon from our material icons name equals reload with a size
+
+52
+00:05:00,130 --> 00:05:01,980
+of 20.
+
+53
+00:05:02,350 --> 00:05:06,430
+And then we'll give it a color of 5s
+
+54
+00:05:11,130 --> 00:05:18,660
+now we are rendering this above our bottom button because these are all going to be positioned absolutely
+
+55
+00:05:18,960 --> 00:05:24,100
+with the same exact shadow and the same exact positioning right behind our green button.
+
+56
+00:05:24,210 --> 00:05:27,570
+And we don't want them to be visible until we need them to be visible.
+
+57
+00:05:27,660 --> 00:05:34,610
+So we're going to copy and paste this one up above and I'm going to call it food fork drink.
+
+58
+00:05:34,770 --> 00:05:39,510
+It's going to be the exact same and we'll adjust the styling later.
+
+59
+00:05:39,590 --> 00:05:47,590
+So we have two buttons and we're adding this styles not other let's go at that is just going to be setting
+
+60
+00:05:47,590 --> 00:05:50,740
+the background color to white.
+
+61
+00:05:51,190 --> 00:05:56,170
+And when we refreshed this so that nothing happens because it is behind it.
+
+62
+00:05:56,170 --> 00:06:09,270
+However if we were to go and say do a transform and translate this negative 70 and refresh we see that
+
+63
+00:06:09,270 --> 00:06:13,800
+we have now our buttons moved up but we do this via animation.
+
+64
+00:06:13,800 --> 00:06:18,210
+I was just proving that we actually have our buttons that are sitting right behind our pay button.
+
+65
+00:06:20,060 --> 00:06:25,790
+So with hiding behind our pay button that just means that we don't have to use opacity or anything like
+
+66
+00:06:25,790 --> 00:06:26,120
+that.
+
+67
+00:06:26,120 --> 00:06:30,770
+They're just they're just hidden and will move out from behind our pay button.
+
+68
+00:06:32,080 --> 00:06:37,900
+But we could potentially add an opacity to have it fade in while it's moving up and scaling but that's
+
+69
+00:06:37,900 --> 00:06:39,460
+unnecessary.
+
+70
+00:06:39,460 --> 00:06:45,740
+So now it's time to tackle our styling for our reload button and our order button.
+
+71
+00:06:45,760 --> 00:06:52,120
+So because we want this to be reversible everything's operating off of an input range of 0 to 1 and
+
+72
+00:06:52,120 --> 00:06:53,950
+we'll tackle our scale.
+
+73
+00:06:54,070 --> 00:07:02,690
+Interpellation first so that's just going to be operating off of this state DOT animations we don't
+
+74
+00:07:02,690 --> 00:07:10,810
+even interpolate from it but we can set up our conc reload style and do a transform and fast and scale
+
+75
+00:07:10,810 --> 00:07:21,080
+and in this state animation and then Konst order style transform scale.
+
+76
+00:07:21,090 --> 00:07:28,560
+This state animation now we are passing in our animation knowing that this animated value will only
+
+77
+00:07:28,560 --> 00:07:30,350
+go between 0 and 1.
+
+78
+00:07:30,810 --> 00:07:36,630
+But just understand that if there is any chance that that animated value will go be on one or below
+
+79
+00:07:36,630 --> 00:07:42,030
+zero we should use an inter-relate for this even though it be an interpellation.
+
+80
+00:07:42,070 --> 00:07:52,890
+It would be interpolate input range 0 1 output range 0 1 and then crucially we would do and extrapolate
+
+81
+00:07:52,890 --> 00:07:57,470
+clamp that way our button would never scale beyond 1 or 0.
+
+82
+00:07:57,480 --> 00:08:01,230
+So even though the output range in the input range are exactly identical.
+
+83
+00:08:01,410 --> 00:08:06,480
+This will always make sure that that value stays between 0 and 1.
+
+84
+00:08:06,690 --> 00:08:10,710
+But because we know what our animated value is going to do we're not going to do that here.
+
+85
+00:08:11,880 --> 00:08:16,050
+Now add our second transform which will be our translate y.
+
+86
+00:08:16,170 --> 00:08:23,000
+So with our translate y for our order style this will be the first button that slides up here.
+
+87
+00:08:23,040 --> 00:08:27,660
+And then our other one will be up here and we can input.
+
+88
+00:08:27,660 --> 00:08:30,270
+We can do our interpolate
+
+89
+00:08:32,850 --> 00:08:37,370
+input range 0 to 1 and then our output range will be zero.
+
+90
+00:08:37,620 --> 00:08:41,380
+And because we're moving up it will be negative 70.
+
+91
+00:08:41,610 --> 00:08:46,890
+And this is because our button is 60 and we'll just give yourself 10 pixels of padding away from this
+
+92
+00:08:46,890 --> 00:08:59,430
+button here and we can copy this and give it to our order styling and instead of 70 we'll just double
+
+93
+00:08:59,430 --> 00:09:02,990
+that to 140.
+
+94
+00:09:03,000 --> 00:09:10,290
+So with our scale and translate y set up we can come down here and pass it into our animated views.
+
+95
+00:09:10,290 --> 00:09:18,510
+So this one would be our order style and this one will be our reload style and if we refresh here so
+
+96
+00:09:18,510 --> 00:09:22,860
+that nothing has happened because this is still zero.
+
+97
+00:09:23,130 --> 00:09:27,740
+But if we flip our default to 1 so our interpretations will kick in and we refresh.
+
+98
+00:09:27,780 --> 00:09:33,600
+We see that they are now spread out appropriately so with a versatile animations sometimes you might
+
+99
+00:09:33,600 --> 00:09:37,660
+want to test out your animation just that things are in the appropriate place.
+
+100
+00:09:37,710 --> 00:09:41,790
+Once you hit one so you can always toggle your default value.
+
+101
+00:09:41,910 --> 00:09:45,530
+So I'll just move this back to zero and hide everything.
+
+102
+00:09:46,830 --> 00:09:53,100
+Now let's go ahead and trigger our animation our touch without feedback pay button is calling toggle
+
+103
+00:09:53,100 --> 00:09:53,500
+open.
+
+104
+00:09:53,520 --> 00:10:00,880
+So we will create a function called toggle open and we'll just do a simple timing animation.
+
+105
+00:10:00,920 --> 00:10:03,110
+We'll keep track of whether or not this is open.
+
+106
+00:10:03,110 --> 00:10:07,760
+We don't need to use state here because we aren't doing any sort of pointer events or anything that
+
+107
+00:10:07,760 --> 00:10:09,370
+requires a real render.
+
+108
+00:10:09,590 --> 00:10:14,570
+So vulgar and get are to value and this does open even though we haven't defined it.
+
+109
+00:10:14,570 --> 00:10:16,790
+So it's always going to be false to start.
+
+110
+00:10:17,180 --> 00:10:20,980
+And then if it's open then we'll go to zero.
+
+111
+00:10:20,990 --> 00:10:23,130
+If it's not up and then we'll go to one.
+
+112
+00:10:23,150 --> 00:10:31,880
+And that way we can just do our innovative timing I send this out say to animation to value the duration
+
+113
+00:10:31,940 --> 00:10:43,890
+of 200 and then call start and then we'll just toggle our animation this equals not this dot open
+
+114
+00:10:46,760 --> 00:10:53,390
+because this is all synchronicity not going through set state we can't hammer on our button and it will
+
+115
+00:10:53,390 --> 00:10:59,120
+continually go up and out up and back so we can see that it doesn't matter at what point that I press
+
+116
+00:10:59,120 --> 00:10:59,850
+it.
+
+117
+00:11:00,020 --> 00:11:06,480
+The animation will stop and start moving towards the other direction either 0 or 1.
+
+118
+00:11:06,500 --> 00:11:14,600
+Every time we press on this so we have two things left to tackle the first is the text for here and
+
+119
+00:11:14,600 --> 00:11:21,280
+the second is the blackish sea through background that explodes from the button and comes up here.
+
+120
+00:11:23,560 --> 00:11:26,220
+So let's tackle the text first.
+
+121
+00:11:26,320 --> 00:11:34,410
+We're going to add some animated text because we need to move it inside of each of our buttons.
+
+122
+00:11:34,670 --> 00:11:35,870
+And this one will be order
+
+123
+00:11:40,060 --> 00:11:46,360
+inside here animated attacks will be reload and inside this button here.
+
+124
+00:11:47,680 --> 00:11:50,070
+Will be pay.
+
+125
+00:11:50,280 --> 00:11:55,950
+Now we aren't just going to go with the default styling will give this some style because it's going
+
+126
+00:11:55,950 --> 00:11:58,660
+to be sitting on a black background.
+
+127
+00:11:58,890 --> 00:12:05,230
+And so we'll get that to label and we'll go ahead and apply this to each of our animated techs.
+
+128
+00:12:08,060 --> 00:12:10,260
+And then go and create our styling.
+
+129
+00:12:11,740 --> 00:12:19,890
+Now this would have been easier if we already had our background color set with black.
+
+130
+00:12:19,890 --> 00:12:28,240
+We could do that really quickly by just changing this container to our G.P.A. 000 point five which is
+
+131
+00:12:28,300 --> 00:12:31,030
+what the background color will be.
+
+132
+00:12:32,050 --> 00:12:40,440
+When we eventually go to our payment animation for our background but we'll set up our labels here so
+
+133
+00:12:40,450 --> 00:12:41,830
+say laved color
+
+134
+00:12:45,060 --> 00:12:46,230
+position.
+
+135
+00:12:46,320 --> 00:12:47,180
+Absolute.
+
+136
+00:12:47,310 --> 00:12:50,700
+So that way it's independent of anything inside of here.
+
+137
+00:12:50,820 --> 00:12:57,210
+We'll get a font size of 18 and then background color of transparent
+
+138
+00:13:00,000 --> 00:13:04,740
+so that we have that so that we can go and remove whatever the background will be when that is actually
+
+139
+00:13:04,830 --> 00:13:06,360
+floating over here.
+
+140
+00:13:09,410 --> 00:13:12,880
+And now the key piece is our animation.
+
+141
+00:13:13,010 --> 00:13:16,430
+So we're going to set up the same animation for all of them.
+
+142
+00:13:16,430 --> 00:13:22,190
+That means we just need one label style that we can apply to all of them because they will be doing
+
+143
+00:13:22,190 --> 00:13:24,380
+the same exact animation.
+
+144
+00:13:24,380 --> 00:13:34,690
+And the first thing we need to do is control the positioning of our label is they translate X that comes
+
+145
+00:13:34,690 --> 00:13:40,190
+from about here and explodes out here kind of towards the end of the animation.
+
+146
+00:13:40,270 --> 00:13:52,650
+So we'll set up a label position and chirpily an equal to this animation inter-relate with an input
+
+147
+00:13:52,650 --> 00:14:01,140
+range of zero to one and our output range will start at negative 30 which with translate X means it's
+
+148
+00:14:01,140 --> 00:14:04,320
+moving this direction.
+
+149
+00:14:04,550 --> 00:14:07,940
+And then we'll finish at negative 90.
+
+150
+00:14:08,060 --> 00:14:12,080
+So this will be a slow movement from here to here.
+
+151
+00:14:13,690 --> 00:14:21,180
+Now the key piece of this is that we won't actually show up until the 80th percent of the animation.
+
+152
+00:14:21,510 --> 00:14:24,740
+So give it to our capacity.
+
+153
+00:14:25,060 --> 00:14:32,050
+Here say it's animation not inter-relate and will create a point eight cliff.
+
+154
+00:14:32,300 --> 00:14:34,700
+So we will do as zero point eight.
+
+155
+00:14:34,970 --> 00:14:41,420
+And because our animation is 0 to 1 This means that its covering 80 percent of the animation and then
+
+156
+00:14:41,420 --> 00:14:42,960
+we'll do a one here.
+
+157
+00:14:43,310 --> 00:14:47,680
+And our output range will be 0 0 and then 1.
+
+158
+00:14:48,170 --> 00:14:53,270
+So that means that from zero to 80 percent of the animation our label will be hidden.
+
+159
+00:14:53,270 --> 00:15:00,200
+However it will still be casually moving towards negative 90 and then it will very quickly fade in.
+
+160
+00:15:00,200 --> 00:15:07,980
+Over the last 20 percent of our animation so we can set that up with opacity fastener opacity and interpolate
+
+161
+00:15:08,690 --> 00:15:16,240
+transform and will pass and it translate acts with the label physician interplay.
+
+162
+00:15:17,710 --> 00:15:21,430
+So with this crafted we can apply it to all of our animated teks
+
+163
+00:15:28,870 --> 00:15:34,760
+save that and refresh this and will give it a shot so we can press on this and we can't see our So let's
+
+164
+00:15:34,880 --> 00:15:36,610
+add back our background color
+
+165
+00:15:41,620 --> 00:15:42,590
+refresh again.
+
+166
+00:15:43,790 --> 00:15:49,900
+We kind of see that it is moving very quickly and then will fade in kind of looks like it explodes.
+
+167
+00:15:49,900 --> 00:15:56,980
+We could you could adjust the opacity to be less than 80 percent if you wanted to see it kind of come
+
+168
+00:15:57,040 --> 00:15:58,070
+out of the button.
+
+169
+00:15:58,090 --> 00:16:00,520
+So we started that 20 percent.
+
+170
+00:16:00,520 --> 00:16:09,650
+You can kind of see it's Galan And now here move in and out but we'll leave it at that point at.
+
+171
+00:16:09,660 --> 00:16:17,540
+So the final thing to do is our background color actually being exploded from this button and we can
+
+172
+00:16:17,540 --> 00:16:22,550
+do that by adding an animated view above all of these.
+
+173
+00:16:22,550 --> 00:16:27,110
+That way it will sit behind it and the buttons will appear on top of it.
+
+174
+00:16:27,230 --> 00:16:32,990
+And this is going to be an animated view and we won't have any children.
+
+175
+00:16:33,110 --> 00:16:36,000
+We'll give some styles MySpace tiles.
+
+176
+00:16:36,600 --> 00:16:42,750
+Background and we're going to pass on some animated styling here eventually.
+
+177
+00:16:43,240 --> 00:16:44,890
+And for our backgrounds
+
+178
+00:16:50,970 --> 00:16:57,470
+we're going to give it the exact same positioning and as this button here that way it will actually
+
+179
+00:16:57,470 --> 00:17:00,170
+sit behind all of our buttons.
+
+180
+00:17:00,410 --> 00:17:03,900
+So first thing is the background color Well actually use RGV.
+
+181
+00:17:03,900 --> 00:17:09,610
+0 0 0 point 2 but you can adjust the capacity to your liking position.
+
+182
+00:17:09,620 --> 00:17:22,980
+Absolute with 60 height 60 bottom 20 right 20 and border radius of 13.
+
+183
+00:17:22,990 --> 00:17:28,840
+Now you could adjust this button to have a reusable style that's like a position or something but we
+
+184
+00:17:28,840 --> 00:17:30,880
+just will just type this out.
+
+185
+00:17:31,650 --> 00:17:36,360
+Let's fix this missing quote here before we do any sort of refreshing.
+
+186
+00:17:36,630 --> 00:17:38,020
+And now when we refresh.
+
+187
+00:17:38,070 --> 00:17:39,740
+See that nothing is changed.
+
+188
+00:17:39,750 --> 00:17:45,750
+This button is covering up all of our other content that we will eventually display when our animation
+
+189
+00:17:45,750 --> 00:17:46,400
+triggers
+
+190
+00:17:49,240 --> 00:17:52,490
+the final thing to do is set up our scale animation.
+
+191
+00:17:52,630 --> 00:17:54,300
+So we don't need to move the button at all.
+
+192
+00:17:54,370 --> 00:18:04,630
+We just need to scale the animation out so that they can speed dial give this a transform or scale here
+
+193
+00:18:04,870 --> 00:18:13,380
+and then say this state that animation interpolate input range 0 to 1 in our output range will be zero
+
+194
+00:18:13,470 --> 00:18:15,990
+to a very large number.
+
+195
+00:18:16,350 --> 00:18:24,330
+So you could calculate the required number here by taking the size of our button which is 60 and the
+
+196
+00:18:24,330 --> 00:18:33,270
+size of the screen and roughly dividing it by two or so that way when our scale happens it will expand
+
+197
+00:18:33,780 --> 00:18:38,940
+the circle outwards and cover up to the screen will also expand the other direction you just won't see
+
+198
+00:18:38,940 --> 00:18:39,350
+it.
+
+199
+00:18:39,720 --> 00:18:46,140
+So let's pass this into our background and refresh.
+
+200
+00:18:46,230 --> 00:18:54,260
+And now when you press on it and see that we have our expanding background and at the same time these
+
+201
+00:18:54,260 --> 00:18:58,170
+will slide out and scale out and these will kind of explode out.
+
+202
+00:18:58,220 --> 00:19:04,250
+And 80 percent until that 80 percent will be hidden and we can target them as much as we want because
+
+203
+00:19:04,250 --> 00:19:06,440
+it is that reversible animation.
+

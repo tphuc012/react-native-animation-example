@@ -1,0 +1,128 @@
+1
+00:00:00,830 --> 00:00:09,080
+Animation also allows us to use interpellation to rotate a particular element using degrees or radians.
+
+2
+00:00:09,080 --> 00:00:12,560
+We already have our animated value set up so we can just use it.
+
+3
+00:00:12,560 --> 00:00:21,530
+Now suppose a contest rotates interpret does this start state animation inter-relate which takes an
+
+4
+00:00:21,530 --> 00:00:28,250
+object in our input range and because we are starting at zero that's our default here in our animation
+
+5
+00:00:28,250 --> 00:00:29,410
+will say zero.
+
+6
+00:00:29,660 --> 00:00:33,610
+And then we will say our animation will run to 360.
+
+7
+00:00:33,620 --> 00:00:39,380
+We'll then define our output range of rotation and say zero degrees rotated to start all the way to
+
+8
+00:00:39,380 --> 00:00:46,410
+three hundred and sixty degrees will then create our style so say Konst animated styles.
+
+9
+00:00:48,070 --> 00:00:52,100
+We do transform which is an array of transforms.
+
+10
+00:00:52,100 --> 00:00:58,610
+And in our case we'll say rotate and pass in our rotate interpret and then we'll pass in this to our
+
+11
+00:00:58,610 --> 00:00:59,570
+box.
+
+12
+00:01:00,020 --> 00:01:05,240
+And now when we refresh we can see that nothing has changed because our default values zero into our
+
+13
+00:01:05,240 --> 00:01:11,920
+internally input range and says output of 0 degrees which is no rotation at all.
+
+14
+00:01:11,950 --> 00:01:22,340
+We'll set up our start animation and say animated timing and say this state animation it's a to value
+
+15
+00:01:22,650 --> 00:01:26,620
+of 360 because that's what we have to find here.
+
+16
+00:01:26,630 --> 00:01:32,770
+Over the course of fifteen hundred milliseconds and then we'll call Start now and refresh.
+
+17
+00:01:32,860 --> 00:01:40,220
+We can press this and see that it spins 360 degrees over the course of fifteen hundred milliseconds.
+
+18
+00:01:42,010 --> 00:01:50,550
+Rotate also has a rotate X which will cause it to flip over the horizontal axis and then also rotate
+
+19
+00:01:50,580 --> 00:01:58,920
+Y which will cause it to flip over the vertical axis will changes back to rotate and you'll see that
+
+20
+00:01:59,010 --> 00:02:05,370
+this goes to 360 degrees which means that our rotation goes in a clockwise fashion.
+
+21
+00:02:05,550 --> 00:02:12,570
+If we want to animate it in a counter-clockwise fashion we can say negative 360 degrees and interpret
+
+22
+00:02:12,570 --> 00:02:16,580
+it or figure out that this needs to go towards the negative direction.
+
+23
+00:02:16,770 --> 00:02:17,780
+So you're fresh.
+
+24
+00:02:17,850 --> 00:02:24,870
+And now we will spin the opposite direction these values don't have to be exactly the same.
+
+25
+00:02:24,870 --> 00:02:29,810
+They could be just loosely correlated and interpolate will figure them out.
+
+26
+00:02:29,820 --> 00:02:33,800
+For example if we wanted to say 10 180 degrees here.
+
+27
+00:02:33,930 --> 00:02:35,910
+So it will spin a few times.
+
+28
+00:02:36,960 --> 00:02:41,640
+It will then spin a few times over the course of 2500 milliseconds so we press this and we see that
+
+29
+00:02:41,640 --> 00:02:43,620
+it spins very quickly.
+
+30
+00:02:43,620 --> 00:02:47,120
+Additionally we could cut this in half and say 180 degrees.
+
+31
+00:02:47,280 --> 00:02:50,500
+And in this case it would only spin half way.
+
+32
+00:02:50,580 --> 00:02:57,540
+Even though our input ranges 360 the interpreter will figure out the output range based upon the input.
+
