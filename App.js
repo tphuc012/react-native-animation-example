@@ -47,6 +47,7 @@ import TapShowLoveFloattingHearts from './src/60 - tap show love floating hearts
 import BouncingHeartShapedLikeButton from './src/61 - bouncing heart shaped like button/BouncingHeartShapedLikeButton';
 import ExplodingHeartButton from './src/62 exploding heart button/ExplodingHeartButton';
 import ExpandingNotifyInputWithSUccessMessage from './src/63 expanding notify input with success message/ExpandingNotifyInputWithSUccessMessage';
+import AnimatedHiddenScreen from './src/34- animated hidden/AnimatedHiddenScreen';
 
 const AppNavigator = createAppContainer(
   createStackNavigator(
@@ -151,6 +152,10 @@ const AppNavigator = createAppContainer(
       Cliff99: {
         screen: Cliff99,
         navigationOptions: { title: 'Cliff99' }
+      },
+      AnimatedHiddenScreen: {
+        screen: AnimatedHiddenScreen,
+        navigationOptions: { title: 'AnimatedHiddenScreen' }
       },
       PointerEventsScreen: {
         screen: PointerEventsScreen,

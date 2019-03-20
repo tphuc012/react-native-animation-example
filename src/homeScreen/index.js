@@ -36,6 +36,7 @@ const dataScreen = [
   'VideoScreen',
   'CreateAnimatedComponentsScreen',
   'Cliff99',
+  'AnimatedHiddenScreen',
   'PointerEventsScreen',
   'FourConnerScreen',
   'TaggerdHeadsScreen',
